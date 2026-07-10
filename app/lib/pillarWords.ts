@@ -1,5 +1,5 @@
 // The five brand pillars (see ../../_docs and brand guidelines) and their
-// translations, used by the hero WordRotator and the ParticleField backdrop.
+// translations, used by the hero (HeroSection) and the ParticleField backdrop.
 //
 // ⚠️ Translations are best-effort and pending native-speaker review — edit
 // freely; each entry is independent. Notes:

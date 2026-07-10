@@ -43,6 +43,19 @@ body {
   display: none;
 }
 
+/* Hero background echoes: fade + drift in on each word change. Only `from`
+   is declared so each echo settles at its own opacity utility value. Uses
+   the standalone `translate` property so Tailwind rotate-* isn't clobbered. */
+@keyframes echo-in {
+  from {
+    opacity: 0;
+    translate: 0 16px;
+  }
+}
+.animate-echo-in {
+  animation: echo-in 900ms ease-out both;
+}
+
 /* Hero pillar-word cross-fade (WordRotator) */
 @keyframes word-in {
   from {
