@@ -4,56 +4,71 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { PILLARS } from "../lib/pillarWords";
 
-// Hero: "MEDIA FORGED FOR OUR ___." where the rotating word is a photo-filled
-// word image (public/brand/pillars/), plus ghosted echoes of the SAME word
-// scattered around the empty hero space, all driven by one shared clock so
-// the swap is perfectly synchronized. Echo images reuse the rotator's URLs,
-// so they cost zero extra bytes.
+// Hero: full-bleed editorial stills crossfading behind the headline
+// (web-optimized copies in public/brand/hero/, sourced from Noah's masters
+// in public/images/), with a slow Ken Burns drift and a center gradient
+// scrim that pools darkness behind the text while the edges stay vibrant.
+// The rotating pillar word (photo-filled word images) runs on its own clock.
 
-const ROTATE_MS = 2600;
-
-// Echo slots: positioned in the hero's empty zones (never over the headline),
-// with varied size/tilt/opacity. Mobile shows 2, tablet 4, desktop 6.
-const ECHO_SLOTS = [
-  { cls: "left-[6%] top-[13%] w-56 md:w-72 -rotate-6 opacity-[0.10]", delay: 0 },
-  { cls: "right-[5%] bottom-[20%] w-64 md:w-80 -rotate-3 opacity-[0.11]", delay: 180 },
-  { cls: "right-[7%] top-[10%] w-44 md:w-60 rotate-3 opacity-[0.08] hidden sm:block", delay: 120 },
-  { cls: "left-[4%] bottom-[26%] w-40 md:w-56 rotate-2 opacity-[0.07] hidden md:block", delay: 260 },
-  { cls: "left-[20%] bottom-[9%] w-44 rotate-1 opacity-[0.06] hidden lg:block", delay: 340 },
-  { cls: "right-[24%] top-[22%] w-36 -rotate-2 opacity-[0.06] hidden xl:block", delay: 420 },
+const ROTATE_MS = 2600; // pillar word
+const IMAGE_MS = 7500; // background still
+const HERO_IMAGES = [
+  "/brand/hero/hero-7.jpg", // golden-hour community
+  "/brand/hero/hero-34.jpg", // Amazon aerial
+  "/brand/hero/hero-1.jpg",
+  "/brand/hero/hero-10.jpg",
 ];
 
 export default function HeroSection() {
   const [index, setIndex] = useState(0);
+  const [bgIndex, setBgIndex] = useState(0);
+  const [bgReady, setBgReady] = useState(false); // defer non-first stills off the critical path
 
   useEffect(() => {
-    const id = setInterval(() => {
+    const wordId = setInterval(() => {
       setIndex((i) => (i + 1) % PILLARS.length);
     }, ROTATE_MS);
-    return () => clearInterval(id);
+    const bgId = setInterval(() => {
+      setBgIndex((i) => (i + 1) % HERO_IMAGES.length);
+    }, IMAGE_MS);
+    const readyId = setTimeout(() => setBgReady(true), 1500);
+    return () => {
+      clearInterval(wordId);
+      clearInterval(bgId);
+      clearTimeout(readyId);
+    };
   }, []);
 
   const word = PILLARS[index];
 
   return (
     <section className="relative min-h-[calc(100svh-72px)] flex items-center justify-center px-6 py-20">
-      {/* Ghosted echoes of the active word. Remounted per rotation (key) so
-          the staggered fade-in replays; aria-hidden — purely decorative. */}
+      {/* FULL-BLEED BACKGROUND — crossfading stills + scrims */}
       <div
-        key={word}
         aria-hidden="true"
         className="absolute inset-0 overflow-hidden pointer-events-none select-none"
       >
-        {ECHO_SLOTS.map((slot, i) => (
-          /* eslint-disable-next-line @next/next/no-img-element */
-          <img
-            key={i}
-            src={`/brand/pillars/${word}.png`}
-            alt=""
-            style={{ animationDelay: `${slot.delay}ms` }}
-            className={`absolute h-auto motion-safe:animate-echo-in ${slot.cls}`}
-          />
-        ))}
+        {HERO_IMAGES.map(
+          (src, i) =>
+            (i === 0 || bgReady) && (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img
+                key={src}
+                src={src}
+                alt=""
+                fetchPriority={i === 0 ? "high" : undefined}
+                className={`absolute inset-0 h-full w-full object-cover saturate-[1.12] transition-opacity duration-[1600ms] ease-in-out ${
+                  i === bgIndex
+                    ? `opacity-65 ${i % 2 === 0 ? "motion-safe:animate-kenburns-in" : "motion-safe:animate-kenburns-out"}`
+                    : "opacity-0"
+                }`}
+              />
+            )
+        )}
+        {/* Center scrim: darkness pools behind the headline, edges stay alive */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_58%_52%_at_50%_46%,rgba(8,15,17,0.84)_0%,rgba(8,15,17,0.30)_60%,rgba(8,15,17,0.02)_100%)]" />
+        {/* Top fade for navbar legibility; bottom fade blends into the page */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#080F11]/55 via-transparent to-[#080F11]" />
       </div>
 
       <div className="relative max-w-5xl mx-auto text-center">
