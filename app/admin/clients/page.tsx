@@ -54,6 +54,12 @@ export default function AdminClientsPage() {
       toast.error("Name, email, and workspace ID are required");
       return;
     }
+    // The workspace ID becomes a URL segment and the join key across
+    // projects/invoices/assets — keep it a clean slug.
+    if (!/^[a-z0-9][a-z0-9-]*$/.test(form.workspaceId)) {
+      toast.error("Workspace ID must be lowercase letters, numbers, and dashes");
+      return;
+    }
     setSaving(true);
     try {
       const now = new Date().toISOString();
