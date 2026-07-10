@@ -2,10 +2,10 @@
 **Studio:** Ayni Studios (Noah G Beilin)
 **Tech Stack:** Next.js 16 (App Router), React 19, Tailwind CSS v4, Firebase (Auth + Firestore).
 **External:** Resend (transactional email), Stripe (card checkout — framework only, not deployed), `@react-pdf/renderer` (invoice/receipt PDFs), YouTube (video CDN via library records).
-**Hosting:** Firebase App Hosting (project ID `aynistudios-fe09b` — display name "aynistudios"; backend `aynistudios-web`). ⚠️ Deploy requires the Blaze plan (project is on Spark as of July 2026).
+**Hosting:** Firebase App Hosting (project ID `aynistudios-fe09b` — display name "aynistudios"; backend `aynistudios-web`, us-east4, Blaze). Deploys automatically from `main` on GitHub repo `studiosayni/aynistudios`. Default URL: aynistudios-web--aynistudios-fe09b.us-east4.hosted.app.
 
-## CURRENT STATE (As of July 9, 2026)
-Marketing v2 redesign built (Phase 1 of the Main/Library/Portal plan): particle-word hero replaces the old video concept, homepage carousel + iCloud-style sign-in/contact cards, featured Library hero with lite-YouTube facade, admin library manager, locked-down Firestore rules in-repo. Firebase client config is real (`aynistudios-fe09b`), `_library` is seeded with the 7 live productions. Awaiting: Blaze upgrade → staging deploy → DNS cutover; then Phase 2 (frame.io-style review portal — see `_docs/tasks.md`).
+## CURRENT STATE (As of July 10, 2026 — LIVE)
+**ayni-studios.com serves the redesigned site from App Hosting** (cutover completed 2026-07-10). Marketing v2 (particle hero, carousel, portal cards, featured library) + Phase 2 review portal core (assets/versions/time-coded comments, Storage uploads, notify endpoint) are deployed; Firestore/Storage rules are locked down in production. Open items: `www` custom domain, Resend verification (portal emails currently no-op), billing-route migration to `firebase-admin`, client-role end-to-end test — see `_docs/tasks.md`.
 
 ## SITE-WIDE BACKDROP (ParticleField)
 `app/components/ParticleField.tsx` renders a fixed z-0 canvas behind all pages: the five brand pillars drifting/cross-fading in ~14 languages (word data in `app/lib/pillarWords.ts` — single editable const, translations pending native review). Full intensity over the Main hero → dims to 35% ambient on scroll/other routes; unmounted on `/admin` + `/workspace`; static frame under `prefers-reduced-motion`; pauses when the tab is hidden; DPR capped at 2. The old hero video (`Main_2-4.mov`) is archived in `brand_assets-aynistudios/videos/` and no longer ships.

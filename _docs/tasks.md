@@ -19,13 +19,14 @@ _No active app dev tasks currently tracked in master todo. Check `../../Noah95/t
 <!-- Drop new bugs and unplanned tasks here. Include: what broke, where, and any reproduction steps. -->
 <!-- Run workspace-audit to review and promote items to A-### in the master todo. -->
 
-- **Launch checklist (owner actions, redesign Phase 1 → live):**
-  1. ~~Blaze upgrade~~ ✅ (2026-07-10)
-  2. `python3 scripts/seed-allowlist.py` — creates the two admin `_allowlist` docs
-  3. `firebase deploy --only firestore:rules` — replaces the permissive scaffold rules from April
-  4. ~~GitHub + App Hosting backend~~ ✅ (2026-07-10) — repo `studiosayni/aynistudios`, branch `main`, auto-rollouts on; backend `aynistudios-web` at https://aynistudios-web--aynistudios-fe09b.us-east4.hosted.app (first rollout failed on an empty-value env entry in apphosting.yaml; fixed same day)
-  5. Review pillar-word translations in `app/lib/pillarWords.ts` (flagged for native review)
-  6. DNS cutover — attach ayni-studios.com to the backend in console; ~~Auth authorized domains~~ ✅ already includes staging URL + ayni-studios.com + www
+- **Launch checklist — 🚀 SITE WENT LIVE on ayni-studios.com 2026-07-10 (~09:51 PT):**
+  1. ~~Blaze upgrade~~ ✅
+  2. ~~Allowlist seed~~ ✅ (owner ran `scripts/seed-allowlist.py`; note: a stale April test doc `_allowlist/Q288za15…` with misspelled `workspaceid` remains — inert, delete at leisure)
+  3. ~~Firestore + Storage rules deployed~~ ✅
+  4. ~~GitHub + App Hosting backend~~ ✅ — repo `studiosayni/aynistudios`, auto-rollouts from `main`; backend `aynistudios-web`
+  5. Review pillar-word translations in `app/lib/pillarWords.ts` (flagged for native review) — still open
+  6. ~~DNS cutover~~ ✅ — apex live with cert (gotcha for the record: the certificatemanager ACME CNAME had been placed on `@`, breaking apex resolution; moved to the `_acme-challenge_…` host and cert minted ~40 min later)
+  7. **Still open:** add `www.ayni-studios.com` as a second custom domain in App Hosting (DNS CNAME already points at the apex; Auth authorized domains already include it)
 - **Mobile device pass:** verify Main/Library/portal cards on a real phone once staging is up (Chrome window couldn't shrink below ~500px during local verification; layouts are standard mobile-first Tailwind).
 
 ---
