@@ -31,12 +31,13 @@ env:
       - BUILD
       - RUNTIME
 
-  # Stripe publishable key (safe to expose). Leave empty until Stripe is live.
-  - variable: NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-    value: ""
-    availability:
-      - BUILD
-      - RUNTIME
+  # Stripe publishable key (safe to expose). Commented out until Stripe is
+  # live — App Hosting rejects env entries with an empty value.
+  # - variable: NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+  #   value: "pk_live_..."
+  #   availability:
+  #     - BUILD
+  #     - RUNTIME
 
   # -------------------------------------------------------
   # SECRETS — commented out until each service goes live, because referencing

@@ -9,7 +9,7 @@ const PARTNERS = [
   { name: "AoA", file: "aoa.png" },
   { name: "ENWWF", file: "enwwf.png" },
   { name: "Goumbook", file: "goumbook.png" },
-  { name: "Al Faris", file: "al-faris.png" },
+  { name: "Learning for Nature (UNDP)", file: "learning-for-nature.png" },
   { name: "IN2", file: "in2.png" },
   { name: "La Isla de los Monos", file: "la-isla.png" },
   { name: "SFS", file: "sfs.png" },
