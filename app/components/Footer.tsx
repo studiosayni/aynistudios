@@ -23,8 +23,8 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-sm text-[#DCE4EB]/60 leading-relaxed max-w-xs">
-              A media studio producing documentary and impact content for the
-              planet, humanity, and the future.
+              Ayni Studios is an international media organization on a mission
+              to provide the public unfiltered stories from around the world.
             </p>
           </div>
 

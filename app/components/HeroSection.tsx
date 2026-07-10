@@ -73,15 +73,15 @@ export default function HeroSection() {
 
       <div className="relative max-w-5xl mx-auto text-center">
         <h1 className="text-3xl sm:text-5xl md:text-6xl font-black uppercase tracked leading-tight">
-          Media forged
-          <br />
-          for our{" "}
-          <span className="inline-grid align-baseline">
+          Media forged for our<span className="text-[#FEB040]">...</span>
+          {/* The rotating pillar word — oversized beneath the tagline. All
+              five stack in one grid cell so the block never shifts. */}
+          <span className="mt-5 md:mt-8 grid justify-items-center">
             {PILLARS.map((w, i) => (
               <span
                 key={w}
                 aria-hidden={i !== index}
-                className={`col-start-1 row-start-1 flex items-baseline justify-center whitespace-nowrap ${
+                className={`col-start-1 row-start-1 ${
                   i === index ? "animate-word-in" : "invisible"
                 }`}
               >
@@ -89,18 +89,12 @@ export default function HeroSection() {
                 <img
                   src={`/brand/pillars/${w}.png`}
                   alt={w}
-                  className="inline-block h-[0.78em] w-auto [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.65))_drop-shadow(0_0_4px_rgba(220,228,235,0.18))]"
+                  className="h-[1.35em] sm:h-[1.6em] md:h-[1.85em] w-auto [filter:drop-shadow(0_2px_5px_rgba(0,0,0,0.75))_drop-shadow(0_0_12px_rgba(220,228,235,0.32))]"
                 />
-                <span className="text-[#FEB040]">.</span>
               </span>
             ))}
           </span>
         </h1>
-
-        <p className="mt-10 text-lg md:text-xl text-[#DCE4EB]/70 max-w-2xl mx-auto leading-relaxed">
-          A media studio producing documentary and impact content for the
-          planet, humanity, and the future.
-        </p>
 
         <div className="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
           <Link
