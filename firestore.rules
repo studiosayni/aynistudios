@@ -86,6 +86,39 @@ service cloud.firestore {
       allow read, write: if isAdmin();
     }
 
+    // Review portal assets (Phase 2). Workspace-scoped; queries must filter
+    // on workspaceId so list rules are provable. Files live in Storage under
+    // workspaces/{workspaceId}/assets/{assetId}/ (see storage.rules).
+    match /_assets/{assetId} {
+      function assetInMyWorkspace() {
+        return signedIn()
+          && get(/databases/$(database)/documents/_assets/$(assetId)).data.workspaceId == myWorkspace();
+      }
+      allow get: if isAdmin()
+        || (signedIn() && resource.data.workspaceId == myWorkspace());
+      allow list: if isAdmin()
+        || (signedIn() && resource.data.workspaceId == myWorkspace());
+      allow create: if isAdmin()
+        || (signedIn() && request.resource.data.workspaceId == myWorkspace());
+      allow update: if isAdmin()
+        || (signedIn()
+            && resource.data.workspaceId == myWorkspace()
+            && request.resource.data.workspaceId == resource.data.workspaceId);
+      allow delete: if isAdmin();
+
+      match /versions/{versionId} {
+        allow read, create: if isAdmin() || assetInMyWorkspace();
+        allow update, delete: if isAdmin();
+      }
+
+      match /comments/{commentId} {
+        allow read, create: if isAdmin() || assetInMyWorkspace();
+        // Workspace members can edit/resolve comments; only admins delete.
+        allow update: if isAdmin() || assetInMyWorkspace();
+        allow delete: if isAdmin();
+      }
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }

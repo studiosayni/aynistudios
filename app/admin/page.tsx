@@ -5,16 +5,17 @@ import Link from "next/link";
 import { collection, getDocs, orderBy, query, limit } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import { formatCurrency } from "../lib/currency";
-import type { Invoice, Project } from "../lib/types";
+import type { Client, Invoice, Project } from "../lib/types";
 
 export default function AdminDashboard() {
   const [invoices, setInvoices] = useState<Invoice[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
+  const [clients, setClients] = useState<Client[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
-      const [invSnap, projSnap] = await Promise.all([
+      const [invSnap, projSnap, clientSnap] = await Promise.all([
         getDocs(
           query(
             collection(db, "_invoices"),
@@ -29,12 +30,16 @@ export default function AdminDashboard() {
             limit(10)
           )
         ),
+        getDocs(query(collection(db, "_clients"), orderBy("name"))),
       ]);
       setInvoices(
         invSnap.docs.map((d) => ({ id: d.id, ...(d.data() as Omit<Invoice, "id">) }))
       );
       setProjects(
         projSnap.docs.map((d) => ({ id: d.id, ...(d.data() as Omit<Project, "id">) }))
+      );
+      setClients(
+        clientSnap.docs.map((d) => ({ id: d.id, ...(d.data() as Omit<Client, "id">) }))
       );
       setLoading(false);
     })();
@@ -87,6 +92,32 @@ export default function AdminDashboard() {
                   {formatCurrency(inv.amount, inv.currency)}
                 </span>
                 <StatusPill status={inv.status} />
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+
+      {/* Enter any client's portal to upload cuts and answer review comments
+          (admins pass every WorkspaceGate). */}
+      <section className="space-y-4">
+        <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-[#7B878F]">
+          Client workspaces — review portal
+        </h2>
+        {loading ? null : clients.length === 0 ? (
+          <p className="text-sm text-[#7B878F]">
+            No clients yet — create one under Clients to open its workspace.
+          </p>
+        ) : (
+          <ul className="flex flex-wrap gap-2">
+            {clients.map((c) => (
+              <li key={c.id}>
+                <Link
+                  href={`/workspace/${c.workspaceId}`}
+                  className="inline-block rounded-sm border border-white/10 bg-white/[0.02] px-3 py-2 text-xs font-semibold hover:border-[#FEB040]/60 hover:text-[#FEB040]"
+                >
+                  {c.shortName || c.name} →
+                </Link>
               </li>
             ))}
           </ul>

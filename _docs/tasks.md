@@ -20,12 +20,12 @@ _No active app dev tasks currently tracked in master todo. Check `../../Noah95/t
 <!-- Run workspace-audit to review and promote items to A-### in the master todo. -->
 
 - **Launch checklist (owner actions, redesign Phase 1 → live):**
-  1. Upgrade project `aynistudios-fe09b` to Blaze (App Hosting + Storage need it): https://console.firebase.google.com/project/aynistudios-fe09b/usage/details
+  1. ~~Blaze upgrade~~ ✅ (2026-07-10)
   2. `python3 scripts/seed-allowlist.py` — creates the two admin `_allowlist` docs
   3. `firebase deploy --only firestore:rules` — replaces the permissive scaffold rules from April
-  4. `git init` + push to GitHub + connect App Hosting backend `aynistudios-web` → staging deploy on default URL
+  4. ~~GitHub + App Hosting backend~~ ✅ (2026-07-10) — repo `studiosayni/aynistudios`, branch `main`, auto-rollouts on; backend `aynistudios-web` at https://aynistudios-web--aynistudios-fe09b.us-east4.hosted.app (first rollout failed on an empty-value env entry in apphosting.yaml; fixed same day)
   5. Review pillar-word translations in `app/lib/pillarWords.ts` (flagged for native review)
-  6. DNS cutover + add `ayni-studios.com` to Auth authorized domains
+  6. DNS cutover — attach ayni-studios.com to the backend in console; ~~Auth authorized domains~~ ✅ already includes staging URL + ayni-studios.com + www
 - **Mobile device pass:** verify Main/Library/portal cards on a real phone once staging is up (Chrome window couldn't shrink below ~500px during local verification; layouts are standard mobile-first Tailwind).
 
 ---
@@ -34,12 +34,20 @@ _No active app dev tasks currently tracked in master todo. Check `../../Noah95/t
 
 Items identified but not yet prioritized:
 
-- **Phase 2 — review portal (frame.io replacement):** `_assets` + versions + time-coded comments data model, Firebase Storage uploads (`workspaces/{ws}/assets/...`, rules already written in `storage.rules`), review room UI (player + comment rail + approve/request-changes), `firebase-admin` migration of API routes (closes the admin-auth-hardening item), Resend notifications. Requires Blaze + Resend domain verification.
+- **Phase 2 remainder:** migrate the billing API routes (Stripe webhook, invoice PDF, mark-paid, send-invoice-email) from `x-admin-key` to `firebase-admin` ID-token verification (`app/lib/firebaseAdmin.ts` + `/api/portal/notify` are the pattern); verify ayni-studios.com in Resend + set `RESEND_API_KEY` secret so portal notifications actually send (they currently no-op with a log).
 - **Stripe deployment:** Card checkout framework is scaffolded but not deployed — activate when billing is ready.
 
 ---
 
 ## Recently Completed
+
+000. **Phase 2 core — review portal (2026-07-10)** — The frame.io-replacement loop, built while DNS propagated:
+   - Infra: default Storage bucket created (`aynistudios-fe09b.firebasestorage.app`, US-EAST4); locked-down **Firestore + Storage rules deployed to production** (replacing April's permissive scaffold rules); `firebase-admin` + `server-only` installed.
+   - Data layer: `app/lib/reviewAssets.ts` (`_assets` + versions + comments, notify helper), `app/lib/firebaseAdmin.ts` (ADC).
+   - UI: Review section on workspace home + `UploadAssetModal` (resumable, progress/cancel, orphan cleanup) + review room at `/workspace/[ws]/review/[assetId]` (player, version switcher, time-coded comments with click-to-seek, resolve, approve/request-changes, admin status + new-version upload); admin dashboard gained a workspace switcher.
+   - Notifications: `/api/portal/notify` (ID-token verified; admin action → client contacts, client action → studio; graceful no-op until Resend is configured).
+   - Deploy/DNS same day: GitHub repo `studiosayni/aynistudios` connected to App Hosting backend `aynistudios-web` (rollout-000 failed on an empty env value in apphosting.yaml; fixed in rollout-001 ✓ staging live); custom-domain DNS corrected at Namecheap (ACME CNAME was on `@`; moved to `_acme-challenge_…` host) — cert issuance in progress at time of writing.
+   - Not yet verified end-to-end: needs `scripts/seed-allowlist.py` run first (sign-in requires an allowlist doc), then the upload → comment → approve loop on staging.
 
 00. **CJN + Stories removal (2026-07-10)** — Removed both surfaces entirely at Noah's direction (supersedes the earlier keep-in-footer decision): `app/stories/`, `app/cjn/`, `/api/cjn/auth`, `proxy.ts` (existed only for the CJN gate), `app/lib/{stories,cjn}.ts`, `content/stories/`; dropped `next-mdx-remote` + `gray-matter` deps and the `CJN_PASSWORD` secret from `apphosting.yaml`/`.env.local.example`; footer Explore trimmed to Library + Client Portal; sitemap/robots updated. Post-redesign polish same day: hero one type-step smaller with a fixed-width rotating-word slot (no line reflow), particles ~1.5× denser at 11–17px, partner logos enlarged (h-14/h-16 + auto-trimmed source padding), IFRC-WWF ↔ Al Faris positions swapped. Note: old `/stories` and `/cjn` URLs will 404 after DNS cutover.
 

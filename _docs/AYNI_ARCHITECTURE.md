@@ -23,8 +23,10 @@ Marketing v2 redesign built (Phase 1 of the Main/Library/Portal plan): particle-
 | `/admin/projects` | Client-rendered | Project list + creation wizard with milestones. |
 | `/admin/projects/[id]` | Client-rendered | Project detail — milestones, status, generate invoice per milestone. |
 | `/admin/invoices/[id]` | Client-rendered | Invoice detail — copy pay-link, email invoice, mark paid off-platform. |
-| `/workspace/[workspaceId]` | Client-rendered (WorkspaceGate) | Client portal home — list of their visible projects. |
+| `/workspace/[workspaceId]` | Client-rendered (WorkspaceGate) | Portal home — Review section (assets in review, upload) + visible projects/billing. |
+| `/workspace/[workspaceId]/review/[assetId]` | Client-rendered | Review room — player, version switcher, time-coded comments (click → seek), approve/request-changes; admin can set any status + upload new versions. |
 | `/workspace/[workspaceId]/projects/[projectId]` | Client-rendered | Client-facing project view — status, pending invoices, receipts. |
+| `/api/portal/notify` | Route handler | Verifies Firebase ID token (`firebase-admin`), emails the review counterpart via Resend (no-ops with a warning until `RESEND_API_KEY` is configured). |
 | `/pay/[invoiceId]` | Server-rendered | Public pay page — Stripe Checkout + Zelle + bank transfer options. Token is the Firestore auto-ID. |
 | `/api/create-checkout-session` | Route handler | Starts a Stripe Checkout session for a given invoice. |
 | `/api/stripe-webhook` | Route handler | Verifies Stripe signature, flips invoice to Paid, fires emails. |
@@ -50,7 +52,14 @@ Marketing v2 redesign built (Phase 1 of the Main/Library/Portal plan): particle-
   - `category` (string, optional) — e.g. `"Documentary Series"`, `"Brand"`
   - `sortKey` (string, required for ordering) — library is sorted `desc` by this field. Use `"2026-04-19"`-style ISO dates for natural chronological order.
   - `featured` (boolean, optional) — hero slot on `/library` (admin UI keeps it single-holder; falls back to newest)
-- **`_workspaces/{workspaceId}`** *(not yet built — reserved for the portal)*
+### Review portal (Phase 2)
+- **`_assets/{docId}`** — a deliverable under review in a workspace. Helpers in `app/lib/reviewAssets.ts`.
+  - `workspaceId` (query key — all portal queries filter on it so rules verify from the query shape)
+  - `title`, `status` (`"in_review"` | `"approved"` | `"changes_requested"`), `currentVersion` (0 until v1 lands)
+  - `createdBy`/`createdByName`, `createdAt`, `lastActivityAt` (bumped on upload/comment/status; list sorts by it client-side — no composite index needed)
+- **`_assets/{id}/versions/{docId}`** — one per uploaded cut: `n`, `storagePath`, `downloadUrl` (tokened, stored at upload), `size`, `contentType`, `uploadedBy(Name)`, `note?`, `createdAt`. A new version flips the asset back to `in_review`.
+- **`_assets/{id}/comments/{docId}`** — `versionN`, `tSeconds` (null = general), `body`, `authorUid/Name/Role`, `resolved`, `createdAt`.
+- **Storage layout:** `workspaces/{workspaceId}/assets/{assetId}/v{n}/{filename}` in bucket `aynistudios-fe09b.firebasestorage.app` (US-EAST4, colocated with the backend). Browser-playable video/images/PDF, ≤2 GB, uploaded with `uploadBytesResumable` (progress + cancel in `UploadAssetModal`; an aborted first upload deletes the orphan asset doc).
 
 ### Billing collections
 - **`_clients/{docId}`** — persistent client directory (bill-to + workspace mapping).
@@ -97,8 +106,9 @@ Firebase **client** config is hardcoded in `app/lib/firebase.ts` (keys are publi
 - Client-side queries always filter on `workspaceId` (denormalized onto `_projects`/`_invoices`) so list rules are provable from the query shape.
 - `_library` is public-read; `_invoices` single-doc `get` is open (the doc ID is the pay-link token) but `list` is not.
 - Signup flow creates the Auth account **first**, then reads the user's own allowlist doc (rules only allow reading your own entry), deleting the account if not invited.
-- **Known gap (Phase 2):** API routes (Stripe webhook, invoice PDF, mark-paid) still use the client SDK server-side and are blocked by these rules — they migrate to `firebase-admin` with the portal build. Stripe isn't deployed, so nothing user-facing breaks meanwhile.
+- **Known gap (billing routes):** the Stripe webhook / invoice PDF / mark-paid routes still use the client SDK server-side and are blocked by these rules — migrate them to `firebase-admin` (now installed; see `app/lib/firebaseAdmin.ts`) before Stripe goes live. `/api/portal/notify` already uses the admin SDK and is the reference pattern.
 - One-time bootstrap: `scripts/seed-allowlist.py` creates the two admin `_allowlist` docs (run by the owner; needs gcloud auth).
+- Rules were deployed to production on 2026-07-10 (both Firestore and Storage).
 
 ## SEO PRIMITIVES
 - `app/layout.tsx` — site-level OpenGraph + Twitter + title template (`%s — Ayni Studios`), `metadataBase` from env.
