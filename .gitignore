@@ -45,3 +45,6 @@ firebase-debug.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# raw video source (encoded web versions live in public/brand/hero/)
+public/images/Main_2-4.mov

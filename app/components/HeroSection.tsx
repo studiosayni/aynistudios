@@ -1,16 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { PILLARS } from "../lib/pillarWords";
 
 // Hero: full-bleed editorial stills crossfading behind the headline
-// (web-optimized copies in public/brand/hero/, sourced from Noah's masters
-// in public/images/), with a slow Ken Burns drift and a center gradient
-// scrim that pools darkness behind the text while the edges stay vibrant.
-// The rotating pillar word (photo-filled word images) runs on its own clock.
+// (web-optimized copies in public/brand/hero/), with a slow Ken Burns drift
+// and a center gradient scrim. Beneath the tagline, the original brand
+// word-cloud animation (multilingual pillar words) plays as a transparent
+// video — VP9-alpha WebM for Chrome/Firefox, HEVC-alpha MP4 for Safari,
+// both encoded from brand_assets' Main_2-4.mov.
 
-const ROTATE_MS = 2600; // pillar word
 const IMAGE_MS = 7500; // background still
 const HERO_IMAGES = [
   "/brand/hero/hero-7.jpg", // golden-hour community
@@ -20,26 +19,24 @@ const HERO_IMAGES = [
 ];
 
 export default function HeroSection() {
-  const [index, setIndex] = useState(0);
   const [bgIndex, setBgIndex] = useState(0);
   const [bgReady, setBgReady] = useState(false); // defer non-first stills off the critical path
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
-    const wordId = setInterval(() => {
-      setIndex((i) => (i + 1) % PILLARS.length);
-    }, ROTATE_MS);
     const bgId = setInterval(() => {
       setBgIndex((i) => (i + 1) % HERO_IMAGES.length);
     }, IMAGE_MS);
     const readyId = setTimeout(() => setBgReady(true), 1500);
+    // Respect reduced motion: hold the word-cloud on its first frame.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      videoRef.current?.pause();
+    }
     return () => {
-      clearInterval(wordId);
       clearInterval(bgId);
       clearTimeout(readyId);
     };
   }, []);
-
-  const word = PILLARS[index];
 
   return (
     <section className="relative min-h-[calc(100svh-72px)] flex items-center justify-center px-6 py-20">
@@ -72,29 +69,29 @@ export default function HeroSection() {
       </div>
 
       <div className="relative max-w-5xl mx-auto text-center">
-        {/* Tagline: Bold (not Black) with wider tracking — hero-only
-            treatment; the oversized word below carries the weight. */}
+        {/* Tagline: Bold with wider tracking — hero-only treatment. */}
         <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold uppercase tracking-[0.19em] leading-tight">
           Media forged for our<span className="text-[#FEB040]">...</span>
-          {/* The rotating pillar word — hard cut between words (no fade).
-              All five stack in one grid cell so the block never shifts. */}
-          <span className="mt-5 md:mt-8 grid justify-items-center">
-            {PILLARS.map((w, i) => (
-              <span
-                key={w}
-                aria-hidden={i !== index}
-                className={`col-start-1 row-start-1 ${i === index ? "" : "invisible"}`}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={`/brand/pillars/${w}.png`}
-                  alt={w}
-                  className="h-[1.35em] sm:h-[1.6em] md:h-[1.85em] w-auto brightness-[1.12] contrast-[1.03]"
-                />
-              </span>
-            ))}
-          </span>
         </h1>
+
+        {/* The original brand word-cloud animation, transparent over the
+            stills. Source order matters: WebM-alpha first for Chrome/
+            Firefox, HEVC-alpha (hvc1) for Safari. */}
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          disablePictureInPicture
+          poster="/brand/hero/words-poster.webp"
+          aria-label="Planet, humanity, future, wonder, truth — in many languages"
+          className="mx-auto mt-2 md:mt-4 w-full max-w-4xl h-auto pointer-events-none"
+        >
+          <source src="/brand/hero/words.webm" type="video/webm" />
+          <source src="/brand/hero/words.mp4" type='video/mp4; codecs="hvc1"' />
+        </video>
 
         <div className="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
           <Link

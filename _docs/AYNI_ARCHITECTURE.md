@@ -7,8 +7,10 @@
 ## CURRENT STATE (As of July 10, 2026 — LIVE)
 **ayni-studios.com serves the redesigned site from App Hosting** (cutover completed 2026-07-10). Marketing v2 (particle hero, carousel, portal cards, featured library) + Phase 2 review portal core (assets/versions/time-coded comments, Storage uploads, notify endpoint) are deployed; Firestore/Storage rules are locked down in production. Open items: `www` custom domain, Resend verification (portal emails currently no-op), billing-route migration to `firebase-admin`, client-role end-to-end test — see `_docs/tasks.md`.
 
-## SITE-WIDE BACKDROP (ParticleField)
-`app/components/ParticleField.tsx` renders a fixed z-0 canvas behind all pages: the five brand pillars drifting/cross-fading in ~14 languages (word data in `app/lib/pillarWords.ts` — single editable const, translations pending native review). Full intensity over the Main hero → dims to 35% ambient on scroll/other routes; unmounted on `/admin` + `/workspace`; static frame under `prefers-reduced-motion`; pauses when the tab is hidden; DPR capped at 2. The old hero video (`Main_2-4.mov`) is archived in `brand_assets-aynistudios/videos/` and no longer ships.
+## SITE-WIDE BACKDROP (ParticleField) + HERO MEDIA
+`app/components/ParticleField.tsx` renders a fixed z-0 canvas behind all pages: the five brand pillars drifting/cross-fading in ~14 languages (word data in `app/lib/pillarWords.ts` — single editable const, translations pending native review). Full intensity over the Main hero → dims to 35% ambient on scroll/other routes; unmounted on `/admin` + `/workspace`; static frame under `prefers-reduced-motion`; pauses when the tab is hidden; DPR capped at 2.
+
+The hero (`app/components/HeroSection.tsx`) layers: crossfading full-bleed editorial stills (`public/brand/hero/hero-*.jpg`, 7.5s holds, Ken Burns) under a center scrim, and the original brand word-cloud animation as a transparent video below the tagline — dual-encoded from `brand_assets-aynistudios/videos/Main_2-4.mov` as VP9-alpha WebM (Chrome/Firefox; note: libvpx alpha requires `-auto-alt-ref 0`) + HEVC-alpha MP4 with the `hvc1` tag (Safari), with a 44KB transparent poster as a no-playback fallback. The 4.3MB source `.mov` is gitignored. ⚠️ The Claude-in-Chrome automated browser cannot play any direct-file video (env limitation) — verify video changes by eye.
 
 ## ROUTES
 | Route | Source | Notes |
