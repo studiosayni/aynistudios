@@ -72,24 +72,24 @@ export default function HeroSection() {
       </div>
 
       <div className="relative max-w-5xl mx-auto text-center">
-        <h1 className="text-3xl sm:text-5xl md:text-6xl font-black uppercase tracked leading-tight">
+        {/* Tagline: Bold (not Black) with wider tracking — hero-only
+            treatment; the oversized word below carries the weight. */}
+        <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold uppercase tracking-[0.19em] leading-tight">
           Media forged for our<span className="text-[#FEB040]">...</span>
-          {/* The rotating pillar word — oversized beneath the tagline. All
-              five stack in one grid cell so the block never shifts. */}
+          {/* The rotating pillar word — hard cut between words (no fade).
+              All five stack in one grid cell so the block never shifts. */}
           <span className="mt-5 md:mt-8 grid justify-items-center">
             {PILLARS.map((w, i) => (
               <span
                 key={w}
                 aria-hidden={i !== index}
-                className={`col-start-1 row-start-1 ${
-                  i === index ? "animate-word-in" : "invisible"
-                }`}
+                className={`col-start-1 row-start-1 ${i === index ? "" : "invisible"}`}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={`/brand/pillars/${w}.png`}
                   alt={w}
-                  className="h-[1.35em] sm:h-[1.6em] md:h-[1.85em] w-auto [filter:drop-shadow(0_2px_5px_rgba(0,0,0,0.75))_drop-shadow(0_0_12px_rgba(220,228,235,0.32))]"
+                  className="h-[1.35em] sm:h-[1.6em] md:h-[1.85em] w-auto brightness-[1.12] contrast-[1.03]"
                 />
               </span>
             ))}

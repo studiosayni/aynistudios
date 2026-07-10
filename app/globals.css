@@ -69,22 +69,3 @@ body {
   animation: kenburns-out 9s linear both;
 }
 
-/* Hero pillar-word cross-fade (WordRotator) */
-@keyframes word-in {
-  from {
-    opacity: 0;
-    transform: translateY(0.25em);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-.animate-word-in {
-  animation: word-in 500ms ease both;
-}
-@media (prefers-reduced-motion: reduce) {
-  .animate-word-in {
-    animation: none;
-  }
-}
