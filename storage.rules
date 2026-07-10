@@ -1,0 +1,49 @@
+rules_version = '2';
+
+// Portal review-asset storage (Phase 2). Layout:
+//   workspaces/{workspaceId}/assets/{assetId}/v{n}/{filename}
+// Access mirrors Firestore: admins everywhere, clients inside their own
+// workspace only. Review cuts are browser-playable video plus images/PDF,
+// capped at 2 GB per file (uploads use uploadBytesResumable).
+//
+// NOTE: the default bucket doesn't exist until the project is on the Blaze
+// plan — deploy these rules together with the Phase 2 portal build.
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    function signedIn() {
+      return request.auth != null;
+    }
+    function emailLower() {
+      return request.auth.token.email.lower();
+    }
+    function allowlistDoc() {
+      return firestore.get(/databases/(default)/documents/_allowlist/$(emailLower()));
+    }
+    function isAdmin() {
+      return signedIn() && (
+        emailLower() in ['studiosayni@gmail.com', 'humanity@ayni-studios.com']
+        || allowlistDoc().data.role == 'admin'
+      );
+    }
+    function inWorkspace(workspaceId) {
+      return signedIn() && allowlistDoc().data.workspaceId == workspaceId;
+    }
+    function allowedType() {
+      return request.resource.contentType.matches('video/.*')
+        || request.resource.contentType.matches('image/.*')
+        || request.resource.contentType == 'application/pdf';
+    }
+
+    match /workspaces/{workspaceId}/{path=**} {
+      allow read: if isAdmin() || inWorkspace(workspaceId);
+      allow write: if (isAdmin() || inWorkspace(workspaceId))
+        && request.resource.size < 2 * 1024 * 1024 * 1024
+        && allowedType();
+    }
+
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

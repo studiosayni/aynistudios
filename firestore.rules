@@ -1,0 +1,93 @@
+rules_version = '2';
+
+// Access model (see _docs/AYNI_ARCHITECTURE.md):
+//  - `_allowlist/{lowercaseEmail}` is the source of truth for who can use the
+//    portal and with which role/workspace.
+//  - The two studio-owner emails are hardcoded as bootstrap admins so a fresh
+//    project can be administered before any allowlist docs exist.
+//  - Client-side queries always filter on workspaceId (denormalized onto
+//    projects/invoices) so list rules are provable from the query shape.
+//  - KNOWN GAP (Phase 2): API routes (Stripe webhook, invoice PDF, mark-paid)
+//    still use the client SDK server-side and are blocked by these rules.
+//    They migrate to firebase-admin in the portal build; Stripe is not yet
+//    deployed, so nothing user-facing breaks in the meantime.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+    function emailLower() {
+      return request.auth.token.email.lower();
+    }
+    function allowlistPath() {
+      return /databases/$(database)/documents/_allowlist/$(emailLower());
+    }
+    function isAdmin() {
+      return signedIn() && (
+        emailLower() in ['studiosayni@gmail.com', 'humanity@ayni-studios.com']
+        || (exists(allowlistPath()) && get(allowlistPath()).data.role == 'admin')
+      );
+    }
+    function myWorkspace() {
+      return exists(allowlistPath())
+        ? get(allowlistPath()).data.workspaceId
+        : '';
+    }
+
+    // Public production catalog rendered on /library and the homepage.
+    match /_library/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Invite list. Users may read their own entry (signup/login check).
+    match /_allowlist/{email} {
+      allow get: if signedIn() && (emailLower() == email || isAdmin());
+      allow list: if isAdmin();
+      allow write: if isAdmin();
+    }
+
+    // User profiles, written at signup / complete-profile.
+    match /_users/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
+      allow create, update: if signedIn() && request.auth.uid == uid;
+      allow delete: if isAdmin();
+    }
+
+    match /_clients/{id} {
+      allow read: if isAdmin()
+        || (signedIn() && resource.data.workspaceId == myWorkspace());
+      allow write: if isAdmin();
+    }
+
+    match /_projects/{id} {
+      allow read: if isAdmin()
+        || (signedIn()
+            && resource.data.workspaceId == myWorkspace()
+            && resource.data.visibleToClient == true);
+      allow write: if isAdmin();
+    }
+
+    // The invoice doc ID doubles as the unguessable pay-link token at
+    // /pay/{id}, so single-doc reads stay open; enumeration (list) does not.
+    match /_invoices/{id} {
+      allow get: if true;
+      allow list: if isAdmin()
+        || (signedIn() && resource.data.workspaceId == myWorkspace());
+      allow write: if isAdmin();
+    }
+
+    // Serial counters + reverse index: admin UI only (runs in transactions).
+    match /_serialCounters/{id} {
+      allow read, write: if isAdmin();
+    }
+    match /_projectNumberIndex/{id} {
+      allow read, write: if isAdmin();
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

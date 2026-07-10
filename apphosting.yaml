@@ -1,0 +1,67 @@
+# Settings for Backend (on Cloud Run).
+# See https://firebase.google.com/docs/app-hosting/configure#cloud-run
+runConfig:
+  minInstances: 0
+
+env:
+  # -------------------------------------------------------
+  # PUBLIC VARS
+  # -------------------------------------------------------
+  - variable: NEXT_PUBLIC_BASE_URL
+    value: "https://ayni-studios.com"
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: ADMIN_EMAIL
+    value: "humanity@ayni-studios.com"
+    availability:
+      - RUNTIME
+
+  # Resend — configured after ayni-studios.com is verified in Resend
+  - variable: RESEND_FROM
+    value: "Ayni Studios <humanity@ayni-studios.com>"
+    availability:
+      - RUNTIME
+
+  # Billing — public display values for the pay page
+  - variable: NEXT_PUBLIC_ZELLE_CONTACT
+    value: "studiosayni@gmail.com"
+    availability:
+      - BUILD
+      - RUNTIME
+
+  # Stripe publishable key (safe to expose). Leave empty until Stripe is live.
+  - variable: NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+    value: ""
+    availability:
+      - BUILD
+      - RUNTIME
+
+  # -------------------------------------------------------
+  # SECRETS — commented out until each service goes live, because referencing
+  # a Cloud Secret Manager secret that doesn't exist fails the rollout.
+  # To enable one:
+  #   1. firebase apphosting:secrets:set <NAME>
+  #   2. firebase apphosting:secrets:grantaccess <NAME> --backend aynistudios-web
+  #   3. Uncomment its block below and push.
+  # -------------------------------------------------------
+  # - variable: RESEND_API_KEY
+  #   secret: RESEND_API_KEY
+  #   availability:
+  #     - RUNTIME
+
+  # - variable: STRIPE_SECRET_KEY
+  #   secret: STRIPE_SECRET_KEY
+  #   availability:
+  #     - RUNTIME
+
+  # - variable: STRIPE_WEBHOOK_SECRET
+  #   secret: STRIPE_WEBHOOK_SECRET
+  #   availability:
+  #     - RUNTIME
+
+  # - variable: ADMIN_API_KEY
+  #   secret: ADMIN_API_KEY
+  #   availability:
+  #     - RUNTIME

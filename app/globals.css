@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+/* Brand typography: Barlow */
+@theme {
+  --font-sans: var(--font-barlow), ui-sans-serif, system-ui, sans-serif;
+
+  /* Ayni brand tokens (see _docs/brand.md) */
+  --color-ayni-bg: #080F11;
+  --color-ayni-text: #DCE4EB;
+  --color-ayni-secondary: #7B878F;
+  --color-ayni-accent: #FEB040;
+}
+
+:root {
+  --background: #080F11;
+  --foreground: #DCE4EB;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-barlow), sans-serif;
+}
+
+/* Utility: wide tracked headline (per brand.md) */
+.tracked {
+  letter-spacing: 0.15em;
+}
+
+/* Smooth in-page anchor scrolling (hero → portal card), motion-safe only */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Hide scrollbars on carousel tracks while keeping them scrollable */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hero pillar-word cross-fade (WordRotator) */
+@keyframes word-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.25em);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-word-in {
+  animation: word-in 500ms ease both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-word-in {
+    animation: none;
+  }
+}
