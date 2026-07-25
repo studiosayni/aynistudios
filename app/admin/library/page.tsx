@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import {
   deleteDoc,
   doc,
@@ -10,11 +9,8 @@ import {
 } from "firebase/firestore";
 import toast from "react-hot-toast";
 import { db } from "../../lib/firebase";
-import {
-  fetchLibrary,
-  youtubeThumb,
-  type LibraryItem,
-} from "../../lib/library";
+import LibraryThumbnail from "../../components/LibraryThumbnail";
+import { fetchLibrary, type LibraryItem } from "../../lib/library";
 
 // Admin manager for the `_library` catalog rendered on /library and the
 // homepage carousel. Doc ID convention: the YouTube video ID.
@@ -227,13 +223,10 @@ export default function AdminLibraryPage() {
       ) : (
         <ul className="divide-y divide-white/5 rounded-md border border-white/10">
           {items.map((item) => {
-            const thumb = item.thumbnailUrl || youtubeThumb(item.youtubeId);
             return (
               <li key={item.dbId} className="flex items-center gap-4 px-4 py-3 text-sm">
                 <div className="relative h-12 w-20 shrink-0 overflow-hidden rounded-sm bg-black/40">
-                  {thumb && (
-                    <Image src={thumb} alt="" fill className="object-cover" unoptimized />
-                  )}
+                  <LibraryThumbnail item={item} sizes="80px" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="truncate font-semibold">{item.title}</p>

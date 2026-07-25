@@ -34,11 +34,16 @@ _No active app dev tasks currently tracked in master todo. Check `../../Noah95/t
   3. **Featured plays inline, every other card ejects to youtube.com** in a new tab, with no external-link affordance. Reusing the lite-YouTube facade (or a lightbox) for grid cards would keep people in the library.
   4. **Homepage ends on the Malcolm X quote with no CTA;** the only conversion section (Clients & Contact) is buried mid-page. Consider moving the quote up near the hero and closing on the CTA.
   5. **Partner logos are hard to read** — `opacity-60 grayscale` plus wildly inconsistent optical sizing (teamLab/La Isla render as tiny emblems next to full-width IFRC-WWF). Per-logo sizing + ~75% resting opacity. They're also not linked.
-  6. **YouTube handle mismatch — real bug.** `app/page.tsx` publishes `@Ayni.Studios` in the schema.org `sameAs`; `Footer.tsx` links `@ayni-studios`. One is wrong and the JSON-LD one feeds search engines.
-  7. **Footer copyright fails WCAG AA** — `#DCE4EB/40` on `#080F11` is ≈3.25:1 at 10px (needs 4.5:1). Navbar "Logout" and "Access is invite-only" at `/50` are ≈4.37:1, marginally under.
+  6. ~~**YouTube handle mismatch**~~ ✅ Done 2026-07-25 — worse than a mismatch: `Footer.tsx` linked `@ayni-studios`, which returns **HTTP 404**. The footer's YouTube icon had been dead. `@Ayni.Studios` (the JSON-LD value) is the real channel — verified 200 + title "Ayni Studios - YouTube". Footer corrected.
+  7. ~~**Contrast failures**~~ ✅ Done 2026-07-25 — footer copyright `/40`→`/60` (3.25:1 → 5.86:1), navbar "Logout" and "Access is invite-only" `/50`→`/60` (4.37:1 → 5.86:1). All now clear the 4.5:1 floor for normal-size text. The footer's amber `#FEB040/70` was measured at 5.58:1 and left alone.
   8. **Hero stills bypass `next/image`** (raw `<img>`, lint rule disabled) — no responsive sizing, no AVIF/WebP, so a phone downloads the same 383KB desktop JPEG. Four stills (~966KB) + video (~1.4MB) ≈ 2.4MB above the fold.
   9. **Consider dropping `unoptimized` on library thumbnails.** Routing them through `/_next/image` serves AVIF/WebP at the right size *and* makes them immune to client-side blockers (they'd come from our own origin). Tradeoff: image traffic lands on the App Hosting bill.
-  10. Smaller: navbar has no active-page state; signed-in portal card has ~128px of dead space next to the filled contact card; Barlow weight 800 is preloaded but never used (`layout.tsx` declares 7 weights); no category/year filtering on `/library` though both fields exist; `/admin/library` still uses the old direct `youtubeThumb()` path rather than the shared fallback chain.
+  10. Smaller — mostly done 2026-07-25:
+      - ~~Navbar active-page state~~ ✅ `/library` renders the Library link in amber with `aria-current="page"`.
+      - ~~Signed-in portal card dead space~~ ✅ CTA pinned with `mt-auto`; trailing space inside both cards is now an identical 41px (was ~128px on the portal card).
+      - ~~Barlow weight 800~~ ✅ removed from `layout.tsx` — zero uses, one fewer font preload. 500 stays: ParticleField sets it as a raw canvas font string, not a Tailwind class, so it isn't greppable as a utility.
+      - ~~`/admin/library` on the old `youtubeThumb()` path~~ ✅ moved to the shared `LibraryThumbnail` — admin now gets the same fallback chain and 1280×720 artwork.
+      - **Still open: category/year filtering on `/library`.** Deliberately skipped — with 7 items, filter chrome costs more than it returns. Revisit when the catalog is large enough that scanning it is actual work.
 
 ---
 

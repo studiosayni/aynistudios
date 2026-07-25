@@ -6,9 +6,12 @@ import Footer from "./components/Footer";
 import ParticleField from "./components/ParticleField";
 import { Toaster } from "react-hot-toast";
 
+// Every declared weight gets its own preload, so unused ones are dead
+// requests. 800 has zero uses across app/ — 500 is kept for the ParticleField
+// canvas, which sets it as a raw font string rather than a Tailwind class.
 const barlow = Barlow({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  weight: ["300", "400", "500", "600", "700", "900"],
   variable: "--font-barlow",
 });
 

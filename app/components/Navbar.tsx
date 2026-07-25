@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { auth } from "../lib/firebase";
 import { onAuthStateChanged, signOut, User } from "firebase/auth";
 import { workspaceDestination } from "../lib/authRouting";
@@ -11,6 +11,8 @@ import { workspaceDestination } from "../lib/authRouting";
 export default function Navbar() {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const router = useRouter();
+  const pathname = usePathname();
+  const onLibrary = pathname === "/library";
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -56,7 +58,12 @@ export default function Navbar() {
         <div className="flex items-center gap-5 md:gap-8 text-[10px] md:text-xs font-bold uppercase tracked z-10">
           <Link
             href="/library"
-            className="hover:text-[#FEB040] transition-colors"
+            aria-current={onLibrary ? "page" : undefined}
+            className={`transition-colors ${
+              onLibrary
+                ? "text-[#FEB040]"
+                : "text-[#DCE4EB] hover:text-[#FEB040]"
+            }`}
           >
             Library
           </Link>
@@ -64,7 +71,9 @@ export default function Navbar() {
           {currentUser && (
             <button
               onClick={handleLogout}
-              className="text-[#DCE4EB]/50 hover:text-white transition-colors"
+              // /60 not /50: /50 measured 4.37:1 against #080F11, just under
+              // the 4.5:1 floor. Still clearly subordinate to Library at 15:1.
+              className="text-[#DCE4EB]/60 hover:text-white transition-colors"
             >
               Logout
             </button>

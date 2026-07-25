@@ -94,7 +94,10 @@ export default function PortalSignInCard() {
           <p className="mt-3 text-sm text-[#DCE4EB]/60 break-all">
             Signed in as {user.email}
           </p>
-          <div className="mt-8 flex flex-col gap-3">
+          {/* mt-auto pins the CTA to the bottom so the signed-in card fills
+              its height instead of leaving a gap beside the contact card,
+              which stretches to match it. */}
+          <div className="mt-auto pt-8 flex flex-col gap-3">
             <button
               onClick={handleOpenWorkspace}
               disabled={busy}
@@ -165,7 +168,7 @@ export default function PortalSignInCard() {
             Continue with Google
           </button>
 
-          <p className="mt-5 text-center text-xs text-[#DCE4EB]/50">
+          <p className="mt-5 text-center text-xs text-[#DCE4EB]/60">
             Access is invite-only.{" "}
             <Link
               href="/signup"

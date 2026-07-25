@@ -102,7 +102,7 @@ export default function Footer() {
               <div className="flex items-center gap-4">
                 {/* YouTube */}
                 <a
-                  href="https://www.youtube.com/@ayni-studios"
+                  href="https://www.youtube.com/@Ayni.Studios"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded bg-[#111A1D] border border-[#1b282d] flex items-center justify-center text-[#7B878F] hover:text-white hover:border-[#FEB040] transition-all hover:scale-110"
@@ -177,7 +177,9 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-[#1b282d] pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-[10px] font-bold uppercase tracked text-[#DCE4EB]/40 text-center md:text-left">
+          {/* /60 not /40: at 10px this is normal-size text for WCAG, so it
+              needs 4.5:1 against #080F11. /40 measured 3.25:1; /60 is 5.86:1. */}
+          <p className="text-[10px] font-bold uppercase tracked text-[#DCE4EB]/60 text-center md:text-left">
             © {currentYear} Ayni Studios. All Rights Reserved.
           </p>
           <p className="text-[10px] font-bold uppercase tracked text-[#FEB040]/70 text-center md:text-right">
