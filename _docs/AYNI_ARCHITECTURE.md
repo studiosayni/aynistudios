@@ -4,19 +4,27 @@
 **External:** Resend (transactional email), Stripe (card checkout — framework only, not deployed), `@react-pdf/renderer` (invoice/receipt PDFs), YouTube (video CDN via library records).
 **Hosting:** Firebase App Hosting (project ID `aynistudios-fe09b` — display name "aynistudios"; backend `aynistudios-web`, us-east4, Blaze). Deploys automatically from `main` on GitHub repo `studiosayni/aynistudios`. Default URL: aynistudios-web--aynistudios-fe09b.us-east4.hosted.app.
 
-## CURRENT STATE (As of July 10, 2026 — LIVE)
-**ayni-studios.com serves the redesigned site from App Hosting** (cutover completed 2026-07-10). Marketing v2 (particle hero, carousel, portal cards, featured library) + Phase 2 review portal core (assets/versions/time-coded comments, Storage uploads, notify endpoint) are deployed; Firestore/Storage rules are locked down in production. Open items: `www` custom domain, Resend verification (portal emails currently no-op), billing-route migration to `firebase-admin`, client-role end-to-end test — see `_docs/tasks.md`.
+## CURRENT STATE (As of July 24, 2026 — LIVE)
+**ayni-studios.com serves the redesigned site from App Hosting** (cutover completed 2026-07-10). Marketing v2 (particle hero, carousel, portal cards, featured library) + Phase 2 review portal core (assets/versions/time-coded comments, Storage uploads, notify endpoint) are deployed; Firestore/Storage rules are locked down in production.
+
+**2026-07-24 — first real-device pass, three bugs fixed** (see `_docs/tasks.md`): the hero word-cloud was rendering opaque on Safari/iOS (`<source>` order), and `/library` + the homepage carousel were entirely dead on mobile because the Firestore *client* SDK hangs rather than erroring behind a network filter. Both public surfaces now read the catalog server-side; the portal and auth keep the client SDK by design. Verified on iOS Safari + iOS Chrome.
+
+Open items: `www` custom domain, Resend verification (portal emails currently no-op), billing-route migration to `firebase-admin`, client-role end-to-end test, plus a batch of deferred UX-review follow-ups — see `_docs/tasks.md`.
 
 ## SITE-WIDE BACKDROP (ParticleField) + HERO MEDIA
 `app/components/ParticleField.tsx` renders a fixed z-0 canvas behind all pages: the five brand pillars drifting/cross-fading in ~14 languages (word data in `app/lib/pillarWords.ts` — single editable const, translations pending native review). Full intensity over the Main hero → dims to 35% ambient on scroll/other routes; unmounted on `/admin` + `/workspace`; static frame under `prefers-reduced-motion`; pauses when the tab is hidden; DPR capped at 2.
 
-The hero (`app/components/HeroSection.tsx`) layers: crossfading full-bleed editorial stills (`public/brand/hero/hero-*.jpg`, 7.5s holds, Ken Burns) under a center scrim, and the original brand word-cloud animation as a transparent video below the tagline — dual-encoded from `brand_assets-aynistudios/videos/Main_2-4.mov` as VP9-alpha WebM (Chrome/Firefox; note: libvpx alpha requires `-auto-alt-ref 0`) + HEVC-alpha MP4 with the `hvc1` tag (Safari), with a 44KB transparent poster as a no-playback fallback. The 4.3MB source `.mov` is gitignored. ⚠️ The Claude-in-Chrome automated browser cannot play any direct-file video (env limitation) — verify video changes by eye.
+The hero (`app/components/HeroSection.tsx`) layers: crossfading full-bleed editorial stills (`public/brand/hero/hero-*.jpg`, 7.5s holds, Ken Burns) under a center scrim, and the original brand word-cloud animation as a transparent video below the tagline — dual-encoded from `brand_assets-aynistudios/videos/Main_2-4.mov` as VP9-alpha WebM (Chrome/Firefox; note: libvpx alpha requires `-auto-alt-ref 0`) + HEVC-alpha MP4 with the `hvc1` tag (Safari), with a 44KB transparent poster as a no-playback fallback. The 4.3MB source `.mov` is gitignored.
+
+⚠️ **`<source>` order is load-bearing — the HEVC MP4 must be listed first.** WebKit plays VP9/WebM but silently *ignores its alpha channel*, so with the WebM first Safari and every iOS browser (all WebKit, including iOS Chrome/Firefox) claimed it and rendered the word-cloud as an opaque black block, never reaching the HEVC file encoded for them. Engines that can't decode `hvc1` skip that source and fall through to the WebM, so Chrome/Firefox are unaffected — verified: Chrome returns an empty `canPlayType('video/mp4; codecs="hvc1"')`. If Chrome ever starts reporting `hvc1` support it would take the MP4 and lose alpha (Chrome has no HEVC-alpha support); `HeroSection.tsx` carries a dev-only console check that logs the resolved source per engine and warns on a mismatch. Fixed 2026-07-24.
+
+⚠️ Verifying alpha with `ffprobe` is a trap: **`pix_fmt` reports `yuv420p` for both files even though both carry alpha**, because VP9 stores it in WebM BlockAdditional side data and HEVC in an auxiliary picture layer — neither surfaces at stream level. Check `TAG:ALPHA_MODE=1` for the WebM, and `ffmpeg -bsf:v trace_headers` for `Alpha Channel Information` / `nuh_layer_id: 1` for the MP4. ⚠️ The Claude-in-Chrome automated browser cannot navigate directly to a video file (a direct `.webm` URL hangs at `readyState 0`); in-page playback does work — verify video changes by eye.
 
 ## ROUTES
 | Route | Source | Notes |
 |---|---|---|
-| `/` | Hardcoded (`app/page.tsx`) | Full-viewport hero (rotating pillar word over the particle backdrop), library carousel (`LibraryCarousel`), inline portal sign-in card (`PortalSignInCard`) + contact card, partner logos, Malcolm X quote, Organization JSON-LD |
-| `/library` | Firestore `_library` (client-side fetch) | Featured hero card (lite-YouTube facade — embed loads on click) + grid; grid cards link out to YouTube |
+| `/` | Server component; `_library` read server-side (`revalidate = 300`) | Full-viewport hero (rotating pillar word over the particle backdrop), library carousel (`LibraryCarousel` — receives items as a prop), inline portal sign-in card (`PortalSignInCard`) + contact card, partner logos, Malcolm X quote, Organization JSON-LD |
+| `/library` | Server component; `_library` read server-side (`revalidate = 300`) | Featured hero card (lite-YouTube facade — embed loads on click) + grid; grid cards link out to YouTube. Exports its own `metadata` (was a client component and could not, so it inherited the homepage title). |
 | `/admin/library` | Client-rendered | CRUD for `_library` incl. featured toggle. Doc ID convention: the YouTube video ID. |
 | `/login`, `/signup` | Firebase Auth | Email/Pass + Google; gated by Firestore `_allowlist/{email}` |
 | `/complete-profile` | Firebase Auth | First-time Google users set their full name and get workspace routed |
@@ -44,7 +52,9 @@ The hero (`app/components/HeroSection.tsx`) layers: crossfading full-bleed edito
   - `addedAt` — ISO timestamp
 - **`_users/{uid}`** — user profile, written at signup / complete-profile.
   - `fullName`, `email`, `role`, `workspaceId`, `createdAt`
-- **`_library/{docId}`** — production catalog, rendered on `/library` + homepage carousel. Managed in `/admin/library`; shared access helpers in `app/lib/library.ts`. Doc ID = the YouTube video ID.
+- **`_library/{docId}`** — production catalog, rendered on `/library` + homepage carousel. Managed in `/admin/library`. Doc ID = the YouTube video ID.
+  - **Access is split across three modules, deliberately.** `app/lib/libraryShared.ts` holds the types and pure helpers and imports *no* Firebase, so server components can use it without dragging the client SDK (and its `getAuth()`/`getFirestore()` module-scope calls) into their bundle. `app/lib/libraryServer.ts` is `server-only` and reads via the Admin SDK — this is what `/` and `/library` use. `app/lib/library.ts` keeps the client-SDK `fetchLibrary()` for `/admin/library` and re-exports the shared helpers for back-compat.
+  - **Why the public surfaces read server-side (2026-07-24):** both pages used to fetch with the client SDK in a `useEffect`. On a network that filters `googleapis.com` the SDK does **not** reject — it is offline-first and simply waits — so the promise stayed pending and `/library` sat on "Loading library" forever while the carousel held its skeletons. Reproduced on a phone where the rest of the site rendered fine. Reading server-side means the visitor's device never contacts Firestore for catalog content. The portal/auth surfaces still use the client SDK by design.
   - `title` (string, required)
   - `client` (string, optional) — e.g. `"ENWWF"`, `"Amazon Expeditions"`
   - `year` (number, optional)
@@ -54,6 +64,7 @@ The hero (`app/components/HeroSection.tsx`) layers: crossfading full-bleed edito
   - `category` (string, optional) — e.g. `"Documentary Series"`, `"Brand"`
   - `sortKey` (string, required for ordering) — library is sorted `desc` by this field. Use `"2026-04-19"`-style ISO dates for natural chronological order.
   - `featured` (boolean, optional) — hero slot on `/library` (admin UI keeps it single-holder; falls back to newest)
+  - **Artwork** is resolved by `thumbnailChain()` + `app/components/LibraryThumbnail.tsx`, shared by the grid, the carousel and the featured card. The chain is: `thumbnailUrl` override → `maxresdefault`/`hqdefault` on `i.ytimg.com` → the same pair on `img.youtube.com` (a distinct hostname that often survives a blocklist catching the first) → a branded placeholder (hamsa mark on a gradient) so a dead thumbnail is never a black void. ⚠️ **`onError` alone is not enough:** YouTube answers a missing frame with a 404 carrying a *decodable* 120×90 grey body, so the browser fires `load`, not `error` — the chain also advances when `naturalWidth <= 120`. Without that it stalls on a grey blob exactly where `maxresdefault` goes missing (older/short uploads). `/admin/library` still uses the older direct `youtubeThumb()` path.
 ### Review portal (Phase 2)
 - **`_assets/{docId}`** — a deliverable under review in a workspace. Helpers in `app/lib/reviewAssets.ts`.
   - `workspaceId` (query key — all portal queries filter on it so rules verify from the query shape)
@@ -115,6 +126,8 @@ Firebase **client** config is hardcoded in `app/lib/firebase.ts` (keys are publi
 ## SEO PRIMITIVES
 - `app/layout.tsx` — site-level OpenGraph + Twitter + title template (`%s — Ayni Studios`), `metadataBase` from env.
 - `app/page.tsx` — Organization JSON-LD.
+- `app/library/page.tsx` — page-level `metadata` (title + description + OG). Only possible since it became a server component; as a client component it silently inherited the homepage title on every share, bookmark and search result.
+- ⚠️ Any route that needs its own `metadata` **cannot** be a client component. Fetch server-side and keep the interactive parts as child client components.
 - `app/sitemap.ts` — static routes (`/`, `/library`).
 - `app/robots.ts` — disallows `/admin`, `/login`, `/signup`, `/complete-profile`, `/workspace`.
 

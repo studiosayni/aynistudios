@@ -1,6 +1,6 @@
 # Ayni Studios Web — Dev Tasks
 
-_Last updated: 2026-07-09_
+_Last updated: 2026-07-24_
 
 > Tracks active development tasks, bugs, and the completed work log for `aynistudios-web`.
 > New bugs and unplanned tasks go in **Untracked** first. Run a workspace audit to promote them to the master `todo.md` as A-### items.
@@ -27,7 +27,18 @@ _No active app dev tasks currently tracked in master todo. Check `../../Noah95/t
   5. Review pillar-word translations in `app/lib/pillarWords.ts` (flagged for native review) — still open
   6. ~~DNS cutover~~ ✅ — apex live with cert (gotcha for the record: the certificatemanager ACME CNAME had been placed on `@`, breaking apex resolution; moved to the `_acme-challenge_…` host and cert minted ~40 min later)
   7. **Still open:** add `www.ayni-studios.com` as a second custom domain in App Hosting (DNS CNAME already points at the apex; Auth authorized domains already include it)
-- **Mobile device pass:** verify Main/Library/portal cards on a real phone once staging is up (Chrome window couldn't shrink below ~500px during local verification; layouts are standard mobile-first Tailwind).
+- ~~**Mobile device pass**~~ ✅ Done 2026-07-24 — real-device pass on iOS Safari + iOS Chrome surfaced three genuine bugs (opaque hero video, dead library page, missing thumbnails), all fixed same day; see Recently Completed. Layouts themselves were fine.
+- **UX review follow-ups (2026-07-24)** — from a full pass over Main + Library. Deferred at Noah's direction; none are blocking. Roughly by impact:
+  1. **Hero CTAs fall below the fold on short viewports.** The hero's height is driven by the fixed-aspect word-cloud video (896×504), not the viewport, so total content is ~857px regardless. On a 13" MacBook (~750px viewport) "View the Library" / "Client Portal" are both off-screen, and the scroll cue already sits below the fold at 873px. Cap the video with `max-h-[38vh]` or a `clamp()` and tighten `py-20` on short viewports.
+  2. **Duplicate and *conflicting* titles on library cards.** Six of seven thumbnails have the title burned into the artwork, and the card repeats it — often differently: thumb "OIL SPILL THREATENS AN ENTIRE ECOSYSTEM" vs title "Oil Spill Threatens the Galápagos"; "RESCUED PRIMATES OF THE AMAZON" vs "Orphaned Monkeys of the Amazon Rainforest"; "A HIGHWAY OF HOPE AND CORRUPTION IN THE AMAZON" vs "The Bridge to Nowhere". Fix via `thumbnailUrl` overrides pointing at clean frames, or reconcile the copy.
+  3. **Featured plays inline, every other card ejects to youtube.com** in a new tab, with no external-link affordance. Reusing the lite-YouTube facade (or a lightbox) for grid cards would keep people in the library.
+  4. **Homepage ends on the Malcolm X quote with no CTA;** the only conversion section (Clients & Contact) is buried mid-page. Consider moving the quote up near the hero and closing on the CTA.
+  5. **Partner logos are hard to read** — `opacity-60 grayscale` plus wildly inconsistent optical sizing (teamLab/La Isla render as tiny emblems next to full-width IFRC-WWF). Per-logo sizing + ~75% resting opacity. They're also not linked.
+  6. **YouTube handle mismatch — real bug.** `app/page.tsx` publishes `@Ayni.Studios` in the schema.org `sameAs`; `Footer.tsx` links `@ayni-studios`. One is wrong and the JSON-LD one feeds search engines.
+  7. **Footer copyright fails WCAG AA** — `#DCE4EB/40` on `#080F11` is ≈3.25:1 at 10px (needs 4.5:1). Navbar "Logout" and "Access is invite-only" at `/50` are ≈4.37:1, marginally under.
+  8. **Hero stills bypass `next/image`** (raw `<img>`, lint rule disabled) — no responsive sizing, no AVIF/WebP, so a phone downloads the same 383KB desktop JPEG. Four stills (~966KB) + video (~1.4MB) ≈ 2.4MB above the fold.
+  9. **Consider dropping `unoptimized` on library thumbnails.** Routing them through `/_next/image` serves AVIF/WebP at the right size *and* makes them immune to client-side blockers (they'd come from our own origin). Tradeoff: image traffic lands on the App Hosting bill.
+  10. Smaller: navbar has no active-page state; signed-in portal card has ~128px of dead space next to the filled contact card; Barlow weight 800 is preloaded but never used (`layout.tsx` declares 7 weights); no category/year filtering on `/library` though both fields exist; `/admin/library` still uses the old direct `youtubeThumb()` path rather than the shared fallback chain.
 
 ---
 
@@ -41,6 +52,14 @@ Items identified but not yet prioritized:
 ---
 
 ## Recently Completed
+
+0000. **Mobile bug sweep — hero alpha, library data path, thumbnails (2026-07-24)** — Three real bugs found by a UX review + real-device pass, all shipped same day:
+   - **Hero word-cloud was opaque on Safari and all iOS browsers.** Both encodes were correct all along; only the `<source>` order was wrong. WebKit plays VP9/WebM but ignores its alpha, so it claimed the WebM and never reached the HEVC file built for it. Swapped so `hvc1` is listed first — engines that can't decode it fall through to the WebM, so Chrome/Firefox are untouched. Added a dev-only check logging the resolved source per engine. Confirmed transparent on desktop Safari, iOS Safari and iOS Chrome. Details + the `ffprobe` alpha-detection trap are in AYNI_ARCHITECTURE.md.
+   - **`/library` and the homepage carousel were dead on mobile** — permanently "Loading library" / never-filling skeletons. Root cause: the Firestore *client* SDK is offline-first, so behind a network filter on `googleapis.com` it waits rather than rejecting and the promise never settles (which is also why the error state never showed). Both surfaces now read server-side via the Admin SDK and ship the catalog in the HTML; `/library` became a plain server component with no loading state, killing the ~8s blank load. Split `libraryShared.ts` out so server code doesn't import the client SDK, which also keeps `firebase/auth` + `firebase/firestore` out of the library page's client bundle. Both routes prerender with `revalidate = 300`. **Portal/auth deliberately still use the client SDK.**
+   - **`/library` finally has its own metadata** — impossible while it was a client component; it had been inheriting the homepage title everywhere.
+   - **Thumbnails:** grid + carousel were requesting `hqdefault` (480×360, letterboxed) into ~400px slots with *no* error handling — a failed request left a bare black rectangle. New shared `LibraryThumbnail` + `thumbnailChain()` walks maxres → hq → `img.youtube.com` mirror → branded placeholder. Testing caught a flaw in the first cut: YouTube returns a 404 with a decodable 120×90 grey body, so `onError` never fires and the chain stalled; now also advances on `naturalWidth <= 120`. All surfaces serve 1280×720.
+   - Verified: production build clean, `tsc` clean, lint unchanged at the 9 pre-existing `admin/` errors, catalog present in raw server HTML, and the whole thing confirmed working on a real phone.
+   - Follow-ups from the same review are logged in **Untracked** above (deferred, none blocking).
 
 000. **Phase 2 core — review portal (2026-07-10)** — The frame.io-replacement loop, built while DNS propagated:
    - Infra: default Storage bucket created (`aynistudios-fe09b.firebasestorage.app`, US-EAST4); locked-down **Firestore + Storage rules deployed to production** (replacing April's permissive scaffold rules); `firebase-admin` + `server-only` installed.
