@@ -3,6 +3,8 @@ import PartnerLogos from "./components/PartnerLogos";
 import LibraryCarousel from "./components/LibraryCarousel";
 import PortalSignInCard from "./components/PortalSignInCard";
 import ContactCard from "./components/ContactCard";
+import { fetchLibraryServer } from "./lib/libraryServer";
+import type { LibraryItem } from "./lib/libraryShared";
 
 const BASE_URL =
   process.env.NEXT_PUBLIC_BASE_URL || "https://ayni-studios.com";
@@ -31,7 +33,25 @@ const organizationJsonLd = {
   ],
 };
 
-export default function HomePage() {
+// Matches /library: the catalog changes rarely, so re-read it every 5 minutes
+// rather than on every request.
+export const revalidate = 300;
+
+export default async function HomePage() {
+  // Fetched here rather than in the carousel so the cards ship in the HTML —
+  // a client-side Firestore call stalls indefinitely behind a network filter,
+  // leaving the carousel on its skeletons forever.
+  let carouselItems: LibraryItem[] = [];
+  try {
+    const all = await fetchLibraryServer(12);
+    carouselItems = [
+      ...all.filter((i) => i.featured),
+      ...all.filter((i) => !i.featured),
+    ].slice(0, 8);
+  } catch (err) {
+    console.error("Library carousel fetch error:", err);
+  }
+
   return (
     <div>
       <script
@@ -48,7 +68,7 @@ export default function HomePage() {
 
       {/* LIBRARY PREVIEW */}
       <div id="library-preview">
-        <LibraryCarousel />
+        <LibraryCarousel items={carouselItems} />
       </div>
 
       {/* PORTAL + CONTACT CARDS */}

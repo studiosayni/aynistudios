@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { thumbnailChain, type LibraryItem } from "../lib/library";
+import { thumbnailChain, type LibraryItem } from "../lib/libraryShared";
 
 // Shared artwork slot for every library surface — the /library grid, its
 // featured hero, and the homepage carousel. Walks thumbnailChain() on each

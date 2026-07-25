@@ -1,46 +1,30 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import LibraryThumbnail from "./LibraryThumbnail";
-import {
-  fetchLibrary,
-  youtubeWatchUrl,
-  type LibraryItem,
-} from "../lib/library";
+import { youtubeWatchUrl, type LibraryItem } from "../lib/libraryShared";
 
 // Homepage preview of the content library: horizontal scroll-snap carousel of
 // the latest productions (featured item leads). Gently auto-advances; pauses
 // on hover/touch/reduced-motion; cards link out to YouTube.
+//
+// Items are fetched server-side by the page and passed in, so the carousel
+// renders with content in the initial HTML instead of waiting on a
+// client-side Firestore call that a blocked googleapis.com would stall.
 
 const AUTO_ADVANCE_MS = 5000;
 const INTERACTION_GRACE_MS = 8000;
 
-export default function LibraryCarousel() {
-  const [items, setItems] = useState<LibraryItem[] | null>(null);
+export default function LibraryCarousel({ items }: { items: LibraryItem[] }) {
   const trackRef = useRef<HTMLDivElement | null>(null);
   const hoverRef = useRef(false);
   const lastInteractionRef = useRef(0);
   const dragRef = useRef<{ startX: number; startLeft: number; moved: boolean } | null>(null);
 
-  useEffect(() => {
-    fetchLibrary(12)
-      .then((all) => {
-        const featuredFirst = [
-          ...all.filter((i) => i.featured),
-          ...all.filter((i) => !i.featured),
-        ];
-        setItems(featuredFirst.slice(0, 8));
-      })
-      .catch((err) => {
-        console.error("Library carousel fetch error:", err);
-        setItems([]);
-      });
-  }, []);
-
   // Auto-advance.
   useEffect(() => {
-    if (!items || items.length < 2) return;
+    if (items.length < 2) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const id = setInterval(() => {
@@ -103,7 +87,7 @@ export default function LibraryCarousel() {
     }
   };
 
-  if (items !== null && items.length === 0) return null;
+  if (items.length === 0) return null;
 
   return (
     <section className="py-20 md:py-28">
@@ -149,56 +133,40 @@ export default function LibraryCarousel() {
         onClickCapture={onClickCapture}
         className="no-scrollbar flex gap-6 overflow-x-auto snap-x snap-mandatory px-6 md:px-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))] cursor-grab active:cursor-grabbing select-none"
       >
-        {items === null
-          ? Array.from({ length: 4 }).map((_, i) => (
-              <div
-                key={i}
-                data-card
-                className="shrink-0 snap-start w-[82vw] sm:w-[420px] rounded-2xl border border-[#1b282d] bg-[#0C1619]/60 animate-pulse"
-              >
-                <div className="aspect-video" />
-                <div className="p-6 space-y-3">
-                  <div className="h-3 w-1/4 bg-[#1b282d] rounded" />
-                  <div className="h-5 w-3/4 bg-[#1b282d] rounded" />
-                </div>
-              </div>
-            ))
-          : items.map((item) => {
-              return (
-                <Link
-                  key={item.dbId}
-                  data-card
-                  href={youtubeWatchUrl(item.youtubeId)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  draggable={false}
-                  className="group shrink-0 snap-start w-[82vw] sm:w-[420px] rounded-2xl overflow-hidden border border-[#1b282d] bg-[#0C1619]/70 backdrop-blur-md hover:border-[#FEB040]/60 transition-colors"
-                >
-                  <div className="relative aspect-video bg-[#080F11]">
-                    <LibraryThumbnail
-                      item={item}
-                      sizes="(max-width: 640px) 82vw, 420px"
-                      className="group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="p-6">
-                    {item.category && (
-                      <span className="text-[10px] font-bold uppercase tracked text-[#FEB040]">
-                        {item.category}
-                      </span>
-                    )}
-                    <h3 className="mt-2 text-lg font-bold uppercase leading-tight text-white line-clamp-2">
-                      {item.title}
-                    </h3>
-                    {(item.client || item.year) && (
-                      <p className="mt-2 text-xs font-bold uppercase tracked text-[#7B878F]">
-                        {[item.client, item.year].filter(Boolean).join(" · ")}
-                      </p>
-                    )}
-                  </div>
-                </Link>
-              );
-            })}
+        {items.map((item) => (
+          <Link
+            key={item.dbId}
+            data-card
+            href={youtubeWatchUrl(item.youtubeId)}
+            target="_blank"
+            rel="noopener noreferrer"
+            draggable={false}
+            className="group shrink-0 snap-start w-[82vw] sm:w-[420px] rounded-2xl overflow-hidden border border-[#1b282d] bg-[#0C1619]/70 backdrop-blur-md hover:border-[#FEB040]/60 transition-colors"
+          >
+            <div className="relative aspect-video bg-[#080F11]">
+              <LibraryThumbnail
+                item={item}
+                sizes="(max-width: 640px) 82vw, 420px"
+                className="group-hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+            <div className="p-6">
+              {item.category && (
+                <span className="text-[10px] font-bold uppercase tracked text-[#FEB040]">
+                  {item.category}
+                </span>
+              )}
+              <h3 className="mt-2 text-lg font-bold uppercase leading-tight text-white line-clamp-2">
+                {item.title}
+              </h3>
+              {(item.client || item.year) && (
+                <p className="mt-2 text-xs font-bold uppercase tracked text-[#7B878F]">
+                  {[item.client, item.year].filter(Boolean).join(" · ")}
+                </p>
+              )}
+            </div>
+          </Link>
+        ))}
       </div>
 
       <div className="max-w-7xl mx-auto px-6 mt-10">

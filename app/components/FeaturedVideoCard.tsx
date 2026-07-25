@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import LibraryThumbnail from "./LibraryThumbnail";
-import { type LibraryItem } from "../lib/library";
+import { type LibraryItem } from "../lib/libraryShared";
 
 // Featured hero slot on /library: a lite-YouTube facade. Shows only the
 // thumbnail on load (zero YouTube JS); the embed iframe is injected on click.

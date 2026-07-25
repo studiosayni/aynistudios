@@ -6,59 +6,17 @@ import {
   orderBy,
   query,
 } from "firebase/firestore";
+import type { LibraryItem } from "./libraryShared";
 
-// Shared access to the `_library` production catalog (see
-// _docs/AYNI_ARCHITECTURE.md). Used by /library, the homepage carousel, and
-// the admin library manager.
-
-export type LibraryItem = {
-  dbId: string;
-  title: string;
-  client?: string;
-  year?: number;
-  description?: string;
-  youtubeId?: string; // e.g. "dQw4w9WgXcQ" — drives thumbnail + link/embed
-  thumbnailUrl?: string; // optional override for non-YouTube sources
-  category?: string;
-  sortKey?: string; // ISO-date string; library sorts desc by this
-  featured?: boolean; // hero slot on /library (first match wins)
-};
-
-export function youtubeThumb(
-  id?: string,
-  quality: "hq" | "maxres" = "hq"
-): string | null {
-  if (!id) return null;
-  return `https://i.ytimg.com/vi/${id}/${quality === "maxres" ? "maxresdefault" : "hqdefault"}.jpg`;
-}
-
-// Ordered artwork candidates for a library item. LibraryThumbnail walks this
-// list, advancing each time the current one fails to load:
-//   1. an explicit thumbnailUrl override, when the item carries one
-//   2. maxres on i.ytimg.com — a true 16:9 1280x720 frame
-//   3. hq on the same host — only 480x360 and letterboxed, but it exists for
-//      every video, whereas maxres 404s on older/short uploads
-//   4-5. the same pair on img.youtube.com, a distinct hostname that often
-//      survives a blocklist which catches i.ytimg.com (ad blockers and DNS
-//      filters routinely carry the latter)
-// Running off the end renders the branded placeholder instead of a void.
-export function thumbnailChain(item: LibraryItem): string[] {
-  const id = item.youtubeId;
-  const hosted = id
-    ? [
-        `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`,
-        `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
-        `https://img.youtube.com/vi/${id}/maxresdefault.jpg`,
-        `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
-      ]
-    : [];
-  return item.thumbnailUrl ? [item.thumbnailUrl, ...hosted] : hosted;
-}
-
-export function youtubeWatchUrl(id?: string): string {
-  if (!id) return "#";
-  return `https://www.youtube.com/watch?v=${id}`;
-}
+// Browser-side access to the `_library` catalog via the Firebase client SDK.
+// Only the admin library manager still reads this way; the public /library
+// page and the homepage carousel are server-rendered through
+// libraryServer.ts, so a visitor whose network blocks googleapis.com still
+// gets the catalog.
+//
+// Types and pure helpers live in libraryShared.ts and are re-exported here so
+// existing imports keep resolving.
+export * from "./libraryShared";
 
 export async function fetchLibrary(count?: number): Promise<LibraryItem[]> {
   const parts = [orderBy("sortKey", "desc"), ...(count ? [qLimit(count)] : [])];
@@ -67,10 +25,4 @@ export async function fetchLibrary(count?: number): Promise<LibraryItem[]> {
     dbId: d.id,
     ...(d.data() as Omit<LibraryItem, "dbId">),
   }));
-}
-
-// The item shown in the featured hero slot on /library: the flagged item,
-// falling back to the newest.
-export function pickFeatured(items: LibraryItem[]): LibraryItem | null {
-  return items.find((i) => i.featured) ?? items[0] ?? null;
 }
