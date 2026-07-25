@@ -32,9 +32,34 @@ export default function HeroSection() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       videoRef.current?.pause();
     }
+
+    // Dev check: confirm the engine landed on the source it can render with
+    // alpha (see the <source> order below). WebKit — Safari and every iOS
+    // browser — must get the HEVC file; everything else takes the WebM.
+    // Open the console on the homepage in each browser to verify.
+    let checkId: ReturnType<typeof setTimeout> | undefined;
+    if (process.env.NODE_ENV !== "production") {
+      checkId = setTimeout(() => {
+        const v = videoRef.current;
+        if (!v) return;
+        const webkit = /apple/i.test(navigator.vendor);
+        const want = webkit ? "words.mp4" : "words.webm";
+        const got = v.currentSrc.split("/").pop() || "(none)";
+        const line = `[hero] ${webkit ? "WebKit" : "non-WebKit"} → ${got} (expected ${want}), readyState=${v.readyState}`;
+        if (got !== want) {
+          console.warn(`${line} — WRONG SOURCE: alpha will not render`);
+        } else if (v.readyState === 0) {
+          console.warn(`${line} — source selected but no metadata; not decoding`);
+        } else {
+          console.info(line);
+        }
+      }, 3000);
+    }
+
     return () => {
       clearInterval(bgId);
       clearTimeout(readyId);
+      clearTimeout(checkId);
     };
   }, []);
 
@@ -75,8 +100,11 @@ export default function HeroSection() {
         </h1>
 
         {/* The original brand word-cloud animation, transparent over the
-            stills. Source order matters: WebM-alpha first for Chrome/
-            Firefox, HEVC-alpha (hvc1) for Safari. */}
+            stills. Source order matters, and HEVC must come first: WebKit
+            plays VP9/WebM but silently ignores its alpha channel, so listing
+            the WebM first made Safari (and every iOS browser, all WebKit)
+            render the word-cloud as an opaque block. Engines that can't
+            decode hvc1 skip that source and fall through to the WebM. */}
         <video
           ref={videoRef}
           autoPlay
@@ -89,8 +117,8 @@ export default function HeroSection() {
           aria-label="Planet, humanity, future, wonder, truth — in many languages"
           className="mx-auto mt-2 md:mt-4 w-full max-w-4xl h-auto pointer-events-none"
         >
-          <source src="/brand/hero/words.webm" type="video/webm" />
           <source src="/brand/hero/words.mp4" type='video/mp4; codecs="hvc1"' />
+          <source src="/brand/hero/words.webm" type="video/webm" />
         </video>
 
         <div className="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
