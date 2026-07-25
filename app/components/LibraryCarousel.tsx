@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
+import LibraryThumbnail from "./LibraryThumbnail";
 import {
   fetchLibrary,
-  youtubeThumb,
   youtubeWatchUrl,
   type LibraryItem,
 } from "../lib/library";
@@ -165,7 +164,6 @@ export default function LibraryCarousel() {
               </div>
             ))
           : items.map((item) => {
-              const thumb = item.thumbnailUrl || youtubeThumb(item.youtubeId);
               return (
                 <Link
                   key={item.dbId}
@@ -177,17 +175,11 @@ export default function LibraryCarousel() {
                   className="group shrink-0 snap-start w-[82vw] sm:w-[420px] rounded-2xl overflow-hidden border border-[#1b282d] bg-[#0C1619]/70 backdrop-blur-md hover:border-[#FEB040]/60 transition-colors"
                 >
                   <div className="relative aspect-video bg-[#080F11]">
-                    {thumb && (
-                      <Image
-                        src={thumb}
-                        alt={item.title}
-                        fill
-                        draggable={false}
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        sizes="(max-width: 640px) 82vw, 420px"
-                        unoptimized
-                      />
-                    )}
+                    <LibraryThumbnail
+                      item={item}
+                      sizes="(max-width: 640px) 82vw, 420px"
+                      className="group-hover:scale-105 transition-transform duration-500"
+                    />
                   </div>
                   <div className="p-6">
                     {item.category && (

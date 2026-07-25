@@ -1,13 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import FeaturedVideoCard from "../components/FeaturedVideoCard";
+import LibraryThumbnail from "../components/LibraryThumbnail";
 import {
   fetchLibrary,
   pickFeatured,
-  youtubeThumb,
   youtubeWatchUrl,
   type LibraryItem,
 } from "../lib/library";
@@ -70,7 +69,6 @@ export default function LibraryPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {rest.map((item) => {
-          const thumb = item.thumbnailUrl || youtubeThumb(item.youtubeId);
           const href = youtubeWatchUrl(item.youtubeId);
           return (
             <Link
@@ -81,16 +79,11 @@ export default function LibraryPage() {
               className="group flex flex-col rounded-2xl overflow-hidden border border-[#1b282d] bg-[#0C1619]/70 backdrop-blur-md hover:border-[#FEB040]/60 transition-colors"
             >
               <div className="relative aspect-video bg-[#080F11]">
-                {thumb && (
-                  <Image
-                    src={thumb}
-                    alt={item.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    unoptimized
-                  />
-                )}
+                <LibraryThumbnail
+                  item={item}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="group-hover:scale-105 transition-transform duration-500"
+                />
               </div>
               <div className="p-6">
                 {item.category && (

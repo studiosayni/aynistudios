@@ -1,18 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
-import { youtubeThumb, type LibraryItem } from "../lib/library";
+import LibraryThumbnail from "./LibraryThumbnail";
+import { type LibraryItem } from "../lib/library";
 
 // Featured hero slot on /library: a lite-YouTube facade. Shows only the
 // thumbnail on load (zero YouTube JS); the embed iframe is injected on click.
+// Artwork resolution and its fallbacks live in LibraryThumbnail.
 
 export default function FeaturedVideoCard({ item }: { item: LibraryItem }) {
   const [playing, setPlaying] = useState(false);
-  const [thumbQuality, setThumbQuality] = useState<"maxres" | "hq">("maxres");
-
-  const thumb =
-    item.thumbnailUrl || youtubeThumb(item.youtubeId, thumbQuality);
 
   return (
     <div className="relative rounded-2xl overflow-hidden border border-[#1b282d] bg-[#0C1619] shadow-2xl">
@@ -31,21 +28,12 @@ export default function FeaturedVideoCard({ item }: { item: LibraryItem }) {
             aria-label={`Play ${item.title}`}
             className="group absolute inset-0 w-full h-full text-left"
           >
-            {thumb && (
-              <Image
-                src={thumb}
-                alt={item.title}
-                fill
-                priority
-                className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
-                sizes="(max-width: 1024px) 100vw, 1024px"
-                unoptimized
-                onError={() => {
-                  // Not every video has a maxres thumbnail — fall back.
-                  if (thumbQuality === "maxres") setThumbQuality("hq");
-                }}
-              />
-            )}
+            <LibraryThumbnail
+              item={item}
+              sizes="(max-width: 1024px) 100vw, 1024px"
+              priority
+              className="group-hover:scale-[1.02] transition-transform duration-700"
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-[#080F11]/95 via-[#080F11]/30 to-transparent" />
 
             <span className="absolute inset-0 flex items-center justify-center">
