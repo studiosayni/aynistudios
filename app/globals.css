@@ -43,6 +43,42 @@ body {
   display: none;
 }
 
+/* Hero sizing.
+   The word-cloud video is a fixed 16:9, so its height followed purely from its
+   width — which made the hero stack ~857px tall on every screen regardless of
+   viewport. Anything shorter than ~870px (a 13" laptop is ~750px) pushed both
+   CTAs, and the scroll cue with them, below the fold.
+
+   Fix: cap the video's width from the height actually available, letting the
+   aspect ratio carry the height down with it. The two rules share --hero-pad so
+   the budget can never drift out of sync with the real padding.
+
+   18rem is everything in the stack that isn't padding or video, measured:
+   72px navbar + 75px headline + 16px video margin + 48px gap + 54px button row
+   = 265px, plus ~23px clearance for the scroll cue. 16rem floors the video so
+   it stays legible on very short windows; 56rem keeps the original max-w-4xl
+   ceiling on tall ones.
+
+   On a short viewport the padding gives way before the animation does — it is
+   the brand centrepiece, and these are exactly the laptop heights where the
+   overflow happened. Interpolated rather than stepped at a breakpoint, so the
+   video doesn't visibly jump size while a window is dragged across it. Note the
+   padding cancels out of the budget algebraically (the stack always lands at
+   viewport − 23px), so this curve can be retuned freely without reopening the
+   overflow. */
+.hero-shell {
+  --hero-pad: clamp(3rem, calc(3rem + (100svh - 700px) * 0.16), 5rem);
+  padding-top: var(--hero-pad);
+  padding-bottom: var(--hero-pad);
+}
+
+.hero-wordcloud {
+  max-width: min(
+    56rem,
+    max(16rem, calc((100svh - 18rem - var(--hero-pad) * 2) * 16 / 9))
+  );
+}
+
 /* Hero background stills: barely-perceptible Ken Burns drift while each
    image holds. Uses the standalone `scale` property so it never conflicts
    with transform utilities; direction alternates per image for variety. */

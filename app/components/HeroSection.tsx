@@ -64,7 +64,7 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="relative min-h-[calc(100svh-72px)] flex items-center justify-center px-6 py-20">
+    <section className="hero-shell relative min-h-[calc(100svh-72px)] flex items-center justify-center px-6">
       {/* FULL-BLEED BACKGROUND — crossfading stills + scrims */}
       <div
         aria-hidden="true"
@@ -115,7 +115,7 @@ export default function HeroSection() {
           disablePictureInPicture
           poster="/brand/hero/words-poster.webp"
           aria-label="Planet, humanity, future, wonder, truth — in many languages"
-          className="mx-auto mt-2 md:mt-4 w-full max-w-4xl h-auto pointer-events-none"
+          className="hero-wordcloud mx-auto mt-2 md:mt-4 w-full h-auto pointer-events-none"
         >
           <source src="/brand/hero/words.mp4" type='video/mp4; codecs="hvc1"' />
           <source src="/brand/hero/words.webm" type="video/webm" />
