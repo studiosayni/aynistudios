@@ -71,8 +71,30 @@ export default async function HomePage() {
         <LibraryCarousel items={carouselItems} />
       </div>
 
-      {/* PORTAL + CONTACT CARDS */}
-      <section id="portal" className="py-20 md:py-28 px-6 scroll-mt-20">
+      {/* PARTNERS */}
+      <PartnerLogos />
+
+      {/* MALCOLM X QUOTE — deliberately sits between the proof (library,
+          partners) and the ask below it. Placed here rather than under the
+          hero, where two large statements would compete; here it reads as the
+          reason the ask matters, and the page no longer dead-ends on it. */}
+      <section className="py-28 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <blockquote className="text-2xl md:text-3xl lg:text-4xl font-light italic leading-relaxed text-[#DCE4EB]/90">
+            &ldquo;The media&apos;s the most powerful entity on earth. They
+            have the power to make the innocent guilty and to make the guilty
+            innocent, and that&apos;s power. Because they control the minds of
+            the masses.&rdquo;
+          </blockquote>
+          <cite className="mt-8 block text-sm font-bold uppercase tracked text-[#FEB040] not-italic">
+            — Malcolm X
+          </cite>
+        </div>
+      </section>
+
+      {/* PORTAL + CONTACT CARDS — the page's closer. The hero's "Client
+          Portal" button anchors here, so this stays #portal. */}
+      <section id="portal" className="pb-24 md:pb-32 px-6 scroll-mt-20">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <span className="text-[10px] font-bold uppercase tracked text-[#FEB040]">
@@ -86,24 +108,6 @@ export default async function HomePage() {
             <PortalSignInCard />
             <ContactCard />
           </div>
-        </div>
-      </section>
-
-      {/* PARTNERS */}
-      <PartnerLogos />
-
-      {/* MALCOLM X QUOTE */}
-      <section className="py-28 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <blockquote className="text-2xl md:text-3xl lg:text-4xl font-light italic leading-relaxed text-[#DCE4EB]/90">
-            &ldquo;The media&apos;s the most powerful entity on earth. They
-            have the power to make the innocent guilty and to make the guilty
-            innocent, and that&apos;s power. Because they control the minds of
-            the masses.&rdquo;
-          </blockquote>
-          <cite className="mt-8 block text-sm font-bold uppercase tracked text-[#FEB040] not-italic">
-            — Malcolm X
-          </cite>
         </div>
       </section>
     </div>
