@@ -4,6 +4,7 @@ import { Barlow } from "next/font/google";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ParticleField from "./components/ParticleField";
+import { LightboxProvider } from "./components/VideoLightbox";
 import { Toaster } from "react-hot-toast";
 
 // Every declared weight gets its own preload, so unused ones are dead
@@ -74,7 +75,11 @@ export default function RootLayout({
           }}
         />
 
-        <main className="font-sans relative z-10 flex-grow">{children}</main>
+        {/* Client provider wrapping server children — the pages stay server
+            components; only the player overlay ships as client JS. */}
+        <LightboxProvider>
+          <main className="font-sans relative z-10 flex-grow">{children}</main>
+        </LightboxProvider>
 
         <Footer />
       </body>

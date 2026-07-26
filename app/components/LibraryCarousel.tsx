@@ -3,7 +3,9 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import LibraryThumbnail from "./LibraryThumbnail";
-import { youtubeWatchUrl, type LibraryItem } from "../lib/libraryShared";
+import PlayLink from "./PlayLink";
+import PlayBadge from "./PlayBadge";
+import { type LibraryItem } from "../lib/libraryShared";
 
 // Homepage preview of the content library: horizontal scroll-snap carousel of
 // the latest productions (featured item leads). Gently auto-advances; pauses
@@ -134,13 +136,10 @@ export default function LibraryCarousel({ items }: { items: LibraryItem[] }) {
         className="no-scrollbar flex gap-6 overflow-x-auto snap-x snap-mandatory px-6 md:px-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))] cursor-grab active:cursor-grabbing select-none"
       >
         {items.map((item) => (
-          <Link
+          <PlayLink
             key={item.dbId}
+            item={item}
             data-card
-            href={youtubeWatchUrl(item.youtubeId)}
-            target="_blank"
-            rel="noopener noreferrer"
-            draggable={false}
             className="group shrink-0 snap-start w-[82vw] sm:w-[420px] rounded-2xl overflow-hidden border border-[#1b282d] bg-[#0C1619]/70 backdrop-blur-md hover:border-[#FEB040]/60 transition-colors"
           >
             <div className="relative aspect-video bg-[#080F11]">
@@ -149,6 +148,7 @@ export default function LibraryCarousel({ items }: { items: LibraryItem[] }) {
                 sizes="(max-width: 640px) 82vw, 420px"
                 className="group-hover:scale-105 transition-transform duration-500"
               />
+              <PlayBadge />
             </div>
             <div className="p-6">
               {item.category && (
@@ -165,7 +165,7 @@ export default function LibraryCarousel({ items }: { items: LibraryItem[] }) {
                 </p>
               )}
             </div>
-          </Link>
+          </PlayLink>
         ))}
       </div>
 

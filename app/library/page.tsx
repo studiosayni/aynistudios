@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import FeaturedVideoCard from "../components/FeaturedVideoCard";
 import LibraryThumbnail from "../components/LibraryThumbnail";
+import PlayLink from "../components/PlayLink";
+import PlayBadge from "../components/PlayBadge";
 import { fetchLibraryServer } from "../lib/libraryServer";
-import {
-  pickFeatured,
-  youtubeWatchUrl,
-  type LibraryItem,
-} from "../lib/libraryShared";
+import { pickFeatured, type LibraryItem } from "../lib/libraryShared";
 
 // Server-rendered: the catalog arrives in the HTML rather than via a
 // client-side Firestore call, which a blocked googleapis.com would stall
@@ -77,11 +74,9 @@ export default async function LibraryPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {rest.map((item) => (
-          <Link
+          <PlayLink
             key={item.dbId}
-            href={youtubeWatchUrl(item.youtubeId)}
-            target="_blank"
-            rel="noopener noreferrer"
+            item={item}
             className="group flex flex-col rounded-2xl overflow-hidden border border-[#1b282d] bg-[#0C1619]/70 backdrop-blur-md hover:border-[#FEB040]/60 transition-colors"
           >
             <div className="relative aspect-video bg-[#080F11]">
@@ -90,6 +85,7 @@ export default async function LibraryPage() {
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 className="group-hover:scale-105 transition-transform duration-500"
               />
+              <PlayBadge />
             </div>
             <div className="p-6">
               {item.category && (
@@ -111,7 +107,7 @@ export default async function LibraryPage() {
                 </p>
               )}
             </div>
-          </Link>
+          </PlayLink>
         ))}
       </div>
     </div>
