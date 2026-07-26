@@ -39,7 +39,13 @@ export default function LibraryThumbnail({
       // Remount on each fallback so the handlers re-arm for the new candidate.
       key={src}
       src={src}
-      alt={item.title}
+      // Decorative: every surface renders the title adjacent to this image
+      // (below it in the grid, carousel and admin list; overlaid on the
+      // featured card), so alt={item.title} made screen readers announce the
+      // same words twice. It was also inaccurate — these thumbnails carry
+      // their own headline art, which frequently says something different
+      // from the record's title.
+      alt=""
       fill
       priority={priority}
       sizes={sizes}
