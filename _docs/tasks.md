@@ -30,6 +30,10 @@ _No active app dev tasks currently tracked in master todo. Check `../../Noah95/t
 - **No category/year filtering on `/library`**, though both fields exist in the schema. Deliberately skipped — with 7 items the filter chrome costs more than it returns. Revisit when scanning the catalog is actual work.
 - **Library card artwork carries its own burned-in headlines**, which sit above the card title. Investigated and deliberately left alone — the thumbnails are strong design and the Firestore titles were verified correct against the real YouTube titles. Only a set of hand-picked clean 16:9 stills exported from the masters would improve it, wired in via the existing `thumbnailUrl` override. Asset work, not code.
 
+**Needs a real-device check** (verified only through synthesised input, where this kind of thing is least trustworthy):
+- **The word field during iOS momentum scroll.** It is now anchored to the document and repositioned per rAF frame; if iOS throttles rAF during momentum scrolling the words may visibly lag or judder behind the content. Fine everywhere it has been tested, but that testing was all desktop and all synthetic.
+- **Lightbox touch dismissal**, and the **hero at a short window** — both carried over from the July UX pass, still unverified on hardware.
+
 ---
 
 ## Roadmap / Backlog
@@ -43,6 +47,25 @@ Items identified but not yet prioritized:
 ---
 
 ## Recently Completed
+
+000000. **Lower-page backdrop (2026-07-27)** — the Partners → Quote → Clients stretch read as three black gaps. Two measurements shaped the fix rather than taste:
+
+   - The backdrop meant to give that stretch texture *was already running there* and drawing on **0.3% of its own canvas** — word alpha 1.75–3.85%, a ~7/255 lift over `#080F11`. Present and invisible. Nothing new was needed there, only turning up what existed.
+   - The emptiness is **more horizontal than vertical**. At 1835px the quote leaves 470px of bare page per side and the cards 406px, while the vertical gaps (128–177px) are ordinary editorial rhythm. Those were left alone; filling them would have made the page busier, not better.
+
+   **What shipped**
+   - **Backdrop zones.** `ParticleField` takes intensity from whichever section holds the viewport midline instead of decaying once and parking at a floor. Sections opt in with `data-backdrop="<0..1>"`, so the canvas never learns the page's section order and a new page can set its own rhythm without touching it. Quiet (0.3) behind the carousel and partner chips, moderate (0.5) behind the quote, loud (0.9) behind the closing cards. Anything undeclared gets `AMBIENT`. Peaks and particle counts up ~30–60%.
+   - **A full-bleed still behind the quote** (`AyniStudiosImage-11`, the one 4K frame the hero doesn't use). Masked top and bottom — the section has no borders of its own, so a hard image edge would read as a band pasted over the page. The scrim deepens the *middle* rather than the edges, which is the inverse of the usual treatment: it keeps the text column clear while leaving the picture visible out at the margins, which is where the empty space actually was.
+   - **The word field anchored to the page.** Particle `y` moved from viewport-space to document-space with the draw loop subtracting `scrollY`, so words scroll with the content instead of holding their screen position while the page slides underneath. Drift kept deliberately — the ask was to remove the detachment, not the life.
+   - `bleedImage.ts` extracted now that two sections build the same srcset, so the width ladder that must track `build-brand-assets.py` and the "why not `next/image`" rationale live in one place. `build-brand-assets.py` generalised to `(folder, glob)` pairs.
+
+   **Gotchas worth not rediscovering**
+   - **Anchoring a particle field to the document blanks it on a fast scroll** unless recycled particles come back mid-life. Words carried out of view are respawned into the visible band; doing that at `t=0` meant a jump-scroll retired the whole population at once and left the field empty for a full fade-in — the faster you scrolled, the emptier the page looked.
+   - **`prefers-reduced-motion` draws one frame and stops**, so document-anchoring alone leaves the words pinned to the viewport — precisely the parallax being removed, in the mode that should least want it. That path now redraws on scroll (rAF-coalesced, `dt=0`), and `spawnWord` starts words at mid-hold there since a fade that never gets frames to finish leaves them invisible.
+   - **`pkill -f "next start"` does not match a running dev server.** Next renames the process to `next-server`, so the old server survives and keeps port 3000 — every "rebuilt" page served is the *previous* build. Kill by port (`lsof -ti tcp:3000 | xargs kill -9`), never by name. This burned a whole review round on numbers that had already changed.
+   - **CSS ships under `/_next/static/chunks/*.css`, not `/_next/static/css/`.** A grep for the latter reports every custom class missing. Sanity-check any such grep against a class known to work (`hero-shell`) before believing it.
+   - **`canvas.getImageData` returns a stale frame when the tab is unfocused** — rAF is throttled, so every scroll position reads byte-identical and the numbers look plausible. Force a paint (a screenshot) immediately before sampling, and treat identical readings across different states as evidence of a frozen frame, not of equal values.
+   - **A busy-wait loop starves rAF**, so "waiting for the easing to settle" with a spin loop measures nothing at all. Yield to the event loop.
 
 00000. **UX review + mobile bug sweep (2026-07-24 → 07-27)** — a full pass over Main and Library that started as a design review and turned up several real defects. All shipped and verified live.
 
