@@ -27,7 +27,20 @@ The hero (`app/components/HeroSection.tsx`) layers: crossfading full-bleed edito
 ⚠️ Verifying alpha with `ffprobe` is a trap: **`pix_fmt` reports `yuv420p` for both files even though both carry alpha**, because VP9 stores it in WebM BlockAdditional side data and HEVC in an auxiliary picture layer — neither surfaces at stream level. Check `TAG:ALPHA_MODE=1` for the WebM, and `ffmpeg -bsf:v trace_headers` for `Alpha Channel Information` / `nuh_layer_id: 1` for the MP4. ⚠️ The Claude-in-Chrome automated browser cannot navigate directly to a video file (a direct `.webm` URL hangs at `readyState 0`); in-page playback does work — verify video changes by eye.
 
 ## IMAGE HANDLING
-⚠️ **Firebase App Hosting does not serve the Next image optimizer.** `/_next/image` returns **404 in production** (verified 2026-07-27; response header `x-fah-adapter: nextjs-14.0.21`). The build itself is configured correctly — `required-server-files.json` shows `unoptimized: false`, loader `default` — and the optimizer works on a local `next build && next start`, so the override happens in App Hosting's build. The failure is **silent**: `next/image` degrades to emitting the raw `src` with **no `srcset` at all**, so every device downloads the full-size original. Do not assume `next/image` is buying responsive delivery here; check the deployed HTML for `/_next/image`.
+⚠️ **`images.unoptimized: false` in `next.config.ts` is load-bearing, despite being the Next default.** The App Hosting build adapter (`@apphosting/adapter-nextjs`, currently 14.0.21 — that is the *adapter's* version, not Next's; it peers `next: "*"`) rewrites `next.config.ts` during its build and injects `unoptimized: true`, but **only when both `images.unoptimized` and `images.loader` are undefined**:
+
+```js
+...(config.images?.unoptimized === undefined && config.images?.loader === undefined
+    ? { unoptimized: true } : {})
+```
+
+Setting either key explicitly opts out. From launch until 2026-07-27 we set `images.remotePatterns` and neither of those two, so the adapter turned optimization off in production: `/_next/image` returned 404 and `next/image` silently degraded to a raw `src` with no `srcset`, so every device pulled full-size originals.
+
+⚠️ **This is invisible locally** — the adapter only runs inside App Hosting's build, so a local `next build` reports `unoptimized: false` either way. The earlier diagnosis in this doc read `required-server-files.json`, saw the config was "correct", and wrongly concluded the *platform* did not support the optimizer. It was reading the wrong build. To check the real state, probe the deployed `/_next/image` directly, never the local manifest.
+
+Since the fix (verified live 2026-07-27): `/_next/image` returns 200, negotiates WebP off the `Accept` header, and reports `x-nextjs-cache: HIT` with `cache-control: public, max-age=14400, must-revalidate` and `vary: Accept`. Measured on `/library`, all seven thumbnails: **1280KB → 228KB on a phone (82% smaller), 460KB on desktop (64%)**. The homepage carousel shares `LibraryThumbnail` and got the same. Crucially the artwork now comes from **our own origin instead of `i.ytimg.com`**, removing the ad-blocker/DNS-filter exposure that made the catalog unreachable on mobile in the first place.
+
+**The pre-built WebP pipeline stays** even though the optimizer works now. Brand assets are already optimal, cost nothing at runtime, and are immune to exactly this class of platform surprise. Every `next/image` call site except `LibraryThumbnail` therefore passes `unoptimized` explicitly and points at a pre-built `.webp`; the hero and quote backdrops are plain `<img>` with a hand-built srcset. Do not "simplify" these back onto the optimizer.
 
 Consequences, and what we do instead:
 - **`scripts/build-brand-assets.py` pre-builds WebP for everything in `public/brand/`.** Run it and commit the output after adding or replacing any brand asset. Originals are kept deliberately — the hero JPEGs are the `<img src>` fallback, and the 1080px logo PNG is still what the schema.org `logo` field points crawlers at (they want a large, universally supported file, not a 160px WebP). Full-bleed backgrounds are driven by the `SRCSET_SOURCES` list of `(folder, glob)` pairs — add a row to give a new backdrop the same treatment.
@@ -36,8 +49,7 @@ Consequences, and what we do instead:
   - ⚠️ The srcset builder lives in **`app/lib/bleedImage.ts`** (`BLEED_WIDTHS` + `bleedSrcSet`), shared by the hero and the quote. `BLEED_WIDTHS` must stay in sync with `HERO_WIDTHS` in the Python script — nothing enforces this, and a mismatch produces 404s in the `srcset` that browsers swallow silently.
   - *Brand mark*: single 160px WebP — covers the largest UI use (44px) past 3x. 122KB → 8.7KB, and it is on every page.
   - *Partner logos*: single WebP each, max 480px, q82 (line art and type need more than photos). The set went 426KB → ~87KB.
-- **Library thumbnails** still pass through `next/image` without `unoptimized`. That is harmless but currently inert in production — it neither resizes nor shields them from the ad blockers and DNS filters that eat `i.ytimg.com`. The fallback chain in `LibraryThumbnail` is what actually protects that surface.
-- If image optimization is ever enabled on the backend, the thumbnails start benefiting automatically and the hero could move back to `next/image`.
+- **Library thumbnails** pass through `next/image` without `unoptimized`, deliberately — they are the one surface the optimizer is for. The fallback chain in `LibraryThumbnail` still matters: it now covers a missing `maxresdefault` (YouTube's 120×90 grey placeholder) rather than a blocked host.
 
 **Cache headers.** `public/` assets shipped with `Cache-Control: public, max-age=0` — re-downloaded on every visit, including the ~1.4MB word-cloud video. `next.config.ts` now sets `max-age=86400, stale-while-revalidate=604800` for `/brand/:path*`. Deliberately not `immutable`: filenames are stable, so a year-long immutable cache would strand returning visitors on replaced artwork. Hashed `/_next/static` assets already get a year + immutable, which is how we know App Hosting honours these headers.
 

@@ -20,12 +20,11 @@ _No active app dev tasks currently tracked in master todo. Check `../../Noah95/t
 <!-- Run workspace-audit to review and promote items to A-### in the master todo. -->
 
 **Launch leftovers** (site went live 2026-07-10):
-- Add `www.ayni-studios.com` as a second custom domain in App Hosting. DNS CNAME already points at the apex and Auth authorized domains already include it — only the App Hosting side is missing.
+- **No canonical URL, and no redirect between apex and `www`.** Both hostnames serve identical 200s (verified 2026-07-27 — `www` *is* live on the same App Hosting backend, wildcard cert; the long-standing "add www as a custom domain" item was already done and is now closed). Neither host emits `<link rel="canonical">`. `og:url`, the sitemap and robots all point at the apex, so search engines will most likely settle there on their own, but nothing actually tells them to. Either 301 `www` → apex or emit a canonical.
 - Review pillar-word translations in `app/lib/pillarWords.ts` — flagged for native review, never done.
 - Stale April test doc `_allowlist/Q288za15…` with a misspelled `workspaceid`. Inert; delete at leisure.
 
 **Open from the July 2026 UX pass** (none blocking):
-- **App Hosting serves no image optimizer.** `/_next/image` 404s in production, so `next/image` silently degrades to a raw `src` with no `srcset`. Worked around for the brand assets (see `scripts/build-brand-assets.py`), but **library thumbnails are still unoptimised in production** and still fetched from `i.ytimg.com` rather than our origin — so they remain exposed to the ad blockers and DNS filters that broke the catalog on mobile. Worth finding out whether optimization can be enabled for the backend; if it can, thumbnails improve for free and the hero could move back to `next/image`.
 - **Partner logos are not linked**, and 9 of 12 have white backgrounds baked into the source art. Linking is a business call (brand.md restricts partner-logo use to co-branded materials with explicit permission). Sourcing genuinely transparent or reversed-out variants for all twelve would let the wall drop the white chips and go back to bare marks on the dark background.
 - **No category/year filtering on `/library`**, though both fields exist in the schema. Deliberately skipped — with 7 items the filter chrome costs more than it returns. Revisit when scanning the catalog is actual work.
 - **Library card artwork carries its own burned-in headlines**, which sit above the card title. Investigated and deliberately left alone — the thumbnails are strong design and the Firestore titles were verified correct against the real YouTube titles. Only a set of hand-picked clean 16:9 stills exported from the masters would improve it, wired in via the existing `thumbnailUrl` override. Asset work, not code.
@@ -47,6 +46,19 @@ Items identified but not yet prioritized:
 ---
 
 ## Recently Completed
+
+0000000. **Image optimizer enabled on App Hosting (2026-07-27)** — `/_next/image` had returned 404 since launch. This was recorded for three days as a platform limitation; it was our own config.
+
+   **Cause.** `@apphosting/adapter-nextjs` rewrites `next.config.ts` during the App Hosting build and injects `unoptimized: true`, but only when **both** `images.unoptimized` and `images.loader` are undefined. We set `remotePatterns` and neither of those, so the adapter took its default and switched optimization off. The fix is one explicit line: `images: { unoptimized: false }`.
+
+   **Result** (measured live, all seven `/library` thumbnails): **1280KB → 228KB on a phone (82% smaller)**, 460KB on desktop (64%). WebP negotiated off `Accept`, `x-nextjs-cache: HIT`, `cache-control: public, max-age=14400`. The homepage carousel shares `LibraryThumbnail` and got the same. The bigger win is that catalog artwork now comes from **our own origin instead of `i.ytimg.com`** — the ad-blocker/DNS-filter exposure that made the catalog unreachable on mobile is gone at the source, not just papered over by the fallback chain.
+
+   The pre-built WebP pipeline was **kept**, not reverted: brand assets are already optimal, cost nothing at runtime, and are immune to precisely this class of platform surprise.
+
+   **Gotchas worth not rediscovering**
+   - **The adapter's override is invisible locally.** It runs only inside App Hosting's build, so a local `next build` reports `unoptimized: false` whether or not you set it. The original wrong diagnosis came from reading `required-server-files.json` on a local build, seeing "correct", and blaming the platform. Probe the deployed `/_next/image`, never the local manifest.
+   - **React 19 emits the attribute as `srcSet`, not `srcset`.** HTML attribute names are case-insensitive so browsers do not care, but a `grep 'srcset='` over deployed HTML reports zero and looks exactly like the optimizer still being broken.
+   - **Four separate grep patterns returned confidently wrong answers this session** — `pkill -f "next start"` (process is renamed `next-server`), `/_next/static/css/` (CSS ships under `/chunks/`), `grep -c` (counts *lines*; minified HTML is one line), and the `srcset` case above. When a grep says "zero", check it against something known to be present before believing it.
 
 000000. **Lower-page backdrop (2026-07-27)** — the Partners → Quote → Clients stretch read as three black gaps. Two measurements shaped the fix rather than taste:
 
