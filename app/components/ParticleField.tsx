@@ -45,10 +45,16 @@ type Zone = { top: number; bottom: number; intensity: number };
 // searches). Verified against all 70 pillar words: identical classification.
 const UPPERCASABLE = /^[\u0020-\u024F\u0400-\u04FF\s]+$/;
 
+// x is viewport-space, y is DOCUMENT-space. The canvas is fixed to the
+// viewport, so every draw subtracts scrollY to place a word. Without that the
+// words hold their screen position while the page moves underneath, which
+// reads as the field being stuck to the glass rather than belonging to the
+// page. Vertical scrolling does not move anything horizontally, so x needs no
+// equivalent.
 type WordParticle = {
   text: string;
   x: number;
-  y: number;
+  y: number; // document-space
   vx: number; // px/s
   vy: number;
   size: number;
@@ -60,7 +66,12 @@ type WordParticle = {
   fadeOut: number;
 };
 
+// y is document-space, as above.
 type Dot = { x: number; y: number; vx: number; vy: number; r: number; a: number };
+
+// How far past an edge something must go before it is recycled. Comfortably
+// clears the largest glyph so nothing is seen vanishing.
+const CULL_MARGIN = 60;
 
 function rand(min: number, max: number) {
   return min + Math.random() * (max - min);
@@ -145,21 +156,29 @@ export default function ParticleField() {
     function spawnWord(initial: boolean): WordParticle {
       const amber = Math.random() < 0.11;
       // Peaks are the per-word ceiling; the zone intensity scales them down
-      // from there. At the old 0.05–0.11 a word in the ambient zone composited
-      // to a ~7/255 lift over #080F11, i.e. below the threshold of noticing.
-      const peak = rand(0.06, 0.13);
+      // from there. At the original 0.05–0.11 a word in the ambient zone
+      // composited to a ~7/255 lift over #080F11 — invisible unless the
+      // display was at full brightness, which is how it was actually caught.
+      const peak = rand(0.1, 0.19);
+      const fadeIn = rand(1.8, 2.6);
+      const hold = rand(4, 8);
       return {
         text: nextWordText(),
         x: rand(0.06, 0.94) * w,
-        y: rand(0.08, 0.92) * h,
+        // Into the band the reader is actually looking at, not the top of the
+        // document — the field only ever needs to populate one viewport.
+        y: window.scrollY + rand(0.08, 0.92) * h,
         vx: rand(-3, 3),
         vy: rand(-4.5, -1),
         size: rand(11, w < 640 ? 15 : 17),
-        peak: amber ? Math.min(0.2, peak * 1.8) : peak,
+        peak: amber ? Math.min(0.28, peak * 1.8) : peak,
         color: amber ? "#FEB040" : Math.random() < 0.25 ? "#7B878F" : "#DCE4EB",
-        t: initial ? rand(0, 8) : 0, // desync the initial population
-        fadeIn: rand(1.8, 2.6),
-        hold: rand(4, 8),
+        // Reduced motion is redrawn only on scroll, never continuously, so a
+        // word has to arrive already at full strength — a fade it will never
+        // be given the frames to finish would just leave it invisible.
+        t: reduced ? fadeIn + hold / 2 : initial ? rand(0, 8) : 0,
+        fadeIn,
+        hold,
         fadeOut: rand(2, 3),
       };
     }
@@ -167,11 +186,11 @@ export default function ParticleField() {
     function spawnDot(): Dot {
       return {
         x: Math.random() * w,
-        y: Math.random() * h,
+        y: window.scrollY + Math.random() * h,
         vx: rand(-4, 4),
         vy: rand(-6, -1.5),
         r: rand(0.6, 1.6),
-        a: rand(0.05, 0.12),
+        a: rand(0.08, 0.16),
       };
     }
 
@@ -225,19 +244,32 @@ export default function ParticleField() {
     }
 
     function draw(dt: number) {
+      // Read once per frame and reuse: every position below is document-space
+      // and has to be converted, and a mid-frame change would tear the field.
+      const scroll = window.scrollY;
       ctx.clearRect(0, 0, w, h);
       intensity += (targetIntensity() - intensity) * Math.min(dt * 2.5, 1);
 
       for (const d of dots) {
         d.x += d.vx * dt;
         d.y += d.vy * dt;
-        if (d.y < -4) Object.assign(d, spawnDot(), { y: h + 4 });
+        let sy = d.y - scroll;
+        // Recycle at whichever edge it left — its own drift off the top, or
+        // the page scrolling out from under it in either direction — so
+        // density holds however far the reader has travelled.
+        if (sy < -4) {
+          Object.assign(d, spawnDot(), { y: scroll + h + 4 });
+          sy = h + 4;
+        } else if (sy > h + 4) {
+          Object.assign(d, spawnDot(), { y: scroll - 4 });
+          sy = -4;
+        }
         if (d.x < -4) d.x = w + 4;
         if (d.x > w + 4) d.x = -4;
         ctx.globalAlpha = d.a * intensity;
         ctx.fillStyle = "#DCE4EB";
         ctx.beginPath();
-        ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+        ctx.arc(d.x, sy, d.r, 0, Math.PI * 2);
         ctx.fill();
       }
 
@@ -248,14 +280,25 @@ export default function ParticleField() {
         p.t += dt;
         p.x += p.vx * dt;
         p.y += p.vy * dt;
-        if (p.t > p.fadeIn + p.hold + p.fadeOut) {
-          words[i] = spawnWord(false);
+        const sy = p.y - scroll;
+        const expired = p.t > p.fadeIn + p.hold + p.fadeOut;
+        const offscreen = sy < -CULL_MARGIN || sy > h + CULL_MARGIN;
+        // Lived out its fade cycle, or the page has carried it clear of the
+        // viewport. Either way nobody can see it, so recycle it into view.
+        //
+        // Scrolled-away words come back mid-life rather than at t=0. A fast
+        // scroll retires the entire population at once, and starting all of
+        // them from zero would blank the field for a whole fade-in — the
+        // faster you scrolled, the emptier the page would look. Reusing the
+        // same desync the initial population gets keeps it populated.
+        if (expired || offscreen) {
+          words[i] = spawnWord(offscreen && !expired);
           continue;
         }
         ctx.globalAlpha = alphaFor(p) * intensity;
         ctx.fillStyle = p.color;
         ctx.font = `500 ${p.size}px ${fontFamily}`;
-        ctx.fillText(p.text, p.x, p.y);
+        ctx.fillText(p.text, p.x, sy);
       }
       ctx.globalAlpha = 1;
     }
@@ -271,18 +314,33 @@ export default function ParticleField() {
     remeasureRef.current = measureZones;
 
     if (reduced) {
-      // Static composition: words at rest, no animation loop.
+      // Static composition: words at rest, no animation loop. spawnWord puts
+      // them at mid-hold in this mode, so they need no priming here.
       intensity = targetIntensity();
-      for (const p of words) p.t = p.fadeIn + p.hold / 2;
       draw(0);
       const onResizeStatic = () => {
         resize();
-        for (const p of words) p.t = p.fadeIn + p.hold / 2;
         draw(0);
       };
+      // Redrawn on scroll so the words stay put relative to the page. Skipping
+      // this would leave them pinned to the viewport, which is the parallax
+      // this mode should least want. dt=0 keeps every particle at rest — the
+      // only thing that changes between frames is the scroll offset. Coalesced
+      // through rAF so a flick of the wheel cannot queue a redraw per event.
+      let pending = 0;
+      const onScrollStatic = () => {
+        if (pending) return;
+        pending = requestAnimationFrame(() => {
+          pending = 0;
+          draw(0);
+        });
+      };
       window.addEventListener("resize", onResizeStatic);
+      window.addEventListener("scroll", onScrollStatic, { passive: true });
       return () => {
+        cancelAnimationFrame(pending);
         window.removeEventListener("resize", onResizeStatic);
+        window.removeEventListener("scroll", onScrollStatic);
         remeasureRef.current = null;
       };
     }

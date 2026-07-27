@@ -28,7 +28,7 @@ export default function QuoteSection() {
         loading="lazy"
         decoding="async"
         // Cropped low: the figure that makes the frame sits below the midline.
-        className="quote-still absolute inset-0 -z-10 h-full w-full object-cover object-[center_62%] opacity-[0.34] saturate-[0.8]"
+        className="quote-still absolute inset-0 -z-10 h-full w-full object-cover object-[center_62%] opacity-[0.42] saturate-[0.8]"
       />
       <div aria-hidden="true" className="quote-scrim absolute inset-0 -z-10" />
 

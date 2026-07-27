@@ -135,8 +135,8 @@ body {
 .quote-scrim {
   background: radial-gradient(
     ellipse 62% 58% at 50% 50%,
-    rgba(8, 15, 17, 0.8) 0%,
-    rgba(8, 15, 17, 0.4) 55%,
+    rgba(8, 15, 17, 0.7) 0%,
+    rgba(8, 15, 17, 0.32) 55%,
     rgba(8, 15, 17, 0) 100%
   );
 }
