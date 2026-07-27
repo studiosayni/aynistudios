@@ -42,7 +42,7 @@ export default function Navbar() {
         {/* LEFT: LOGO */}
         <Link href="/" className="flex items-center gap-3 md:gap-4 group z-10">
           <Image
-            src="/brand/logo-icon-whitestroke.png"
+            src="/brand/logo-icon-whitestroke.webp"
             alt="Ayni Studios"
             width={40}
             height={40}

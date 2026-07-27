@@ -1,7 +1,10 @@
 import Image from "next/image";
 
 // Matches the partner list in _docs/overview.md. Logo files go in
-// public/brand/partners/ — filename convention: lowercase-with-dashes.png.
+// public/brand/partners/ as lowercase-with-dashes.png, then run
+// scripts/build-brand-assets.py to emit the .webp actually referenced below
+// (App Hosting does not run the Next image optimizer, so the raw PNGs would
+// otherwise ship at full weight — the set was 426KB, it is now ~80KB).
 // Missing files will 404 silently (next/image) — drop assets in as available.
 //
 // Each logo sits on a uniform light chip. That is not decoration: 8 of the 12
@@ -18,18 +21,18 @@ import Image from "next/image";
 // transparent variants are ever sourced for all twelve, this can go back to
 // bare marks on the dark background.
 const PARTNERS = [
-  { name: "IFRC-WWF", file: "ifrc-wwf.png" },
-  { name: "Amazon Expeditions", file: "amazon-expeditions.png" },
-  { name: "AoA", file: "aoa.png" },
-  { name: "ENWWF", file: "enwwf.png" },
-  { name: "Goumbook", file: "goumbook.png" },
-  { name: "Learning for Nature (UNDP)", file: "learning-for-nature.png" },
-  { name: "IN2", file: "in2.png" },
-  { name: "La Isla de los Monos", file: "la-isla.png" },
-  { name: "SFS", file: "sfs.png" },
-  { name: "teamLab", file: "teamlab.png" },
-  { name: "COP30", file: "cop30.png" },
-  { name: "IUCN World Congress", file: "iucn.png" },
+  { name: "IFRC-WWF", file: "ifrc-wwf.webp" },
+  { name: "Amazon Expeditions", file: "amazon-expeditions.webp" },
+  { name: "AoA", file: "aoa.webp" },
+  { name: "ENWWF", file: "enwwf.webp" },
+  { name: "Goumbook", file: "goumbook.webp" },
+  { name: "Learning for Nature (UNDP)", file: "learning-for-nature.webp" },
+  { name: "IN2", file: "in2.webp" },
+  { name: "La Isla de los Monos", file: "la-isla.webp" },
+  { name: "SFS", file: "sfs.webp" },
+  { name: "teamLab", file: "teamlab.webp" },
+  { name: "COP30", file: "cop30.webp" },
+  { name: "IUCN World Congress", file: "iucn.webp" },
 ];
 
 export default function PartnerLogos() {

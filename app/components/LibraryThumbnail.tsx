@@ -83,7 +83,7 @@ function ThumbnailFallback() {
       className="absolute inset-0 flex items-center justify-center bg-[linear-gradient(160deg,#131E22_0%,#0C1619_55%,#080F11_100%)]"
     >
       <Image
-        src="/brand/logo-icon-whitestroke.png"
+        src="/brand/logo-icon-whitestroke.webp"
         alt=""
         width={44}
         height={44}

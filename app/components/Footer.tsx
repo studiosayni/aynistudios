@@ -12,7 +12,7 @@ export default function Footer() {
           <div className="flex flex-col items-start">
             <Link href="/" className="flex items-center gap-4 group mb-6">
               <Image
-                src="/brand/logo-icon-whitestroke.png"
+                src="/brand/logo-icon-whitestroke.webp"
                 alt="Ayni Studios"
                 width={25}
                 height={25}
