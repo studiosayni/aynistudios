@@ -49,7 +49,12 @@ export default function LibraryThumbnail({
       fill
       priority={priority}
       sizes={sizes}
-      unoptimized
+      // Deliberately NOT unoptimized. Routing through /_next/image means the
+      // browser requests artwork from our own origin instead of i.ytimg.com,
+      // which (a) serves AVIF/WebP at the slot's real width rather than a
+      // 1280x720 JPEG, and (b) survives the ad blockers and DNS filters that
+      // eat ytimg — the same class of failure that made the catalog itself
+      // unreachable on mobile. Costs image transforms on App Hosting.
       draggable={false}
       className={`object-cover ${className}`}
       // Fires when the request itself fails — the ad-blocker / DNS-filter case,

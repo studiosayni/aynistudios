@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 
 // Hero: full-bleed editorial stills crossfading behind the headline
@@ -70,25 +71,31 @@ export default function HeroSection() {
         aria-hidden="true"
         className="absolute inset-0 overflow-hidden pointer-events-none select-none"
       >
+        {/* next/image, not a raw <img>: these are 1920px stills (~950KB across
+            the four) and a phone was downloading them at full desktop size. The
+            optimizer serves AVIF/WebP at the device's actual width. */}
         {HERO_IMAGES.map(
           (src, i) =>
             (i === 0 || bgReady) && (
-              /* eslint-disable-next-line @next/next/no-img-element */
-              <img
+              <Image
                 key={src}
                 src={src}
                 alt=""
-                fetchPriority={i === 0 ? "high" : undefined}
-                className={`absolute inset-0 h-full w-full object-cover saturate-[1.12] transition-opacity duration-[1600ms] ease-in-out ${
+                fill
+                sizes="100vw"
+                priority={i === 0}
+                className={`object-cover saturate-[1.12] transition-opacity duration-[1600ms] ease-in-out ${
                   i === bgIndex
-                    ? `opacity-65 ${i % 2 === 0 ? "motion-safe:animate-kenburns-in" : "motion-safe:animate-kenburns-out"}`
+                    ? `opacity-45 ${i % 2 === 0 ? "motion-safe:animate-kenburns-in" : "motion-safe:animate-kenburns-out"}`
                     : "opacity-0"
                 }`}
               />
             )
         )}
-        {/* Center scrim: darkness pools behind the headline, edges stay alive */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_58%_52%_at_50%_46%,rgba(8,15,17,0.84)_0%,rgba(8,15,17,0.30)_60%,rgba(8,15,17,0.02)_100%)]" />
+        {/* Center scrim: darkness pools behind the headline, edges stay alive.
+            Deepened alongside the drop from opacity-65 to 45 so the word-cloud
+            animation reads clearly against the stills rather than competing. */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_58%_52%_at_50%_46%,rgba(8,15,17,0.90)_0%,rgba(8,15,17,0.42)_60%,rgba(8,15,17,0.08)_100%)]" />
         {/* Top fade for navbar legibility; bottom fade blends into the page */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#080F11]/55 via-transparent to-[#080F11]" />
       </div>

@@ -24,6 +24,14 @@ export default function LibraryCarousel({ items }: { items: LibraryItem[] }) {
   const lastInteractionRef = useRef(0);
   const dragRef = useRef<{ startX: number; startLeft: number; moved: boolean } | null>(null);
 
+  // Declared above the effect that calls it: hoisting makes it work either
+  // way at runtime, but reading it before its declaration trips the
+  // react-hooks immutability rule.
+  function cardStride(track: HTMLDivElement): number {
+    const card = track.querySelector<HTMLElement>("[data-card]");
+    return card ? card.offsetWidth + 24 : track.clientWidth;
+  }
+
   // Auto-advance.
   useEffect(() => {
     if (items.length < 2) return;
@@ -44,11 +52,6 @@ export default function LibraryCarousel({ items }: { items: LibraryItem[] }) {
     }, AUTO_ADVANCE_MS);
     return () => clearInterval(id);
   }, [items]);
-
-  function cardStride(track: HTMLDivElement): number {
-    const card = track.querySelector<HTMLElement>("[data-card]");
-    return card ? card.offsetWidth + 24 : track.clientWidth;
-  }
 
   const arrow = (dir: -1 | 1) => {
     const track = trackRef.current;

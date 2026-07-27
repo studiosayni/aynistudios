@@ -20,6 +20,9 @@ The hero (`app/components/HeroSection.tsx`) layers: crossfading full-bleed edito
 
 ⚠️ Verifying alpha with `ffprobe` is a trap: **`pix_fmt` reports `yuv420p` for both files even though both carry alpha**, because VP9 stores it in WebM BlockAdditional side data and HEVC in an auxiliary picture layer — neither surfaces at stream level. Check `TAG:ALPHA_MODE=1` for the WebM, and `ffmpeg -bsf:v trace_headers` for `Alpha Channel Information` / `nuh_layer_id: 1` for the MP4. ⚠️ The Claude-in-Chrome automated browser cannot navigate directly to a video file (a direct `.webm` URL hangs at `readyState 0`); in-page playback does work — verify video changes by eye.
 
+## IMAGE HANDLING
+Everything user-facing goes through `next/image` **with** the optimizer (`/_next/image`) — deliberately, and for two reasons rather than one. Beyond the usual AVIF/WebP-at-the-right-width win (library thumbs measured 1280×720 → 640×360 in their real slots), it means the browser fetches artwork from **our own origin instead of `i.ytimg.com`**, which survives the ad blockers and DNS filters that eat YouTube domains. That is the same class of failure that made the catalog itself unreachable on mobile in July 2026, so it is worth the image-transform cost on App Hosting. ⚠️ In dev the optimizer is slow on first paint (it fetches upstream and transcodes per size); production caches. Exceptions kept `unoptimized`: the branded thumbnail placeholder and the partner-logo chips (small local assets, not worth a transform).
+
 ## ROUTES
 | Route | Source | Notes |
 |---|---|---|

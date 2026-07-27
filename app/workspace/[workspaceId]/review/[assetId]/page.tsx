@@ -68,11 +68,16 @@ export default function ReviewRoomPage({
   }, [assetId, workspaceId]);
 
   useEffect(() => {
-    reload().catch((err) => {
-      console.error("Review room load error:", err);
-      setError("Unable to load this asset.");
-      setLoading(false);
-    });
+    // Deferred one microtask so reload()'s synchronous setState does not land
+    // inside the effect body, which cascades a second render pass
+    // (react-hooks/set-state-in-effect).
+    void Promise.resolve().then(() =>
+      reload().catch((err) => {
+        console.error("Review room load error:", err);
+        setError("Unable to load this asset.");
+        setLoading(false);
+      })
+    );
   }, [reload]);
 
   useEffect(() => {

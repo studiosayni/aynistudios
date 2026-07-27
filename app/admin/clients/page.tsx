@@ -45,7 +45,11 @@ export default function AdminClientsPage() {
   }
 
   useEffect(() => {
-    loadClients();
+    // Deferred one microtask so the loader's synchronous setLoading(true) does
+    // not land inside the effect body, which cascades a second render pass
+    // (react-hooks/set-state-in-effect). `loading` already starts true, so
+    // nothing flashes.
+    void Promise.resolve().then(loadClients);
   }, []);
 
   async function handleCreate(e: React.FormEvent) {
