@@ -9,15 +9,33 @@ import { ALL_PILLAR_WORDS } from "../lib/pillarWords";
 // Rendered as a fixed z-0 canvas (page content sits at z-10, navbar z-50).
 //
 // Behavior contract (see plan):
-//  - full intensity over the Main hero, dimming to a low ambient as you scroll
+//  - full intensity over the Main hero, dimming as you scroll away from it
+//  - below the hero, intensity is set by the section holding the viewport's
+//    midline (see BACKDROP ZONES below) rather than decaying to a single floor
 //  - hidden entirely on /admin and /workspace (client review surfaces)
 //  - prefers-reduced-motion → a single static frame, no animation
 //  - pauses when the tab is hidden; DPR capped at 2. The <canvas> renders
 //    server-side as an empty element (identical markup either side, so no
 //    hydration mismatch); all drawing happens in the effect.
-
+//
+// BACKDROP ZONES
+// The field used to fade out once and stay there, which measured at 0.3% of
+// canvas pixels carrying any ink at all — the mechanism meant to give the lower
+// page some texture was drawing at roughly the perceptual threshold. It now
+// rises again in the sections that have nothing else in them and stays out of
+// the way behind the dense ones.
+//
+// A section opts in with data-backdrop="<0..1>"; anything that doesn't declare
+// one gets AMBIENT. Keeping it declarative means this component stays generic —
+// it never has to know the page's section order, and a new page can set its own
+// rhythm without touching the canvas.
 const HIDDEN_PREFIXES = ["/admin", "/workspace"];
-const AMBIENT = 0.35; // intensity once scrolled / on non-home routes
+const AMBIENT = 0.35; // intensity for anything that hasn't declared a zone
+
+// Document-space bounds of one data-backdrop section. Measured on layout change
+// rather than per frame: the animation loop must not call
+// getBoundingClientRect, or every frame forces a synchronous layout.
+type Zone = { top: number; bottom: number; intensity: number };
 
 // Latin + Cyrillic words render tracked-uppercase per brand type rules;
 // other scripts keep their natural casing.
@@ -52,13 +70,18 @@ export default function ParticleField() {
   const pathname = usePathname();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const pathRef = useRef(pathname);
+  const remeasureRef = useRef<(() => void) | null>(null);
 
   // Mirrored into a ref so the animation loop can read the current route
   // without being torn down and restarted on every navigation. Assigned in an
   // effect rather than during render — writing a ref while rendering is not
   // safe under concurrent rendering.
+  //
+  // Navigation swaps the whole section list out, so the zones are re-measured
+  // here too. Effects run after commit, so the incoming DOM is already live.
   useEffect(() => {
     pathRef.current = pathname;
+    remeasureRef.current?.();
   }, [pathname]);
 
   const hidden = HIDDEN_PREFIXES.some((p) => pathname.startsWith(p));
@@ -87,13 +110,16 @@ export default function ParticleField() {
     const words: WordParticle[] = [];
     const dots: Dot[] = [];
     let bag: number[] = []; // shuffled indices into ALL_PILLAR_WORDS
+    let zones: Zone[] = [];
 
+    // Raised ~30% alongside the zone work: opacity alone could not fix a
+    // backdrop that only covered 0.3% of its own canvas.
     const counts = () =>
       w < 640
-        ? { words: 12, dots: 27 }
+        ? { words: 16, dots: 36 }
         : w < 1024
-          ? { words: 18, dots: 42 }
-          : { words: 24, dots: 60 };
+          ? { words: 24, dots: 56 }
+          : { words: 32, dots: 78 };
 
     function refillBag() {
       bag = ALL_PILLAR_WORDS.map((_, i) => i);
@@ -118,7 +144,10 @@ export default function ParticleField() {
 
     function spawnWord(initial: boolean): WordParticle {
       const amber = Math.random() < 0.11;
-      const peak = rand(0.05, 0.11);
+      // Peaks are the per-word ceiling; the zone intensity scales them down
+      // from there. At the old 0.05–0.11 a word in the ambient zone composited
+      // to a ~7/255 lift over #080F11, i.e. below the threshold of noticing.
+      const peak = rand(0.06, 0.13);
       return {
         text: nextWordText(),
         x: rand(0.06, 0.94) * w,
@@ -126,7 +155,7 @@ export default function ParticleField() {
         vx: rand(-3, 3),
         vy: rand(-4.5, -1),
         size: rand(11, w < 640 ? 15 : 17),
-        peak: amber ? Math.min(0.17, peak * 1.8) : peak,
+        peak: amber ? Math.min(0.2, peak * 1.8) : peak,
         color: amber ? "#FEB040" : Math.random() < 0.25 ? "#7B878F" : "#DCE4EB",
         t: initial ? rand(0, 8) : 0, // desync the initial population
         fadeIn: rand(1.8, 2.6),
@@ -142,8 +171,21 @@ export default function ParticleField() {
         vx: rand(-4, 4),
         vy: rand(-6, -1.5),
         r: rand(0.6, 1.6),
-        a: rand(0.03, 0.08),
+        a: rand(0.05, 0.12),
       };
+    }
+
+    function measureZones() {
+      zones = [...document.querySelectorAll<HTMLElement>("[data-backdrop]")]
+        .map((el) => {
+          const rect = el.getBoundingClientRect();
+          return {
+            top: rect.top + window.scrollY,
+            bottom: rect.bottom + window.scrollY,
+            intensity: Number(el.dataset.backdrop),
+          };
+        })
+        .filter((z) => Number.isFinite(z.intensity));
     }
 
     function resize() {
@@ -158,6 +200,7 @@ export default function ParticleField() {
       words.length = Math.min(words.length, c.words);
       while (dots.length < c.dots) dots.push(spawnDot());
       dots.length = Math.min(dots.length, c.dots);
+      measureZones();
     }
 
     function alphaFor(p: WordParticle): number {
@@ -168,9 +211,17 @@ export default function ParticleField() {
     }
 
     function targetIntensity(): number {
-      if (pathRef.current !== "/") return AMBIENT;
-      const progress = Math.min(window.scrollY / Math.max(h, 1), 1);
-      return 1 - (1 - AMBIENT) * progress;
+      // The hero owns the top of the home page and fades on its own curve —
+      // it is the only stretch where the field competes with real artwork.
+      if (pathRef.current === "/" && window.scrollY < h) {
+        return 1 - (1 - AMBIENT) * (window.scrollY / Math.max(h, 1));
+      }
+      // Below it, whichever zone holds the viewport's midline wins. Stepping
+      // rather than interpolating between zones is fine: the easing in draw()
+      // turns a step target into a ~0.4s ramp, which reads as a slow swell.
+      const mid = window.scrollY + h / 2;
+      const zone = zones.find((z) => mid >= z.top && mid < z.bottom);
+      return zone ? zone.intensity : AMBIENT;
     }
 
     function draw(dt: number) {
@@ -217,6 +268,7 @@ export default function ParticleField() {
     }
 
     resize();
+    remeasureRef.current = measureZones;
 
     if (reduced) {
       // Static composition: words at rest, no animation loop.
@@ -229,8 +281,17 @@ export default function ParticleField() {
         draw(0);
       };
       window.addEventListener("resize", onResizeStatic);
-      return () => window.removeEventListener("resize", onResizeStatic);
+      return () => {
+        window.removeEventListener("resize", onResizeStatic);
+        remeasureRef.current = null;
+      };
     }
+
+    // Zone bounds move whenever the document reflows — a lazy image landing,
+    // a font swapping in, the carousel filling. Watching the body catches all
+    // of it without the loop having to re-measure per frame.
+    const layoutObserver = new ResizeObserver(measureZones);
+    layoutObserver.observe(document.body);
 
     const onVisibility = () => {
       cancelAnimationFrame(raf);
@@ -245,8 +306,10 @@ export default function ParticleField() {
 
     return () => {
       cancelAnimationFrame(raf);
+      layoutObserver.disconnect();
       window.removeEventListener("resize", resize);
       document.removeEventListener("visibilitychange", onVisibility);
+      remeasureRef.current = null;
     };
   }, [hidden]);
 

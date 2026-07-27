@@ -3,6 +3,7 @@ import PartnerLogos from "./components/PartnerLogos";
 import LibraryCarousel from "./components/LibraryCarousel";
 import PortalSignInCard from "./components/PortalSignInCard";
 import ContactCard from "./components/ContactCard";
+import QuoteSection from "./components/QuoteSection";
 import { fetchLibraryServer } from "./lib/libraryServer";
 import type { LibraryItem } from "./lib/libraryShared";
 
@@ -74,27 +75,20 @@ export default async function HomePage() {
       {/* PARTNERS */}
       <PartnerLogos />
 
-      {/* MALCOLM X QUOTE — deliberately sits between the proof (library,
-          partners) and the ask below it. Placed here rather than under the
-          hero, where two large statements would compete; here it reads as the
-          reason the ask matters, and the page no longer dead-ends on it. */}
-      <section className="py-28 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <blockquote className="text-2xl md:text-3xl lg:text-4xl font-light italic leading-relaxed text-[#DCE4EB]/90">
-            &ldquo;The media&apos;s the most powerful entity on earth. They
-            have the power to make the innocent guilty and to make the guilty
-            innocent, and that&apos;s power. Because they control the minds of
-            the masses.&rdquo;
-          </blockquote>
-          <cite className="mt-8 block text-sm font-bold uppercase tracked text-[#FEB040] not-italic">
-            — Malcolm X
-          </cite>
-        </div>
-      </section>
+      {/* MALCOLM X QUOTE */}
+      <QuoteSection />
 
       {/* PORTAL + CONTACT CARDS — the page's closer. The hero's "Client
-          Portal" button anchors here, so this stays #portal. */}
-      <section id="portal" className="pb-24 md:pb-32 px-6 scroll-mt-20">
+          Portal" button anchors here, so this stays #portal.
+          data-backdrop: loud. This is the emptiest section on the page — two
+          cards in a 1024px column with ~400px of bare page either side — and
+          the only one with nothing of its own competing for attention, so it
+          is where the particle field earns its keep. See ParticleField. */}
+      <section
+        id="portal"
+        data-backdrop="0.9"
+        className="pb-24 md:pb-32 px-6 scroll-mt-20"
+      >
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <span className="text-[10px] font-bold uppercase tracked text-[#FEB040]">

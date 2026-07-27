@@ -36,8 +36,10 @@ const PARTNERS = [
 ];
 
 export default function PartnerLogos() {
+  // data-backdrop: quiet. Twelve white chips are the brightest thing on the
+  // page; drifting words behind them would only add noise. See ParticleField.
   return (
-    <section className="py-16 border-y border-[#1b282d]">
+    <section data-backdrop="0.3" className="py-16 border-y border-[#1b282d]">
       <div className="max-w-7xl mx-auto px-8">
         <h3 className="text-[10px] md:text-xs font-bold uppercase tracked text-[#7B878F] text-center mb-10">
           Partners &amp; Featured At
