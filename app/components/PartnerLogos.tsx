@@ -44,7 +44,12 @@ export default function PartnerLogos() {
         <h3 className="text-[10px] md:text-xs font-bold uppercase tracked text-[#7B878F] text-center mb-10">
           Partners &amp; Featured At
         </h3>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 md:gap-5">
+        {/* Three columns on phones, not two. At two the twelve chips stacked
+            six rows deep — ~560px of the brightest surface on the page, since
+            each carries its own white plate. Three rows of four brings that to
+            ~292px without touching desktop, where six columns already fit on
+            two rows. */}
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 md:gap-5">
           {PARTNERS.map((p) => (
             <div
               key={p.name}
@@ -57,7 +62,10 @@ export default function PartnerLogos() {
               // background colour, because opacity scales the chip and the
               // logo's own baked-in plate by the same factor — they stay
               // matched, so the seam cannot come back.
-              className="flex h-20 items-center justify-center rounded-lg bg-white px-4 py-3 opacity-90 transition-all duration-300 hover:opacity-100 hover:scale-[1.03]"
+              // Shorter chips and tighter inner padding on phones: a third of
+              // the width means the logo needs proportionally more of the chip
+              // to stay legible, so the padding shrinks faster than the box.
+              className="flex h-16 md:h-20 items-center justify-center rounded-lg bg-white px-2 py-2 md:px-4 md:py-3 opacity-90 transition-all duration-300 hover:opacity-100 hover:scale-[1.03]"
             >
               <div className="relative h-full w-full">
                 <Image

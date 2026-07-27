@@ -21,14 +21,32 @@ const HERO_IMAGES = [
 
 export default function HeroSection() {
   const [bgIndex, setBgIndex] = useState(0);
-  const [bgReady, setBgReady] = useState(false); // defer non-first stills off the critical path
+  // Highest still index allowed to have a src yet. Stills used to be deferred
+  // as one batch 1.5s after mount, which kept them off the critical path but
+  // still pulled all 382KB of them before the second one was needed at 7.5s —
+  // wasted entirely on anyone who bounced first. Now each is fetched shortly
+  // before its turn: the batch at 1.5s becomes 294KB at 3.5s, 26KB at 7.5s and
+  // 62KB at 15s. Monotonic, so a wrap back to 0 never drops a loaded image.
+  const [loadedThrough, setLoadedThrough] = useState(0);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  // The rotation index also drives which still may load next, and both have to
+  // move together on the same tick. Mirrored into a ref so the interval can
+  // read it without a second effect — advancing them from an effect body trips
+  // react-hooks/set-state-in-effect.
+  const bgIndexRef = useRef(0);
 
   useEffect(() => {
     const bgId = setInterval(() => {
-      setBgIndex((i) => (i + 1) % HERO_IMAGES.length);
+      const next = (bgIndexRef.current + 1) % HERO_IMAGES.length;
+      bgIndexRef.current = next;
+      setBgIndex(next);
+      // Warm the one after this, giving it a full IMAGE_MS before its turn.
+      setLoadedThrough((n) => Math.max(n, next + 1));
     }, IMAGE_MS);
-    const readyId = setTimeout(() => setBgReady(true), 1500);
+    // The second still is the only one without a rotation tick to warm it, so
+    // it gets its own timer — 4s of lead on a 1.6s crossfade, comfortably
+    // enough for 294KB, while still sparing it entirely from an early bounce.
+    const readyId = setTimeout(() => setLoadedThrough((n) => Math.max(n, 1)), 3500);
     // Respect reduced motion: hold the word-cloud on its first frame.
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       videoRef.current?.pause();
@@ -73,7 +91,7 @@ export default function HeroSection() {
       >
         {HERO_IMAGES.map(
           (base, i) =>
-            (i === 0 || bgReady) && (
+            i <= loadedThrough && (
               /* eslint-disable-next-line @next/next/no-img-element */
               <img
                 key={base}
@@ -81,7 +99,7 @@ export default function HeroSection() {
                 srcSet={bleedSrcSet(base)}
                 sizes="100vw"
                 alt=""
-                fetchPriority={i === 0 ? "high" : undefined}
+                fetchPriority={i === 0 ? "high" : "low"}
                 decoding="async"
                 className={`absolute inset-0 h-full w-full object-cover saturate-[1.12] transition-opacity duration-[1600ms] ease-in-out ${
                   i === bgIndex
