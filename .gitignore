@@ -46,5 +46,6 @@ firebase-debug.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# raw video source (encoded web versions live in public/brand/hero/)
-public/images/Main_2-4.mov
+# raw video sources — encoded web versions live in public/brand/hero/, and the
+# masters live in brand_assets-aynistudios/videos/ outside this repo.
+public/**/*.mov

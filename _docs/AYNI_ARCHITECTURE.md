@@ -30,7 +30,7 @@ Consequences, and what we do instead:
 
 **Cache headers.** `public/` assets shipped with `Cache-Control: public, max-age=0` — re-downloaded on every visit, including the ~1.4MB word-cloud video. `next.config.ts` now sets `max-age=86400, stale-while-revalidate=604800` for `/brand/:path*`. Deliberately not `immutable`: filenames are stable, so a year-long immutable cache would strand returning visitors on replaced artwork. Hashed `/_next/static` assets already get a year + immutable, which is how we know App Hosting honours these headers.
 
-⚠️ `public/images/` is ~40MB of v1-era photography (41 tracked files) that **nothing in `app/` references** and that is still deployed. Not a runtime cost — nobody requests it — but it bloats the repo and every build. Candidate for removal once someone confirms it isn't a working asset library.
+`public/images/` (~40MB of v1-era photography, 41 tracked files) was removed on 2026-07-27 — nothing in the app referenced it, and it was being deployed on every build. Recoverable from git history; the one gitignored file in there, the 4.3MB `Main_2-4.mov` hero source, is byte-identical to the master in `brand_assets-aynistudios/videos/`. `public/` is now 5.8MB.
 
 ## ROUTES
 | Route | Source | Notes |
