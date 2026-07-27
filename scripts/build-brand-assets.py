@@ -26,9 +26,11 @@ from PIL import Image
 
 BRAND = Path(__file__).resolve().parent.parent / "public" / "brand"
 
-# Hero stills are full-bleed backgrounds, so they need a real srcset. They also
-# sit at 45% opacity behind a heavy scrim, which is why q65 is fine here where
-# the logos below need q82.
+# Full-bleed backgrounds need a real srcset. They also sit at 20-45% opacity
+# behind a heavy scrim, which is why q65 is fine here where the logos below
+# need q82. (dir, glob) pairs — add a row to give a new backdrop the same
+# treatment.
+SRCSET_SOURCES = [("hero", "hero-*.jpg"), ("quote", "quote-*.jpg")]
 HERO_WIDTHS = [640, 960, 1280, 1920]
 HERO_QUALITY = 65
 
@@ -63,25 +65,26 @@ def main() -> None:
 
     # Reported as smallest..largest variant, not their sum: a browser picks
     # exactly one from the srcset, so summing them would overstate the cost.
-    print("hero stills (srcset variants — a device downloads ONE of these):")
-    for src in sorted((BRAND / "hero").glob("hero-*.jpg")):
-        im = open_preserving_alpha(src).convert("RGB")
-        made = []
-        for w in HERO_WIDTHS:
-            if w > im.width:
-                continue
-            out = src.parent / f"{src.stem}-{w}.webp"
-            fit(im, w).save(out, "WEBP", quality=HERO_QUALITY, method=6)
-            made.append(out.stat().st_size)
-        before = src.stat().st_size
-        print(
-            f"  {src.name:<32}{before // 1024:>5}KB -> "
-            f"{min(made) // 1024}..{max(made) // 1024}KB  "
-            f"({100 - round(100 * max(made) / before)}-"
-            f"{100 - round(100 * min(made) / before)}% smaller)"
-        )
-        total_before += before
-        total_after += max(made)  # worst case: the largest variant
+    print("full-bleed stills (srcset variants — a device downloads ONE of these):")
+    for folder, pattern in SRCSET_SOURCES:
+        for src in sorted((BRAND / folder).glob(pattern)):
+            im = open_preserving_alpha(src).convert("RGB")
+            made = []
+            for w in HERO_WIDTHS:
+                if w > im.width:
+                    continue
+                out = src.parent / f"{src.stem}-{w}.webp"
+                fit(im, w).save(out, "WEBP", quality=HERO_QUALITY, method=6)
+                made.append(out.stat().st_size)
+            before = src.stat().st_size
+            print(
+                f"  {src.name:<32}{before // 1024:>5}KB -> "
+                f"{min(made) // 1024}..{max(made) // 1024}KB  "
+                f"({100 - round(100 * max(made) / before)}-"
+                f"{100 - round(100 * min(made) / before)}% smaller)"
+            )
+            total_before += before
+            total_after += max(made)  # worst case: the largest variant
 
     print("\nbrand mark (1080px original kept for schema.org):")
     logo = BRAND / "logo-icon-whitestroke.png"

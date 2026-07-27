@@ -105,3 +105,39 @@ body {
   animation: kenburns-out 9s linear both;
 }
 
+/* Quote backdrop still.
+   The section has no borders of its own, so an unmasked full-bleed image would
+   end on two hard horizontal edges and read as a band pasted over the page.
+   The mask dissolves it into #080F11 at top and bottom instead. Prefixed as
+   well as standard: unprefixed mask-image only landed in Safari 15.4, and this
+   site is checked on iOS. */
+.quote-still {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 26%,
+    #000 74%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 26%,
+    #000 74%,
+    transparent 100%
+  );
+}
+
+/* Deepens the middle so the quote never has to compete with the image, while
+   letting it stay legible out at the margins — which is where the empty space
+   actually was. Pure background colour, so the scrim's own edges are
+   invisible against the page and it needs no mask of its own. */
+.quote-scrim {
+  background: radial-gradient(
+    ellipse 62% 58% at 50% 50%,
+    rgba(8, 15, 17, 0.7) 0%,
+    rgba(8, 15, 17, 0.32) 55%,
+    rgba(8, 15, 17, 0) 100%
+  );
+}
+

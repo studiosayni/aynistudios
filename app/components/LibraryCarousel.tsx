@@ -94,8 +94,10 @@ export default function LibraryCarousel({ items }: { items: LibraryItem[] }) {
 
   if (items.length === 0) return null;
 
+  // data-backdrop: quiet. The cards are already the busiest thing on the page
+  // — see ParticleField for what the number means.
   return (
-    <section className="py-20 md:py-28">
+    <section data-backdrop="0.3" className="py-20 md:py-28">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-end justify-between gap-6 mb-10">
           <div>
