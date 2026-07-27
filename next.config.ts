@@ -2,6 +2,21 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
+    // ⚠️ Load-bearing despite being the Next default. Firebase App Hosting's
+    // build adapter (@apphosting/adapter-nextjs) rewrites this file during its
+    // build and injects `unoptimized: true` — but only when BOTH
+    // `images.unoptimized` and `images.loader` are undefined:
+    //
+    //   ...(config.images?.unoptimized === undefined &&
+    //       config.images?.loader === undefined ? { unoptimized: true } : {})
+    //
+    // Setting either one explicitly opts out. Without this line the deployed
+    // build had image optimization off entirely: `/_next/image` returned 404
+    // and next/image silently degraded to emitting a raw `src` with no
+    // `srcset`, so every device pulled full-size originals. It is invisible
+    // locally, where the adapter never runs — a local build reports
+    // `unoptimized: false` either way. Do not "clean up" as redundant.
+    unoptimized: false,
     remotePatterns: [
       { protocol: "https", hostname: "i.ytimg.com" },
       { protocol: "https", hostname: "img.youtube.com" },
