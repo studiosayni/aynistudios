@@ -29,9 +29,9 @@ _No active app dev tasks currently tracked in master todo. Check `../../Noah95/t
 - **No category/year filtering on `/library`**, though both fields exist in the schema. Deliberately skipped — with 7 items the filter chrome costs more than it returns. Revisit when scanning the catalog is actual work.
 - **Library card artwork carries its own burned-in headlines**, which sit above the card title. Investigated and deliberately left alone — the thumbnails are strong design and the Firestore titles were verified correct against the real YouTube titles. Only a set of hand-picked clean 16:9 stills exported from the masters would improve it, wired in via the existing `thumbnailUrl` override. Asset work, not code.
 
-**Needs a real-device check** (verified only through synthesised input, where this kind of thing is least trustworthy):
-- **The word field during iOS momentum scroll.** It is now anchored to the document and repositioned per rAF frame; if iOS throttles rAF during momentum scrolling the words may visibly lag or judder behind the content. Fine everywhere it has been tested, but that testing was all desktop and all synthetic.
-- **Lightbox touch dismissal**, and the **hero at a short window** — both carried over from the July UX pass, still unverified on hardware.
+**Performance, sized but not started:**
+- **The hero word-cloud video is 1358KB — 55% of a cold homepage visit** (measured: 2.46MB total, 27 requests). Re-encoding the WebM at CRF 38 gives 1034KB, a 324KB saving; the current encode sits around CRF 34, and CRF 33 came out *larger*. The re-encode was rendered against a coloured background in a browser and is genuinely transparent and visually equivalent — do not trust `ffprobe` or `alphaextract` here, both report nothing useful (see the alpha gotcha below). **The WebM is safe to swap on its own** since WebKit never selects it. The HEVC-alpha MP4 is the other 1310KB and the risky half: it is the file that caused the opaque-hero bug, and it can only be verified in real Safari. Do that half only with a device to hand.
+- Everything else on the homepage was checked and ruled out: all six Barlow weights are genuinely used (91KB), JS is framework baseline (307KB), and 1920px is the *correct* video resolution — the 896px CSS cap is 1792 device px at DPR 2. Repeat visits are already near-free (24 of 26 responses cached).
 
 ---
 
@@ -46,6 +46,18 @@ Items identified but not yet prioritized:
 ---
 
 ## Recently Completed
+
+00000000. **Homepage payload + partner grid on phones (2026-07-27)** — confirmed on real hardware, mobile and desktop, on the same day.
+
+   - **Hero stills now load just-in-time.** They were already deferred off the critical path as one batch 1.5s after mount, but that batch still pulled all 382KB before the second still was needed at 7.5s — wasted entirely on anyone who bounced first. Each is now fetched shortly before its turn, driven off the rotation tick. Measured on the built app: **247KB at 3.0s where it used to be 629KB**, second still arriving ~3.5s for its 7.5s turn, third warmed by the 7.5s tick. `fetchPriority="low"` on the non-LCP stills.
+   - **Partner chips are 3-up below `sm`, `h-16`, with tighter inner padding.** Two columns stacked the twelve chips six rows deep — ~560px of the brightest surface on the page, since each carries its own white plate. Now ~292px. Desktop untouched: still 6 columns, 186×80, 366px section.
+   - **Real-device pass closed the outstanding hardware items**: word field during iOS momentum scroll (it is anchored to the document and repositioned per rAF frame, so throttling was the risk), lightbox touch dismissal, hero at a short window, and library thumbnails over mobile data now that they come from our origin. All confirmed good.
+
+   **Gotchas worth not rediscovering**
+   - **The browser automation pins the page viewport at 1512px regardless of window size** — `resize_window` succeeds and `outerWidth` really does change, but `innerWidth` does not follow. Every "mobile check" run through it is actually desktop. Tailwind breakpoints are viewport-driven, so responsive layout **cannot** be verified this way; check the compiled CSS and compute the geometry, then confirm on hardware.
+   - **A shell pipeline's exit status is the last command's, not the interesting one's.** `npx eslint app/ | tail -8 && echo "checks clean"` prints "checks clean" over a real lint error. Use `set -o pipefail`, or don't pipe the thing you are testing.
+   - **Deferred work is invisible to a perf script that samples too late.** A 3.5s sampling window swallowed loads deferred to 1.5s and made them look eager, which produced a confident and completely wrong claim about what was on the critical path.
+   - Tailwind v4 emits `@media (min-width:40rem)`, not the `(width >= 40rem)` form — a grep for the latter reports every responsive variant missing.
 
 0000000. **Image optimizer enabled on App Hosting (2026-07-27)** — `/_next/image` had returned 404 since launch. This was recorded for three days as a platform limitation; it was our own config.
 
