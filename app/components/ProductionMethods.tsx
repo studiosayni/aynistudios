@@ -23,6 +23,11 @@ export default function ProductionMethods({ detailed = false }: { detailed?: boo
             <p className="body-copy">{method.description}</p>
             <p className="method-benefit">{method.benefit}</p>
             {detailed && <p className="small-copy">{method.consideration}</p>}
+            {index === 2 && (
+              <Link href="/work/audio-to-animated-legacy-film" className="text-link mt-5">
+                See a narrated animation example ↗
+              </Link>
+            )}
           </article>
         ))}
       </div>

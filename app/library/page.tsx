@@ -2,7 +2,7 @@ import Link from "next/link";
 import ProjectCard from "../components/ProjectCard";
 import FilmCard from "../components/FilmCard";
 import InquiryCTA from "../components/InquiryCTA";
-import { projects } from "../lib/publicContent";
+import { projects, films as editorialFilms } from "../lib/publicContent";
 import { getPublicFilms } from "../lib/publicFilms";
 import { pageMetadata } from "../lib/seo";
 
@@ -15,6 +15,7 @@ export const metadata = pageMetadata(
 );
 export default async function LibraryPage() {
   const films = await getPublicFilms();
+  const animationSample = editorialFilms.find((film) => film.youtubeId === "iZRQlh6dnS0");
   return (
     <div className="public-site">
       <div className="site-width">
@@ -26,11 +27,12 @@ export default async function LibraryPage() {
             something at stake.
           </h1>
           <p className="body-copy">
-            Documentary films, brand collaborations, and stories that connect
+            Documentary films, narrated animation, brand collaborations, and stories that connect
             people with the world around them.
           </p>
           <div className="pill-list">
             <a href="#client-work">Client work</a>
+            <a href="#production-examples">Production examples</a>
             <a href="#films">Films & series</a>
           </div>
         </header>
@@ -43,11 +45,24 @@ export default async function LibraryPage() {
             Selected collaborations
           </h2>
           <div className="project-grid">
-            {projects.map((p) => (
+            {projects.filter((project) => project.kind !== "sample").map((p) => (
               <ProjectCard key={p.slug} project={p} />
             ))}
           </div>
         </section>
+        {animationSample && (
+          <section id="production-examples" className="editorial-grid section-space border-t border-[#28363a] scroll-mt-36" aria-labelledby="production-examples-title">
+            <div className="editorial-copy">
+              <p className="eyebrow accent">Production examples</p>
+              <h2 id="production-examples-title">A voice. A life. An animated story.</h2>
+              <p>Produced by Ayni Studios, The Surgeon Who Crossed the Sea turns
+                the surgeon’s voice narration into an animation. Painted scenes
+                and photographs bring his personal story to life.</p>
+              <Link href="/work/audio-to-animated-legacy-film" className="text-link">Explore the audio-to-animation use case ↗</Link>
+            </div>
+            <FilmCard film={animationSample} />
+          </section>
+        )}
         <section
           id="films"
           className="section-space border-t border-[#28363a] scroll-mt-28"

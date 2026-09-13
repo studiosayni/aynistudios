@@ -1,6 +1,6 @@
 # Search Console indexing priorities
 
-Submit [sitemap.xml](https://ayni-studios.com/sitemap.xml) in the verified property for https://ayni-studios.com/. The sitemap contains all 28 public pages, including nine film pages. Submitting it supports discovery; it is not a guarantee of indexing or rankings.
+Submit [sitemap.xml](https://ayni-studios.com/sitemap.xml) in the verified property for https://ayni-studios.com/. The sitemap contains all 30 public pages, including ten film pages. Submitting it supports discovery; it is not a guarantee of indexing or rankings.
 
 Use URL Inspection for these priority pages and request indexing when appropriate. Work through the list within the quota Search Console makes available; do not repeatedly resubmit unchanged URLs.
 
@@ -13,6 +13,11 @@ Use URL Inspection for these priority pages and request indexing when appropriat
 5. [Environmental and conservation storytelling](https://ayni-studios.com/services/environmental-conservation-filmmaking)
 6. [Legacy films and life stories](https://ayni-studios.com/services/legacy-films)
 7. [Choosing a storytelling company](https://ayni-studios.com/guides/choosing-a-storytelling-company)
+
+## New animation sample — include before your first indexing pass
+
+- [Voice narration to animated legacy film — use case](https://ayni-studios.com/work/audio-to-animated-legacy-film)
+- [The Surgeon Who Crossed the Sea — watch page](https://ayni-studios.com/films/the-surgeon-who-crossed-the-sea)
 
 ## Then: core services and evidence
 

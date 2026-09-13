@@ -85,7 +85,7 @@ export const services = [
       "Develop the narrative and share cuts through agreed feedback rounds.",
       "Finish the edit and prepare the versions included in your scope.",
     ],
-    projectSlugs: ["nature-and-resilience"],
+    projectSlugs: ["nature-and-resilience", "audio-to-animated-legacy-film"],
     question: "Can you edit footage our team has already filmed?",
     answer:
       "Yes. Tell us what you have, what you want to make, and where it will be shown. We will review the material and propose an approach before agreeing the edit scope.",
@@ -168,7 +168,7 @@ export const services = [
       "Choose interviews with a filmmaker, a filming kit, existing footage, or audio recordings with animated visuals.",
       "Shape the story with agreed family or organizational reviewers and confirm the final delivery audience."
     ],
-    "projectSlugs": [],
+    "projectSlugs": ["audio-to-animated-legacy-film"],
     "question": "Can we make a legacy film from audio or older family footage?",
     "answer": "Yes. Existing audio, home videos, and photographs can provide the starting point. We can build an animated narrative around supplied audio or combine recordings with interviews and archive material. We review the material’s quality and permissions first, and agree which memories, people, and visuals belong in the film."
   },
@@ -194,6 +194,7 @@ export const services = [
       "Bring the contributions into a coherent narrative and deliver the versions included in the scope."
     ],
     "projectSlugs": [
+      "audio-to-animated-legacy-film",
       "nature-and-resilience"
     ],
     "question": "Can remote production reduce video costs and turnaround time?",
@@ -208,6 +209,7 @@ export type Project = {
   category: string;
   summary: string;
   status?: string;
+  kind?: "sample";
   image?: string;
   imageAlt?: string;
   logo?: string;
@@ -222,6 +224,59 @@ export type Project = {
 };
 
 export const projects: Project[] = [
+{
+  "slug": "audio-to-animated-legacy-film",
+  "kind": "sample",
+  "title": "From narration to an animated life story",
+  "client": "Ayni Studios",
+  "category": "Audio-led animation · Legacy film",
+  "summary": "Produced by Ayni Studios, The Surgeon Who Crossed the Sea turns the surgeon’s voice narration into an animated life story, combining painted imagery and photographs.",
+  "image": "https://i.ytimg.com/vi/iZRQlh6dnS0/maxresdefault.jpg",
+  "imageAlt": "Painted portrait of a surgeon from The Surgeon Who Crossed the Sea",
+  "context": "The Surgeon Who Crossed the Sea tells a personal story through narration, painted imagery, and photographs. It follows Dr. Tuan T. Lam’s journey from leaving Vietnam as a child to his later life as a surgeon. The film’s published description identifies his own writing as the source of the story.",
+  "role": "Produced by Ayni Studios. We took the surgeon’s voice narration and turned it into an animation, using illustrated scenes and photographs to bring his life story to the screen.",
+  "details": [
+    {
+      "label": "Sample film",
+      "value": "The Surgeon Who Crossed the Sea"
+    },
+    {
+      "label": "Format",
+      "value": "Narrated animation with painted imagery and photographs"
+    },
+    {
+      "label": "Story source",
+      "value": "The surgeon’s voice narration"
+    },
+    {
+      "label": "Duration",
+      "value": "3 minutes 59 seconds"
+    },
+    {
+      "label": "Use case",
+      "value": "Personal legacy and life-story filmmaking"
+    }
+  ],
+  "paragraphs": [
+    "The voice gives the film its narrative thread. Illustrated scenes give viewers a way to picture events from the past, while photographs connect the story with the people behind it. The source description distinguishes the imagined paintings from the real photographs at the end.",
+    "For clients, this offers a useful starting point: a recorded memory, interview, narration, or written life story. It can be especially helpful when the events happened long ago, contributors live in different places, or a new location shoot would not add much to the story.",
+    "With Ayni, the process begins by reviewing the story, audio, photographs, and intended audience. We agree the narrative structure and visual approach, develop the animated sequence, and refine the film through the review stages included in the scope.",
+    "Audio-led production can reduce the need for travel, location filming, and on-camera interviews. The animation style, running time, audio quality, and revisions still determine the work involved. This example shows a creative approach, not a published budget or turnaround benchmark.",
+    "The same approach can support a family history, founder biography, organizational milestone, or an interview-led impact story. We distinguish illustrative scenes from documentary evidence and agree how a person’s words and likeness will be used."
+  ],
+  "serviceSlugs": [
+    "legacy-films",
+    "remote-video-production",
+    "editing-and-post-production"
+  ],
+  "filmIds": [
+    "iZRQlh6dnS0"
+  ],
+  "source": {
+    "label": "Watch the original upload on YouTube",
+    "href": "https://www.youtube.com/watch?v=iZRQlh6dnS0"
+  }
+},
   {
     slug: "conservation-diaries",
     title: "The Conservation Diaries",
@@ -332,11 +387,40 @@ export type Film = {
   year?: number;
   uploadDate?: string;
   projectSlug?: string;
+  duration?: string;
+  serviceSlugs?: string[];
+  viewingNotes?: { title: string; text: string }[];
 };
 
 // Published catalog snapshot: also provides a useful fallback if the catalog
 // cannot be fetched. New records remain available through the live catalog.
 export const films: Film[] = [
+{
+  "slug": "the-surgeon-who-crossed-the-sea",
+  "youtubeId": "iZRQlh6dnS0",
+  "title": "The Surgeon Who Crossed the Sea",
+  "description": "Produced by Ayni Studios, this legacy film turns Dr. Tuan T. Lam’s voice narration into an animation with painted imagery and photographs.",
+  "category": "Narrated animation · Legacy film",
+  "year": 2026,
+  "uploadDate": "2026-08-19T23:05:12-07:00",
+  "duration": "PT3M59S",
+  "projectSlug": "audio-to-animated-legacy-film",
+  "serviceSlugs": [
+    "legacy-films",
+    "remote-video-production",
+    "editing-and-post-production"
+  ],
+  "viewingNotes": [
+    {
+      "title": "A life story carried by narration",
+      "text": "Ayni Studios took the surgeon’s voice narration and turned it into an animated life story. Painted scenes interpret the past, and photographs connect the story with real people."
+    },
+    {
+      "title": "From your audio to an animated film",
+      "text": "Ayni can use a recorded interview, memory, or narration as the starting point for an animated story. We review the material, agree the narrative and visual style, and develop the film around its intended audience. Legacy films, founder stories, and impact narratives can all use this approach."
+    }
+  ]
+},
   {
     slug: "building-community-resilience",
     youtubeId: "KA5wK3R5ClM",

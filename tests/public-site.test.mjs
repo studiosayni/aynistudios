@@ -109,6 +109,8 @@ test("all project/service/film references resolve and public slugs are unique", 
   for (const f of content.films) {
     assert.match(f.youtubeId, /^[\w-]{11}$/);
     if (f.uploadDate) assert.ok(Number.isFinite(Date.parse(f.uploadDate)));
+    for (const slug of f.serviceSlugs || [])
+      assert.ok(content.services.some((service) => service.slug === slug));
     if (f.projectSlug)
       assert.ok(content.projects.some((p) => p.slug === f.projectSlug));
   }

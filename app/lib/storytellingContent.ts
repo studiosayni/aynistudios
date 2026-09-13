@@ -157,7 +157,8 @@ export const guides = [
       "ngo-video-production"
     ],
     "projectSlugs": [
-      "nature-and-resilience"
+      "nature-and-resilience",
+      "audio-to-animated-legacy-film"
     ]
   },
   {

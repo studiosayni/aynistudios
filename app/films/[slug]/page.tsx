@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPublicFilms } from "../../lib/publicFilms";
-import { SITE_URL, films } from "../../lib/publicContent";
+import { SITE_URL, films, getService } from "../../lib/publicContent";
 import { jsonLd, pageMetadata } from "../../lib/seo";
 import FilmCard from "../../components/FilmCard";
 import InquiryCTA from "../../components/InquiryCTA";
@@ -41,6 +41,7 @@ export default async function FilmPage({
     description: film.description,
     thumbnailUrl: `https://i.ytimg.com/vi/${film.youtubeId}/hqdefault.jpg`,
     uploadDate: film.uploadDate,
+    ...(film.duration ? { duration: film.duration } : {}),
     embedUrl: `https://www.youtube-nocookie.com/embed/${film.youtubeId}`,
     url: `${SITE_URL}/films/${film.slug}`,
     publisher: { "@id": `${SITE_URL}/#organization` },
@@ -98,6 +99,22 @@ export default async function FilmPage({
             </p>
           </aside>
         </section>
+        {film.viewingNotes && (
+          <section className="editorial-grid pb-20">
+            <div className="editorial-copy">
+              {film.viewingNotes.map((note) => (
+                <section key={note.title}><h2>{note.title}</h2><p>{note.text}</p></section>
+              ))}
+            </div>
+            <aside>
+              <p className="eyebrow accent mb-5">Make a story like this</p>
+              <div className="pill-list">{film.serviceSlugs?.map((service) => (
+                <Link href={`/services/${service}`} key={service}>{getService(service)?.title}</Link>
+              ))}</div>
+              {film.duration && <p className="small-copy mt-5">Running time: 3 minutes 59 seconds</p>}
+            </aside>
+          </section>
+        )}
         <section className="section-space border-t border-[#28363a]">
           <h2 className="mb-10">Keep watching</h2>
           <div className="film-grid">

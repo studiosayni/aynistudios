@@ -24,7 +24,7 @@ export async function generateMetadata({
   const p = getProject((await params).slug);
   if (!p) return {};
   return pageMetadata(
-    `${p.client}: ${p.title}`,
+    p.kind === "sample" ? p.title : `${p.client}: ${p.title}`,
     p.summary,
     `/work/${p.slug}`,
     p.slug,
@@ -100,7 +100,7 @@ export default async function ProjectPage({
         <section className="editorial-grid section-space">
           <div className="editorial-copy">
             <p>{p.context}</p>
-            <h2>Our role</h2>
+            <h2>{p.kind === "sample" ? "The production" : "Our role"}</h2>
             <p>{p.role}</p>
             {p.paragraphs.map((text) => (
               <p key={text}>{text}</p>
@@ -154,7 +154,7 @@ export default async function ProjectPage({
           </section>
         )}
         <section className="section-space border-t border-[#28363a]">
-          <h2 className="mb-10">More collaborations</h2>
+          <h2 className="mb-10">More work</h2>
           <div className="project-grid">
             {projects
               .filter((other) => other.slug !== p.slug)
