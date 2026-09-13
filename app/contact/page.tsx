@@ -1,8 +1,9 @@
+import BusinessAddress from "../components/BusinessAddress";
 import { BOOKING_URL } from "../lib/publicContent";
 import { pageMetadata } from "../lib/seo";
 export const metadata = pageMetadata(
   "Start a Project",
-  "Tell Ayni Studios about your documentary, brand film, or editing project. Contact our Los Angeles studio for productions and collaborations worldwide.",
+  "Tell Ayni Studios about your documentary, brand film, or editing project. Contact our Valencia, California studio for productions and collaborations worldwide.",
   "/contact",
   "contact",
 );
@@ -59,7 +60,9 @@ export default function ContactPage() {
           >
             WhatsApp ↗
           </a>
-          <p className="eyebrow mt-8">Los Angeles · Working globally</p>
+          <p className="eyebrow mt-8 mb-4">Business address</p>
+          <BusinessAddress />
+          <p className="eyebrow mt-6">Valencia, CA · Working globally</p>
           <div className="question-block mt-10">
             <h2 style={{ fontSize: 25 }}>What happens next?</h2>
             <p className="body-copy mt-4">

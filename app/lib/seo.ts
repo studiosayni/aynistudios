@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { SITE_URL, services } from "./publicContent";
+import { SITE_URL, services, STUDIO_ADDRESS } from "./publicContent";
 
 export function pageMetadata(
   title: string,
@@ -46,7 +46,7 @@ export const organization = {
   url: SITE_URL,
   logo: `${SITE_URL}/brand/marks/ayni-icon.png`,
   description:
-    "A Los Angeles media production company working globally on documentaries, NGO and conservation stories, brand films, and legacy videos. Flexible options include existing footage, filming kits, audio-led animation, and local filmmakers.",
+    "A Valencia, California media production company serving Los Angeles and working globally on documentaries, NGO and conservation stories, brand films, and legacy videos. Flexible options include existing footage, filming kits, audio-led animation, and local filmmakers.",
   founder: { "@type": "Person", name: "Noah Beilin", sameAs: "https://www.linkedin.com/in/noahbeilin" },
   areaServed: "Worldwide",
   hasOfferCatalog: {
@@ -62,9 +62,7 @@ export const organization = {
   telephone: "+1-818-527-5760",
   address: {
     "@type": "PostalAddress",
-    addressLocality: "Los Angeles",
-    addressRegion: "CA",
-    addressCountry: "US",
+    ...STUDIO_ADDRESS,
   },
   sameAs: [
     "https://www.youtube.com/@Ayni.Studios",

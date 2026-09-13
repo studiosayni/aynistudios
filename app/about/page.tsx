@@ -5,7 +5,7 @@ import PartnerLogos from "../components/PartnerLogos";
 import { pageMetadata } from "../lib/seo";
 export const metadata = pageMetadata(
   "About the Studio",
-  "Ayni Studios is an independent media studio rooted in the Andean principle of reciprocity. Documentary production and brand storytelling from Los Angeles to the world.",
+  "Ayni Studios is an independent media studio rooted in the Andean principle of reciprocity. Documentary production and brand storytelling from Valencia, California to the world.",
   "/about",
   "studio",
 );
@@ -51,7 +51,7 @@ export default function AboutPage() {
             </p>
             <p>
               Our work spans conservation, climate, communities, and the
-              organizations working alongside them. Based in Los Angeles, we
+              organizations working alongside them. Based in Valencia, California, we
               bring a global perspective to both original documentaries and
               commissioned projects.
             </p>

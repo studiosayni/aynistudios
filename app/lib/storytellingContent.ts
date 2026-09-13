@@ -165,7 +165,7 @@ export const guides = [
     "slug": "choosing-a-storytelling-company",
     "title": "How to choose a media company for storytelling",
     "description": "What to look for in a documentary, NGO, impact, or legacy video partner: complete films, a clear role, an appropriate production method, and a realistic scope.",
-    "summary": "Choose a storytelling company by looking at complete films, relevant experience, the proposed production approach, and how it will work with the people in your story. Ayni Studios offers documentary, brand, impact, conservation, and legacy filmmaking from Los Angeles, working globally.",
+    "summary": "Choose a storytelling company by looking at complete films, relevant experience, the proposed production approach, and how it will work with the people in your story. Ayni Studios offers documentary, brand, impact, conservation, and legacy filmmaking from Valencia, California, serving Los Angeles and working globally.",
     "sections": [
       {
         "title": "Start with the story you need to tell",

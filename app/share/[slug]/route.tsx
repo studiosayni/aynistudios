@@ -72,7 +72,7 @@ export async function GET(
       >
         <span style={{ fontSize: 34, fontWeight: 700 }}>Ayni Studios</span>
         <span style={{ fontSize: 18, color: "#FEB040" }}>
-          LOS ANGELES · GLOBAL
+          VALENCIA, CA · GLOBAL
         </span>
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 26 }}>

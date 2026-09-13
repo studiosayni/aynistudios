@@ -10,7 +10,7 @@ import { jsonLd, organization, pageMetadata } from "./lib/seo";
 
 export const metadata = pageMetadata(
   "Documentary & Impact Video Production",
-  "Los Angeles media company for documentary, NGO, conservation, brand, and legacy films. Flexible options: existing footage, filming kits, audio animation, and local filmmakers.",
+  "Valencia, California media company serving Los Angeles: documentary, NGO, conservation, brand, and legacy films. Flexible options: existing footage, filming kits, audio animation, and local filmmakers.",
   "/",
 );
 
@@ -79,8 +79,8 @@ export default function HomePage() {
       <section className="section-space site-width border-t border-[#28363a]">
         <div className="section-heading">
           <div><p className="eyebrow accent">Find the right fit</p><h2>What story brings you here?</h2></div>
-          <p className="body-copy max-w-sm">A Los Angeles media production company
-            working globally with NGOs, conservation organizations, brands, and
+          <p className="body-copy max-w-sm">A Valencia, California media production company
+            serving Los Angeles and working globally with NGOs, conservation organizations, brands, and
             people preserving a legacy.</p>
         </div>
         <div className="specialty-grid">

@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     template: "%s — Ayni Studios",
   },
   description:
-    "Documentary films, brand and impact content, and editing from Ayni Studios. Based in Los Angeles, working globally.",
+    "Documentary films, brand and impact content, and editing from Ayni Studios. Based in Valencia, California, serving Los Angeles and working globally.",
   openGraph: {
     type: "website",
     siteName: "Ayni Studios",

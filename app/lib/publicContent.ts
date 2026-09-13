@@ -3,6 +3,13 @@
 export const CONTENT_UPDATED = "2026-09-13";
 export const BOOKING_URL = "https://calendar.app.google/wqfU6XWyx2Z2vkwR8";
 export const STUDIO_EMAIL = "humanity@ayni-studios.com";
+export const STUDIO_ADDRESS = {
+  streetAddress: "28130 Avenue Crocker, Unit 318",
+  addressLocality: "Valencia",
+  addressRegion: "CA",
+  postalCode: "91355",
+  addressCountry: "US",
+} as const;
 // Public canonical identity is separate from the app's local/auth base URL.
 export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL || "https://ayni-studios.com"

@@ -4,6 +4,7 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import BrandLogo from "./BrandLogo";
+import BusinessAddress from "./BusinessAddress";
 import { isPublicPath, BOOKING_URL } from "../lib/publicContent";
 
 const PrivateFooter = dynamic(() => import("./PrivateFooter"));
@@ -21,7 +22,7 @@ export default function Footer() {
             <p className="body-copy mt-5 max-w-xs">
               Stories for our planet, our humanity, and the future we share.
             </p>
-            <p className="eyebrow mt-6">Los Angeles · Working globally</p>
+            <p className="eyebrow mt-6">Valencia, CA · Working globally</p>
           </div>
           <nav aria-label="Footer navigation">
             <p className="eyebrow">Explore</p>
@@ -48,6 +49,7 @@ export default function Footer() {
             >
               WhatsApp ↗
             </a>
+            <div className="small-copy mt-6"><BusinessAddress /></div>
           </div>
           <nav aria-label="Social profiles">
             <p className="eyebrow">Elsewhere</p>
