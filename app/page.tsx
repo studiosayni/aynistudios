@@ -1,3 +1,4 @@
+import ProductionMethods from "./components/ProductionMethods";
 import Link from "next/link";
 import Image from "next/image";
 import HeroSection from "./components/HeroSection";
@@ -9,7 +10,7 @@ import { jsonLd, organization, pageMetadata } from "./lib/seo";
 
 export const metadata = pageMetadata(
   "Documentary & Impact Video Production",
-  "Ayni Studios produces documentary films, brand and impact content, and edits for organizations changing the world. Based in Los Angeles, working globally.",
+  "Los Angeles media company for documentary, NGO, conservation, brand, and legacy films. Flexible options: existing footage, filming kits, audio animation, and local filmmakers.",
   "/",
 );
 
@@ -59,7 +60,7 @@ export default function HomePage() {
             </p>
           </div>
           <div className="service-list">
-            {services.map((s) => (
+            {services.slice(0, 3).map((s) => (
               <Link
                 key={s.slug}
                 href={`/services/${s.slug}`}
@@ -73,6 +74,24 @@ export default function HomePage() {
             ))}
           </div>
         </div>
+      </section>
+      <div className="site-width"><ProductionMethods /></div>
+      <section className="section-space site-width border-t border-[#28363a]">
+        <div className="section-heading">
+          <div><p className="eyebrow accent">Find the right fit</p><h2>What story brings you here?</h2></div>
+          <p className="body-copy max-w-sm">A Los Angeles media production company
+            working globally with NGOs, conservation organizations, brands, and
+            people preserving a legacy.</p>
+        </div>
+        <div className="specialty-grid">
+          {services.slice(3, 6).map((service) => (
+            <Link className="method-card" href={`/services/${service.slug}`} key={service.slug}>
+              <h3>{service.title}</h3><p className="body-copy">{service.short}</p>
+              <span className="text-link mt-5">Explore this service ↗</span>
+            </Link>
+          ))}
+        </div>
+        <Link className="text-link mt-8" href="/guides/affordable-video-production">How to plan an affordable production ↗</Link>
       </section>
       <section className="section-space site-width">
         <div className="proof-layout">

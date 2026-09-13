@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { SITE_URL } from "./publicContent";
+import { SITE_URL, services } from "./publicContent";
 
 export function pageMetadata(
   title: string,
@@ -46,7 +46,18 @@ export const organization = {
   url: SITE_URL,
   logo: `${SITE_URL}/brand/marks/ayni-icon.png`,
   description:
-    "Documentary production, brand and impact content, and editing from a Los Angeles studio working globally.",
+    "A Los Angeles media production company working globally on documentaries, NGO and conservation stories, brand films, and legacy videos. Flexible options include existing footage, filming kits, audio-led animation, and local filmmakers.",
+  founder: { "@type": "Person", name: "Noah Beilin", sameAs: "https://www.linkedin.com/in/noahbeilin" },
+  areaServed: "Worldwide",
+  hasOfferCatalog: {
+    "@type": "OfferCatalog", name: "Video production and storytelling services",
+    itemListElement: services.map((service) => ({
+      "@type": "Offer", itemOffered: {
+        "@type": "Service", "@id": `${SITE_URL}/services/${service.slug}#service`,
+        name: service.title, url: `${SITE_URL}/services/${service.slug}`,
+      },
+    })),
+  },
   email: "humanity@ayni-studios.com",
   telephone: "+1-818-527-5760",
   address: {
@@ -62,3 +73,13 @@ export const organization = {
     "https://www.linkedin.com/company/ayni-studios",
   ],
 };
+
+export function breadcrumbs(items: { name: string; path: string }[]) {
+  return {
+    "@context": "https://schema.org", "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem", position: index + 1, name: item.name,
+      item: `${SITE_URL}${item.path}`,
+    })),
+  };
+}

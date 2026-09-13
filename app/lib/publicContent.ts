@@ -90,6 +90,115 @@ export const services = [
     answer:
       "Yes. Tell us what you have, what you want to make, and where it will be shown. We will review the material and propose an approach before agreeing the edit scope.",
   },
+  {
+    "slug": "ngo-video-production",
+    "number": "04",
+    "title": "NGO & nonprofit video production",
+    "short": "Make your mission understandable. Keep people at the centre.",
+    "description": "NGO and nonprofit storytelling, programme films, and donor communications. Ayni Studios brings WWF and IFRC programme experience to documentary-led video production.",
+    "intro": "Ayni Studios creates films for NGOs, nonprofits, and organizations working on social and environmental impact. We help turn programme information, field interviews, and partner footage into a story that audiences can understand and connect with.",
+    "audience": "For communications teams explaining a programme, engaging supporters, reporting on work, or preparing a film for a launch, conference, or campaign.",
+    "offerings": [
+      "Programme launch and impact films",
+      "Community and participant stories",
+      "Donor and supporter communications",
+      "Films assembled from partner or field-team footage",
+      "Versions for events, websites, and social channels"
+    ],
+    "process": [
+      "Identify the audience, the programme story, and which claims can be supported by your evidence.",
+      "Agree participant permissions, interview plans, and partner review responsibilities before production.",
+      "Choose new filming, existing footage, filming kits, audio-led animation, or local filmmakers to suit the brief.",
+      "Review the narrative with your team and prepare the agreed event and digital versions."
+    ],
+    "projectSlugs": [
+      "nature-and-resilience",
+      "conservation-diaries"
+    ],
+    "question": "Have you worked on films involving international NGOs?",
+    "answer": "Yes. Our BCRN programme film involved Emirates Nature–WWF, WWF International, and the International Federation of Red Cross and Red Crescent Societies (IFRC). We gathered and edited footage from multiple countries into one narrative. The film was showcased at COP30 and the IUCN World Conservation Congress 2025; the case study links to programme sources."
+  },
+  {
+    "slug": "environmental-conservation-filmmaking",
+    "number": "05",
+    "title": "Environmental & conservation storytelling",
+    "short": "Connect ecosystems, evidence, and the people doing the work.",
+    "description": "Environmental films and conservation documentaries from Ayni Studios. Explore mangrove restoration, citizen science, Amazon stories, and nature-based resilience work.",
+    "intro": "Ayni Studios makes environmental and conservation films that connect the natural world with human experience. Our work includes mangrove restoration and citizen science in the UAE, documentary stories in the Amazon, and a programme film about nature-based solutions and community resilience.",
+    "audience": "For conservation organizations, environmental NGOs, researchers, foundations, and brands with a specific, substantiated environmental story to share.",
+    "offerings": [
+      "Conservation documentaries and episodic series",
+      "Interviews with researchers and conservation practitioners",
+      "Community perspectives on environmental change",
+      "Nature-based solutions and programme explainers",
+      "Environmental brand and partnership stories"
+    ],
+    "process": [
+      "Define the environmental question, the people closest to it, and the evidence needed to explain it accurately.",
+      "Plan interviews and imagery around location access, seasonal conditions, and participant needs.",
+      "Choose field production or a combination of partner footage, local filmmakers, and editorial work.",
+      "Review scientific terminology and claims with your designated subject experts before final delivery."
+    ],
+    "projectSlugs": [
+      "conservation-diaries",
+      "nature-and-resilience",
+      "panasonic-lumix"
+    ],
+    "question": "What makes an environmental film more than beautiful nature footage?",
+    "answer": "A clear question and a human perspective give the imagery meaning. In The Conservation Diaries, mangrove restoration and citizen science offer specific ways into the wider conservation story. The aim is to connect what people see with what is happening, why it matters, and who is involved."
+  },
+  {
+    "slug": "legacy-films",
+    "number": "06",
+    "title": "Legacy films & life stories",
+    "short": "Preserve the voices, memories, and decisions that shaped a life.",
+    "description": "Personal, family, founder, and organizational legacy films. Ayni Studios combines interviews, archive material, existing recordings, and audio-led animation.",
+    "intro": "Ayni Studios offers legacy videos for individuals, families, founders, organizations, and institutions. A legacy film can preserve a person’s life story, the memories of a family, or the people and decisions behind an organization’s history.",
+    "audience": "For families preserving memories, founders reflecting on their journey, and organizations marking a milestone or passing knowledge to the next generation.",
+    "offerings": [
+      "Personal biographies and family life stories",
+      "Founder interviews and organizational histories",
+      "Archive photographs, home videos, and recorded memories",
+      "Audio-led stories with animation",
+      "Private family films or versions intended for public sharing"
+    ],
+    "process": [
+      "Discuss whose story is being told, who should see it, and which memories matter most.",
+      "Review available photographs, recordings, and documents, including permission to use them.",
+      "Choose interviews with a filmmaker, a filming kit, existing footage, or audio recordings with animated visuals.",
+      "Shape the story with agreed family or organizational reviewers and confirm the final delivery audience."
+    ],
+    "projectSlugs": [],
+    "question": "Can we make a legacy film from audio or older family footage?",
+    "answer": "Yes. Existing audio, home videos, and photographs can provide the starting point. We can build an animated narrative around supplied audio or combine recordings with interviews and archive material. We review the material’s quality and permissions first, and agree which memories, people, and visuals belong in the film."
+  },
+  {
+    "slug": "remote-video-production",
+    "number": "07",
+    "title": "Remote & flexible video production",
+    "short": "Your footage. Our kits. Local filmmakers. One considered story.",
+    "description": "Send existing footage, use a filming kit, turn audio into an animated story, or work with local filmmakers. Flexible Ayni Studios production options for budgets and deadlines.",
+    "intro": "Ayni Studios offers several ways to make a film without sending a full production crew to every location. You can send us footage you already have, receive a filming kit, supply audio for an animated narrative, or work with filmmakers in local communities around the world.",
+    "audience": "For NGOs, brands, institutions, and families that need a production approach suited to a limited budget, dispersed contributors, recurring content, or a time-sensitive story.",
+    "offerings": [
+      "Editing and storytelling from your existing footage",
+      "Filming kits sent to your team or contributors",
+      "Animated narratives built around supplied audio",
+      "Production with filmmakers in local communities",
+      "A combined approach for multiple locations and formats"
+    ],
+    "process": [
+      "Share your brief, budget range, deadline, locations, and any footage or recordings already available.",
+      "Choose the combination of existing material, filming kits, audio-led animation, and local filming that the story needs.",
+      "Agree capture requirements, contributor responsibilities, kit logistics, and the edit and review plan.",
+      "Bring the contributions into a coherent narrative and deliver the versions included in the scope."
+    ],
+    "projectSlugs": [
+      "nature-and-resilience"
+    ],
+    "question": "Can remote production reduce video costs and turnaround time?",
+    "answer": "It can. Existing footage can remove the need for a new shoot; filming kits and local filmmakers can reduce crew travel; supplied audio can become the basis of an animated film. Shared planning and capture requirements can also improve consistency and make recurring content easier to produce. Savings and timing depend on the material, locations, animation complexity, logistics, and review process, so we scope each project individually."
+  },
 ] as const;
 
 export type Project = {
@@ -134,7 +243,7 @@ export const projects: Project[] = [
       "The Floating Forest explores mangrove restoration in the UAE. Voices of Change follows citizen scientists mapping the country’s species and habitats.",
       "Together, the episodes make space for both the environments being protected and the people doing the work. Each offers a way into a larger conservation story through a specific place or human perspective.",
     ],
-    serviceSlugs: ["documentary-production", "brand-and-impact-content"],
+    serviceSlugs: ["documentary-production", "brand-and-impact-content", "environmental-conservation-filmmaking", "ngo-video-production"],
     filmIds: ["71RKXOFeaco", "qrDvFXIixPY"],
   },
   {
@@ -194,7 +303,7 @@ export const projects: Project[] = [
       "The film was shown on a panel at the UAE government pavilion during the IUCN World Conservation Congress 2025 in Abu Dhabi. The programme’s launch announcement records a US$10 million anchor commitment from the UAE Aid Agency.",
       "The same film was showcased at a COP30 Panda event introducing the next phase of the global partnership. It is also featured on Emirates Nature–WWF’s programme page, giving the story a life beyond the launch events.",
     ],
-    serviceSlugs: ["editing-and-post-production", "brand-and-impact-content"],
+    serviceSlugs: ["editing-and-post-production", "brand-and-impact-content", "ngo-video-production", "remote-video-production"],
     filmIds: ["KA5wK3R5ClM"],
     source: {
       label: "Explore the programme and film at Emirates Nature–WWF",
@@ -342,6 +451,7 @@ export function isPublicPath(path: string) {
       "/about",
       "/contact",
       "/privacy",
+      "/guides",
     ].some((prefix) => path === prefix || path.startsWith(`${prefix}/`))
   );
 }

@@ -37,6 +37,7 @@ function load(relative, dependencies = {}, env = {}) {
 }
 const inquiry = load("../app/lib/inquiry.ts");
 const content = load("../app/lib/publicContent.ts");
+const storytelling = load("../app/lib/storytellingContent.ts");
 const good = {
   name: "Test producer",
   email: "producer@example.com",
@@ -92,6 +93,19 @@ test("all project/service/film references resolve and public slugs are unique", 
     for (const id of p.filmIds || [])
       assert.ok(content.films.some((f) => f.youtubeId === id));
   }
+  for (const service of content.services) {
+    for (const slug of service.projectSlugs)
+      assert.ok(content.projects.some((project) => project.slug === slug));
+  }
+  for (const guide of storytelling.guides) {
+    assert.ok(content.isPublicPath(`/guides/${guide.slug}`));
+    for (const slug of guide.serviceSlugs)
+      assert.ok(content.services.some((service) => service.slug === slug));
+    for (const slug of guide.projectSlugs)
+      assert.ok(content.projects.some((project) => project.slug === slug));
+  }
+  for (const slug of Object.keys(storytelling.serviceQuestions))
+    assert.ok(content.services.some((service) => service.slug === slug));
   for (const f of content.films) {
     assert.match(f.youtubeId, /^[\w-]{11}$/);
     if (f.uploadDate) assert.ok(Number.isFinite(Date.parse(f.uploadDate)));

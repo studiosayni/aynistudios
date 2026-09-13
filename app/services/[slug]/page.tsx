@@ -1,3 +1,5 @@
+import ProductionMethods from "../../components/ProductionMethods";
+import { serviceQuestions } from "../../lib/storytellingContent";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -7,7 +9,7 @@ import {
   SITE_URL,
   BOOKING_URL,
 } from "../../lib/publicContent";
-import { jsonLd, pageMetadata } from "../../lib/seo";
+import { breadcrumbs, jsonLd, pageMetadata } from "../../lib/seo";
 import ProjectCard from "../../components/ProjectCard";
 import InquiryCTA from "../../components/InquiryCTA";
 export function generateStaticParams() {
@@ -33,6 +35,9 @@ export default async function ServicePage({
   const schema = {
     "@context": "https://schema.org",
     "@type": "Service",
+    "@id": `${SITE_URL}/services/${s.slug}#service`,
+    areaServed: "Worldwide",
+    serviceType: s.title,
     name: s.title,
     description: s.description,
     url: `${SITE_URL}/services/${s.slug}`,
@@ -49,6 +54,10 @@ export default async function ServicePage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLd(schema) }}
       />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(breadcrumbs([
+        { name: "Home", path: "/" }, { name: "Services", path: "/services" },
+        { name: s.title, path: `/services/${s.slug}` },
+      ])) }} />
       <div className="site-width">
         <nav aria-label="Breadcrumb" className="breadcrumb">
           <Link href="/services">Services</Link>
@@ -96,7 +105,8 @@ export default async function ServicePage({
             ))}
           </ol>
         </section>
-        <section className="pb-20">
+        {s.slug === "remote-video-production" && <ProductionMethods detailed />}
+        {s.projectSlugs.length > 0 && <section className="pb-20">
           <div className="section-heading">
             <div>
               <p className="eyebrow accent">In practice</p>
@@ -109,10 +119,29 @@ export default async function ServicePage({
               return p ? <ProjectCard key={slug} project={p} /> : null;
             })}
           </div>
-        </section>
-        <section className="question-block mb-20">
+        </section>}
+        <section className="pb-20 service-questions">
+          <h2 className="mb-8">Planning your project</h2>
+          <div className="question-block">
           <h3>{s.question}</h3>
           <p className="body-copy">{s.answer}</p>
+          </div>
+          {(serviceQuestions[s.slug] || []).map((item) => (
+            <div className="question-block" key={item.question}>
+              <h3>{item.question}</h3><p className="body-copy">{item.answer}</p>
+            </div>
+          ))}
+        </section>
+        <section className="editorial-grid pb-20">
+          <div><h2>A scope that fits.</h2></div>
+          <div className="editorial-copy">
+            <p>Looking for an affordable media company? We can discuss existing footage,
+              filming kits, audio-led animation, and local filmmakers alongside new
+              field production. The right approach depends on your story, material,
+              budget, and deadline.</p>
+            <Link href="/guides/affordable-video-production" className="text-link">Plan your production budget ↗</Link>
+            <br /><Link href="/guides/choosing-a-storytelling-company" className="text-link mt-5">Choosing a storytelling partner ↗</Link>
+          </div>
         </section>
       </div>
       <InquiryCTA />

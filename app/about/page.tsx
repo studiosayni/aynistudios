@@ -22,7 +22,8 @@ export default function AboutPage() {
           </h1>
           <p className="body-copy">
             Ayni Studios is an independent media studio working across
-            documentary production, brand storytelling, and impact content.
+            documentary production, brand storytelling, NGO and conservation films,
+            and personal and organizational legacy videos.
           </p>
         </header>
         <div className="project-masthead">
@@ -112,7 +113,15 @@ export default function AboutPage() {
               practical: more time for the craft, and better value for our
               clients.
             </p>
-            <Link href="/services" className="text-link">
+            <p>
+              Flexible production is already part of how we work. Clients can send
+              existing footage, receive filming kits, supply audio for animated
+              narratives, or work with filmmakers in local communities around the
+              world. These options can reduce travel and production costs and make
+              repeat content easier to produce, with scope and quality reviewed
+              for each project.
+            </p>
+            <Link href="/services/remote-video-production" className="text-link">
               Explore how we work ↗
             </Link>
           </div>

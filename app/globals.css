@@ -1260,3 +1260,65 @@ a.partner-tile:hover {
     gap: 6px;
   }
 }
+
+/* Visible planning content and flexible production options. */
+.method-grid,
+.guide-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+.specialty-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+.method-card {
+  display: block;
+  padding: 32px;
+  border: 1px solid #34464b;
+  background: #0c171a;
+}
+.method-card h3,
+.public-site .method-card h2 {
+  font-size: 27px;
+  line-height: 1.18;
+  margin: 15px 0;
+}
+.method-benefit {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 22px 0 12px;
+  color: #e4b86f;
+}
+.guide-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 80px;
+  align-items: start;
+}
+.guide-aside {
+  border-left: 1px solid #34464b;
+  padding-left: 30px;
+  margin-top: 40px;
+}
+.guide-aside a {
+  display: block;
+  margin: 0 0 18px;
+  color: #dce4eb;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.guide-aside a:hover { color: #feb040; }
+.guide-section { scroll-margin-top: 140px; }
+.service-questions .question-block + .question-block { margin-top: 20px; }
+@media (max-width: 1000px) {
+  .specialty-grid { grid-template-columns: 1fr; }
+  .guide-layout { gap: 36px; }
+}
+@media (max-width: 760px) {
+  .method-grid, .guide-grid, .guide-layout { grid-template-columns: 1fr; }
+  .method-card { padding: 24px; }
+  .guide-aside { margin-top: 0; }
+  .guide-section { scroll-margin-top: 155px; }
+}

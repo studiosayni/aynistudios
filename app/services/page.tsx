@@ -3,7 +3,7 @@ import InquiryCTA from "../components/InquiryCTA";
 import { services, BOOKING_URL } from "../lib/publicContent";
 import { pageMetadata } from "../lib/seo";
 export const metadata = pageMetadata(
-  "Documentary, Brand Content & Editing Services",
+  "Video Production, NGO Films & Storytelling Services",
   "Documentary production, brand and impact content, and editing. Explore how Ayni Studios can help develop your story, produce a film, or work with existing footage.",
   "/services",
   "services",
@@ -20,8 +20,9 @@ export default function ServicesPage() {
             Our shared craft.
           </h1>
           <p className="body-copy">
-            From a first conversation to a finished film. Bring us an idea, a
-            production brief, or the footage you already have.
+            Documentaries, NGO and conservation stories, brand content, and legacy
+            films. Work with us through new filming, existing footage, filming
+            kits, audio-led animation, or local filmmakers.
           </p>
         </header>
         <div className="service-list mb-16">
@@ -60,6 +61,11 @@ export default function ServicesPage() {
               brand collaboration, or editing from existing material. The
               approach should fit the story and your resources.
             </p>
+            <p>For an affordable approach, we can explore using your footage,
+              sending filming kits, building animation around audio, or working
+              with filmmakers in local communities. We scope the production
+              around your material, audience, and budget.</p>
+            <p><Link href="/guides/affordable-video-production" className="text-link">Compare production and budget options ↗</Link></p>
             <a
               href={BOOKING_URL}
               className="text-link"

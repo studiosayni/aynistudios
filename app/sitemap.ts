@@ -1,3 +1,4 @@
+import { guides } from "./lib/storytellingContent";
 import type { MetadataRoute } from "next";
 import {
   CONTENT_UPDATED,
@@ -13,6 +14,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "",
     "/library",
     "/services",
+    "/guides",
+    ...guides.map((guide) => `/guides/${guide.slug}`),
     "/about",
     "/contact",
     "/privacy",

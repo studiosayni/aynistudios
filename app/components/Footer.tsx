@@ -27,6 +27,7 @@ export default function Footer() {
             <p className="eyebrow">Explore</p>
             <Link href="/library">Our work</Link>
             <Link href="/services">Services</Link>
+            <Link href="/guides">Production guides</Link>
             <Link href="/about">The studio</Link>
             <a href={BOOKING_URL} data-track="booking_click">Start a project</a>
             <Link href="/login">Client login</Link>

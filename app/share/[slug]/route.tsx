@@ -1,3 +1,4 @@
+import { guides } from "../../lib/storytellingContent";
 import { ImageResponse } from "next/og";
 import { films, projects, services } from "../../lib/publicContent";
 
@@ -24,6 +25,8 @@ const pages = [
     label: "Start a project",
   },
   { slug: "privacy", title: "Your privacy matters.", label: "Ayni Studios" },
+  { slug: "guides", title: "Good questions. A clearer brief.", label: "Video production planning" },
+  ...guides.map((guide) => ({ slug: guide.slug, title: guide.title, label: "Ayni Studios guide" })),
   ...projects.map((p) => ({ slug: p.slug, title: p.title, label: p.client })),
   ...services.map((s) => ({
     slug: s.slug,
