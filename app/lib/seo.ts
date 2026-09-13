@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { SITE_URL, services, STUDIO_ADDRESS } from "./publicContent";
+import { SITE_URL, services, STUDIO_ADDRESS, NATURE_FOR_LIFE } from "./publicContent";
 
 export function pageMetadata(
   title: string,
@@ -46,7 +46,12 @@ export const organization = {
   url: SITE_URL,
   logo: `${SITE_URL}/brand/marks/ayni-icon.png`,
   description:
-    "A Valencia, California media production company serving Los Angeles and working globally on documentaries, NGO and conservation stories, brand films, and legacy videos. Flexible options include existing footage, filming kits, audio-led animation, and local filmmakers.",
+    "A Valencia, California media production company serving Los Angeles and working globally on documentaries, NGO and conservation stories, brand films, and legacy videos. Flexible options include existing footage, filming kits, audio-led animation, and local filmmakers. Its documentary They Live in Our World was selected for UNDP’s Nature for Life Hub 2024.",
+  subjectOf: {
+    "@type": "WebPage",
+    name: "Nature for Life Hub 2024 — Day 3: They Live in Our World by Ayni Studios",
+    url: NATURE_FOR_LIFE.sourceUrl,
+  },
   founder: { "@type": "Person", name: "Noah Beilin", sameAs: "https://www.linkedin.com/in/noahbeilin" },
   areaServed: "Worldwide",
   hasOfferCatalog: {

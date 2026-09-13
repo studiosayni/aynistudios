@@ -1,3 +1,4 @@
+import NatureForLifeRecognition from "./components/NatureForLifeRecognition";
 import ProductionMethods from "./components/ProductionMethods";
 import Link from "next/link";
 import Image from "next/image";
@@ -10,7 +11,7 @@ import { jsonLd, organization, pageMetadata } from "./lib/seo";
 
 export const metadata = pageMetadata(
   "Documentary & Impact Video Production",
-  "Valencia, California media company serving Los Angeles: documentary, NGO, conservation, brand, and legacy films. Flexible options: existing footage, filming kits, audio animation, and local filmmakers.",
+  "Ayni Studios creates documentary, NGO, conservation, brand, and legacy films. Work showcased at COP30 and IUCN, and selected for UNDP’s Nature for Life Hub.",
   "/",
 );
 
@@ -103,7 +104,8 @@ export default function HomePage() {
               beyond the screen.
             </h2>
             <p className="body-copy mt-6">
-              Our work has been showcased at COP30 and the IUCN World Congress.
+              Our work has been showcased at COP30 and the IUCN World Congress,
+              and selected for UNDP’s Nature for Life Hub.
               Behind each appearance is a story, and the people who made it
               possible.
             </p>
@@ -140,6 +142,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      <div className="site-width"><NatureForLifeRecognition /></div>
       <section className="studio-preview">
         <div className="studio-preview-image">
           <Image

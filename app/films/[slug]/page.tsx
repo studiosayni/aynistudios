@@ -1,7 +1,8 @@
+import NatureForLifeRecognition from "../../components/NatureForLifeRecognition";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPublicFilms } from "../../lib/publicFilms";
-import { SITE_URL, films, getService } from "../../lib/publicContent";
+import { SITE_URL, films, getService, NATURE_FOR_LIFE } from "../../lib/publicContent";
 import { jsonLd, pageMetadata } from "../../lib/seo";
 import FilmCard from "../../components/FilmCard";
 import InquiryCTA from "../../components/InquiryCTA";
@@ -38,6 +39,8 @@ export default async function FilmPage({
     "@context": "https://schema.org",
     "@type": "VideoObject",
     name: film.title,
+    ...(film.subtitle ? { alternateName: film.subtitle } : {}),
+    ...(film.sourceUrl ? { citation: film.sourceUrl } : {}),
     description: film.description,
     thumbnailUrl: `https://i.ytimg.com/vi/${film.youtubeId}/hqdefault.jpg`,
     uploadDate: film.uploadDate,
@@ -60,6 +63,7 @@ export default async function FilmPage({
             {film.client ? ` · ${film.client}` : ""}
           </p>
           <h1>{film.title}</h1>
+          {film.subtitle && <p className="body-copy">{film.subtitle}</p>}
         </header>
         {film.uploadDate && (
           <script
@@ -99,6 +103,7 @@ export default async function FilmPage({
             </p>
           </aside>
         </section>
+        {film.slug === NATURE_FOR_LIFE.filmSlug && <NatureForLifeRecognition showFilmLink={false} />}
         {film.viewingNotes && (
           <section className="editorial-grid pb-20">
             <div className="editorial-copy">

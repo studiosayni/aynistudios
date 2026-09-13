@@ -1,3 +1,4 @@
+import NatureForLifeRecognition from "../components/NatureForLifeRecognition";
 import Link from "next/link";
 import Image from "next/image";
 import InquiryCTA from "../components/InquiryCTA";
@@ -5,7 +6,7 @@ import PartnerLogos from "../components/PartnerLogos";
 import { pageMetadata } from "../lib/seo";
 export const metadata = pageMetadata(
   "About the Studio",
-  "Ayni Studios is an independent media studio rooted in the Andean principle of reciprocity. Documentary production and brand storytelling from Valencia, California to the world.",
+  "Meet Ayni Studios, an independent documentary and storytelling company in Valencia, California. Our film They Live in Our World was selected for UNDP’s Nature for Life Hub.",
   "/about",
   "studio",
 );
@@ -90,6 +91,7 @@ export default function AboutPage() {
           </div>
         </section>
       </div>
+      <div className="site-width"><NatureForLifeRecognition /></div>
       <PartnerLogos />
       <div className="site-width section-space">
         <div className="editorial-grid">

@@ -1,6 +1,11 @@
 // Editorial content for the public website. Keep claims tied to the sources
 // in _docs/relaunch-implementation.md; dates below are content revisions.
 export const CONTENT_UPDATED = "2026-09-13";
+export const NATURE_FOR_LIFE = {
+  filmSlug: "orphaned-monkeys-of-the-amazon",
+  sourceUrl: "https://www.learningfornature.org/en/nature-for-life-hub-2024/day3/",
+  recognition: "Selected for UNDP’s Nature for Life Hub 2024",
+} as const;
 export const BOOKING_URL = "https://calendar.app.google/wqfU6XWyx2Z2vkwR8";
 export const STUDIO_EMAIL = "humanity@ayni-studios.com";
 export const STUDIO_ADDRESS = {
@@ -130,7 +135,7 @@ export const services = [
     "number": "05",
     "title": "Environmental & conservation storytelling",
     "short": "Connect ecosystems, evidence, and the people doing the work.",
-    "description": "Environmental films and conservation documentaries from Ayni Studios. Explore mangrove restoration, citizen science, Amazon stories, and nature-based resilience work.",
+    "description": "Conservation documentaries by Ayni Studios, including They Live in Our World, selected for UNDP’s Nature for Life Hub 2024. Explore our environmental storytelling.",
     "intro": "Ayni Studios makes environmental and conservation films that connect the natural world with human experience. Our work includes mangrove restoration and citizen science in the UAE, documentary stories in the Amazon, and a programme film about nature-based solutions and community resilience.",
     "audience": "For conservation organizations, environmental NGOs, researchers, foundations, and brands with a specific, substantiated environmental story to share.",
     "offerings": [
@@ -388,6 +393,9 @@ export type Film = {
   slug: string;
   youtubeId: string;
   title: string;
+  subtitle?: string;
+  recognition?: string;
+  sourceUrl?: string;
   description: string;
   category: string;
   client?: string;
@@ -498,9 +506,17 @@ export const films: Film[] = [
     slug: "orphaned-monkeys-of-the-amazon",
     youtubeId: "QELtdAIjjs0",
     uploadDate: "2024-06-02T06:02:48-07:00",
-    title: "Orphaned Monkeys of the Amazon Rainforest",
+    title: "They Live in Our World",
+    subtitle: "Orphaned Monkeys of the Amazon Rainforest",
+    recognition: NATURE_FOR_LIFE.recognition,
+    sourceUrl: NATURE_FOR_LIFE.sourceUrl,
     description:
-      "The orphaned monkeys of the Amazon rainforest and the people who care for them.",
+      "They Live in Our World, an Ayni Studios documentary about orphaned monkeys in the Amazon rainforest, selected for UNDP’s Nature for Life Hub 2024.",
+    serviceSlugs: ["environmental-conservation-filmmaking", "documentary-production", "ngo-video-production"],
+    viewingNotes: [{
+      title: "Conservation through a shared world",
+      text: "At La Isla de Los Monos, a primate sanctuary in the Peruvian Amazon, the film observes the lives of rescued monkeys and the people caring for them. It connects this intimate perspective with the environmental pressures facing the surrounding rainforest.",
+    }],
     category: "Documentary",
     year: 2024,
   },

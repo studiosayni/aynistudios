@@ -1,3 +1,4 @@
+import NatureForLifeRecognition from "../../components/NatureForLifeRecognition";
 import ProductionMethods from "../../components/ProductionMethods";
 import { serviceQuestions } from "../../lib/storytellingContent";
 import Link from "next/link";
@@ -120,6 +121,7 @@ export default async function ServicePage({
             })}
           </div>
         </section>}
+        {["environmental-conservation-filmmaking", "documentary-production", "ngo-video-production"].includes(s.slug) && <NatureForLifeRecognition />}
         <section className="pb-20 service-questions">
           <h2 className="mb-8">Planning your project</h2>
           <div className="question-block">

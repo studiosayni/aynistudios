@@ -1,3 +1,4 @@
+import NatureForLifeRecognition from "../components/NatureForLifeRecognition";
 import Link from "next/link";
 import ProjectCard from "../components/ProjectCard";
 import FilmCard from "../components/FilmCard";
@@ -9,7 +10,7 @@ import { pageMetadata } from "../lib/seo";
 export const revalidate = 300;
 export const metadata = pageMetadata(
   "Documentary Films & Selected Client Work",
-  "Explore Ayni Studios’ documentary films and client work for Panasonic Global, Emirates Nature–WWF, and global conservation and humanitarian initiatives.",
+  "Explore Ayni Studios’ films, including They Live in Our World, selected for UNDP’s Nature for Life Hub, and work for Panasonic Global and Emirates Nature–WWF.",
   "/library",
   "work",
 );
@@ -63,6 +64,7 @@ export default async function LibraryPage() {
             <FilmCard film={animationSample} />
           </section>
         )}
+        <NatureForLifeRecognition />
         <section
           id="films"
           className="section-space border-t border-[#28363a] scroll-mt-28"

@@ -20,6 +20,8 @@ export default function FilmCard({
       </div>
       <p className="eyebrow accent">{film.category}</p>
       <h3>{film.title}</h3>
+      {film.subtitle && <p className="small-copy">{film.subtitle}</p>}
+      {film.recognition && <p className="small-copy mt-3">{film.recognition}</p>}
       <p className="small-copy">
         {[film.client, film.year].filter(Boolean).join(" · ")}
       </p>
