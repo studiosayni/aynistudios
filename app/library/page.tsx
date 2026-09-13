@@ -1,115 +1,75 @@
-import type { Metadata } from "next";
-import FeaturedVideoCard from "../components/FeaturedVideoCard";
-import LibraryThumbnail from "../components/LibraryThumbnail";
-import PlayLink from "../components/PlayLink";
-import PlayBadge from "../components/PlayBadge";
-import { fetchLibraryServer } from "../lib/libraryServer";
-import { pickFeatured, type LibraryItem } from "../lib/libraryShared";
+import Link from "next/link";
+import ProjectCard from "../components/ProjectCard";
+import FilmCard from "../components/FilmCard";
+import InquiryCTA from "../components/InquiryCTA";
+import { projects } from "../lib/publicContent";
+import { getPublicFilms } from "../lib/publicFilms";
+import { pageMetadata } from "../lib/seo";
 
-// Server-rendered: the catalog arrives in the HTML rather than via a
-// client-side Firestore call, which a blocked googleapis.com would stall
-// forever. Only the interactive leaves (FeaturedVideoCard's play facade,
-// LibraryThumbnail's fallback chain) are client components.
-
-export const metadata: Metadata = {
-  title: "Library",
-  description:
-    "Documentary productions, brand work, and episodic series from Ayni Studios.",
-  openGraph: {
-    title: "Library — Ayni Studios",
-    description:
-      "Documentary productions, brand work, and episodic series from Ayni Studios.",
-  },
-};
-
-// The catalog changes rarely; re-read it every 5 minutes rather than on
-// every request.
 export const revalidate = 300;
-
+export const metadata = pageMetadata(
+  "Documentary Films & Selected Client Work",
+  "Explore Ayni Studios’ documentary films and client work for Panasonic Global, Emirates Nature–WWF, and global conservation and humanitarian initiatives.",
+  "/library",
+  "work",
+);
 export default async function LibraryPage() {
-  let items: LibraryItem[] = [];
-  let failed = false;
-
-  try {
-    items = await fetchLibraryServer();
-  } catch (err) {
-    console.error("Library fetch error:", err);
-    failed = true;
-  }
-
-  const featured = pickFeatured(items);
-  const rest = featured ? items.filter((i) => i.dbId !== featured.dbId) : items;
-
+  const films = await getPublicFilms();
   return (
-    <div className="max-w-7xl mx-auto px-6 py-20">
-      <header className="mb-12">
-        <span className="text-[10px] font-bold uppercase tracked text-[#FEB040]">
-          Non-Fiction Content
-        </span>
-        <h1 className="mt-3 text-5xl md:text-6xl font-black uppercase tracked">
-          Library
-        </h1>
-        <p className="mt-6 text-lg text-[#DCE4EB]/70 max-w-2xl leading-relaxed">
-          Documentary productions, brand work, and episodic series.
-        </p>
-      </header>
-
-      {failed && (
-        <p className="py-20 text-center text-sm font-bold uppercase tracked text-red-400/80">
-          Unable to load library. Check back soon.
-        </p>
-      )}
-
-      {!failed && items.length === 0 && (
-        <p className="py-20 text-center text-sm font-bold uppercase tracked text-[#DCE4EB]/50">
-          New work coming soon.
-        </p>
-      )}
-
-      {featured && (
-        <div className="mb-16">
-          <FeaturedVideoCard item={featured} />
-        </div>
-      )}
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {rest.map((item) => (
-          <PlayLink
-            key={item.dbId}
-            item={item}
-            className="group flex flex-col rounded-2xl overflow-hidden border border-[#1b282d] bg-[#0C1619]/70 backdrop-blur-md hover:border-[#FEB040]/60 transition-colors"
-          >
-            <div className="relative aspect-video bg-[#080F11]">
-              <LibraryThumbnail
-                item={item}
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                className="group-hover:scale-105 transition-transform duration-500"
-              />
-              <PlayBadge />
+    <div className="public-site">
+      <div className="site-width">
+        <header className="page-heading">
+          <p className="eyebrow accent">The work</p>
+          <h1>
+            Stories with
+            <br />
+            something at stake.
+          </h1>
+          <p className="body-copy">
+            Documentary films, brand collaborations, and stories that connect
+            people with the world around them.
+          </p>
+          <div className="pill-list">
+            <a href="#client-work">Client work</a>
+            <a href="#films">Films & series</a>
+          </div>
+        </header>
+        <section
+          id="client-work"
+          className="pb-20 scroll-mt-36"
+          aria-labelledby="client-work-title"
+        >
+          <h2 id="client-work-title" className="mb-9">
+            Selected collaborations
+          </h2>
+          <div className="project-grid">
+            {projects.map((p) => (
+              <ProjectCard key={p.slug} project={p} />
+            ))}
+          </div>
+        </section>
+        <section
+          id="films"
+          className="section-space border-t border-[#28363a] scroll-mt-28"
+          aria-labelledby="films-title"
+        >
+          <div className="section-heading">
+            <div>
+              <p className="eyebrow accent">The library</p>
+              <h2 id="films-title">Films & series</h2>
             </div>
-            <div className="p-6">
-              {item.category && (
-                <span className="text-[10px] font-bold uppercase tracked text-[#FEB040]">
-                  {item.category}
-                </span>
-              )}
-              <h2 className="mt-2 text-xl font-bold uppercase tracked-tight leading-tight text-white">
-                {item.title}
-              </h2>
-              {(item.client || item.year) && (
-                <p className="mt-2 text-xs font-bold uppercase tracked text-[#7B878F]">
-                  {[item.client, item.year].filter(Boolean).join(" · ")}
-                </p>
-              )}
-              {item.description && (
-                <p className="mt-4 text-sm text-[#DCE4EB]/60 leading-relaxed line-clamp-3">
-                  {item.description}
-                </p>
-              )}
-            </div>
-          </PlayLink>
-        ))}
+            <Link href="/services" className="text-link">
+              Our services ↗
+            </Link>
+          </div>
+          <div className="film-grid">
+            {films.map((f) => (
+              <FilmCard film={f} key={f.youtubeId} />
+            ))}
+          </div>
+        </section>
       </div>
+      <InquiryCTA />
     </div>
   );
 }

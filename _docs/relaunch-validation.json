@@ -1,0 +1,166 @@
+{
+  "pageCount": 21,
+  "pages": [
+    {
+      "path": "/",
+      "h1": 1,
+      "players": 0,
+      "schemas": [
+        "Organization"
+      ]
+    },
+    {
+      "path": "/library",
+      "h1": 1,
+      "players": 0,
+      "schemas": []
+    },
+    {
+      "path": "/services",
+      "h1": 1,
+      "players": 0,
+      "schemas": []
+    },
+    {
+      "path": "/about",
+      "h1": 1,
+      "players": 0,
+      "schemas": []
+    },
+    {
+      "path": "/contact",
+      "h1": 1,
+      "players": 0,
+      "schemas": []
+    },
+    {
+      "path": "/privacy",
+      "h1": 1,
+      "players": 0,
+      "schemas": []
+    },
+    {
+      "path": "/work/conservation-diaries",
+      "h1": 1,
+      "players": 0,
+      "schemas": [
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/work/panasonic-lumix",
+      "h1": 1,
+      "players": 0,
+      "schemas": [
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/work/nature-and-resilience",
+      "h1": 1,
+      "players": 0,
+      "schemas": [
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/services/documentary-production",
+      "h1": 1,
+      "players": 0,
+      "schemas": [
+        "Service"
+      ]
+    },
+    {
+      "path": "/services/brand-and-impact-content",
+      "h1": 1,
+      "players": 0,
+      "schemas": [
+        "Service"
+      ]
+    },
+    {
+      "path": "/services/editing-and-post-production",
+      "h1": 1,
+      "players": 0,
+      "schemas": [
+        "Service"
+      ]
+    },
+    {
+      "path": "/films/building-community-resilience",
+      "h1": 1,
+      "players": 1,
+      "schemas": [
+        "VideoObject"
+      ]
+    },
+    {
+      "path": "/films/the-floating-forest",
+      "h1": 1,
+      "players": 1,
+      "schemas": [
+        "VideoObject"
+      ]
+    },
+    {
+      "path": "/films/voices-of-change",
+      "h1": 1,
+      "players": 1,
+      "schemas": [
+        "VideoObject"
+      ]
+    },
+    {
+      "path": "/films/commercial-fishing-in-the-amazon",
+      "h1": 1,
+      "players": 1,
+      "schemas": [
+        "VideoObject"
+      ]
+    },
+    {
+      "path": "/films/do-plants-have-spirits",
+      "h1": 1,
+      "players": 1,
+      "schemas": [
+        "VideoObject"
+      ]
+    },
+    {
+      "path": "/films/oil-spill-threatens-the-galapagos",
+      "h1": 1,
+      "players": 1,
+      "schemas": [
+        "VideoObject"
+      ]
+    },
+    {
+      "path": "/films/orphaned-monkeys-of-the-amazon",
+      "h1": 1,
+      "players": 1,
+      "schemas": [
+        "VideoObject"
+      ]
+    },
+    {
+      "path": "/films/the-bridge-to-nowhere",
+      "h1": 1,
+      "players": 1,
+      "schemas": [
+        "VideoObject"
+      ]
+    },
+    {
+      "path": "/films/what-is-ayni",
+      "h1": 1,
+      "players": 1,
+      "schemas": [
+        "VideoObject"
+      ]
+    }
+  ],
+  "assetCount": 42,
+  "errors": [],
+  "sitemapVideoEntries": 9
+}

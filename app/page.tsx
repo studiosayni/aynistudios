@@ -1,109 +1,153 @@
+import Link from "next/link";
+import Image from "next/image";
 import HeroSection from "./components/HeroSection";
 import PartnerLogos from "./components/PartnerLogos";
-import LibraryCarousel from "./components/LibraryCarousel";
-import PortalSignInCard from "./components/PortalSignInCard";
-import ContactCard from "./components/ContactCard";
-import QuoteSection from "./components/QuoteSection";
-import { fetchLibraryServer } from "./lib/libraryServer";
-import type { LibraryItem } from "./lib/libraryShared";
+import ProjectCard from "./components/ProjectCard";
+import InquiryCTA from "./components/InquiryCTA";
+import { projects, services } from "./lib/publicContent";
+import { jsonLd, organization, pageMetadata } from "./lib/seo";
 
-const BASE_URL =
-  process.env.NEXT_PUBLIC_BASE_URL || "https://ayni-studios.com";
+export const metadata = pageMetadata(
+  "Documentary & Impact Video Production",
+  "Ayni Studios produces documentary films, brand and impact content, and edits for organizations changing the world. Based in Los Angeles, working globally.",
+  "/",
+);
 
-// Organization structured data (schema.org) for search engines.
-const organizationJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "Ayni Studios",
-  url: BASE_URL,
-  logo: `${BASE_URL}/brand/logo-icon-whitestroke.png`,
-  description:
-    "Ayni Studios is a media studio producing documentary and impact content for the planet, humanity, and the future.",
-  email: "humanity@ayni-studios.com",
-  telephone: "+1-818-527-5760",
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Los Angeles",
-    addressRegion: "CA",
-    addressCountry: "US",
-  },
-  sameAs: [
-    "https://www.youtube.com/@Ayni.Studios",
-    "https://www.instagram.com/ayni_studios",
-    "https://www.tiktok.com/@ayni_studios",
-  ],
-};
-
-// Matches /library: the catalog changes rarely, so re-read it every 5 minutes
-// rather than on every request.
-export const revalidate = 300;
-
-export default async function HomePage() {
-  // Fetched here rather than in the carousel so the cards ship in the HTML —
-  // a client-side Firestore call stalls indefinitely behind a network filter,
-  // leaving the carousel on its skeletons forever.
-  let carouselItems: LibraryItem[] = [];
-  try {
-    const all = await fetchLibraryServer(12);
-    carouselItems = [
-      ...all.filter((i) => i.featured),
-      ...all.filter((i) => !i.featured),
-    ].slice(0, 8);
-  } catch (err) {
-    console.error("Library carousel fetch error:", err);
-  }
-
+export default function HomePage() {
   return (
-    <div>
+    <div className="public-site">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(organizationJsonLd).replace(/</g, "\\u003c"),
-        }}
+        dangerouslySetInnerHTML={{ __html: jsonLd(organization) }}
       />
-
-      {/* HERO — the ParticleField backdrop (layout-level) runs at full
-          intensity behind this viewport and dims as you scroll; HeroSection
-          adds ghosted word-image echoes synchronized with the rotator. */}
       <HeroSection />
-
-      {/* LIBRARY PREVIEW */}
-      <div id="library-preview">
-        <LibraryCarousel items={carouselItems} />
-      </div>
-
-      {/* PARTNERS */}
       <PartnerLogos />
-
-      {/* MALCOLM X QUOTE */}
-      <QuoteSection />
-
-      {/* PORTAL + CONTACT CARDS — the page's closer. The hero's "Client
-          Portal" button anchors here, so this stays #portal.
-          data-backdrop: loud. This is the emptiest section on the page — two
-          cards in a 1024px column with ~400px of bare page either side — and
-          the only one with nothing of its own competing for attention, so it
-          is where the particle field earns its keep. See ParticleField. */}
-      <section
-        id="portal"
-        data-backdrop="0.9"
-        className="pb-24 md:pb-32 px-6 scroll-mt-20"
-      >
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <span className="text-[10px] font-bold uppercase tracked text-[#FEB040]">
-              Work with us
-            </span>
-            <h2 className="mt-3 text-4xl md:text-5xl font-black uppercase tracked">
-              Clients &amp; Contact
+      <section className="section-space site-width" id="selected-work">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow accent">Selected work</p>
+            <h2>
+              Good stories.
+              <br />
+              Real-world purpose.
             </h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-6 items-stretch">
-            <PortalSignInCard />
-            <ContactCard />
+          <Link href="/library" className="text-link">
+            All work <span aria-hidden="true">↗</span>
+          </Link>
+        </div>
+        <div className="project-grid">
+          {projects.map((p) => (
+            <ProjectCard key={p.slug} project={p} />
+          ))}
+        </div>
+      </section>
+      <section className="services-section section-space">
+        <div className="site-width">
+          <div className="section-heading">
+            <div>
+              <p className="eyebrow accent">What we do</p>
+              <h2>
+                From first idea
+                <br />
+                to final frame.
+              </h2>
+            </div>
+            <p className="body-copy max-w-sm">
+              A production partner for documentary stories, brand campaigns, and
+              the footage you already have.
+            </p>
+          </div>
+          <div className="service-list">
+            {services.map((s) => (
+              <Link
+                key={s.slug}
+                href={`/services/${s.slug}`}
+                className="service-row"
+              >
+                <span className="service-number">{s.number}</span>
+                <h3>{s.title}</h3>
+                <p>{s.short}</p>
+                <span aria-hidden="true">↗</span>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
+      <section className="section-space site-width">
+        <div className="proof-layout">
+          <div>
+            <p className="eyebrow accent">Stories on a global stage</p>
+            <h2>
+              Work that travels
+              <br />
+              beyond the screen.
+            </h2>
+            <p className="body-copy mt-6">
+              Our work has been showcased at COP30 and the IUCN World Congress.
+              Behind each appearance is a story, and the people who made it
+              possible.
+            </p>
+            <Link className="text-link mt-7" href="/work/nature-and-resilience">
+              Inside the BCRN programme film <span aria-hidden="true">↗</span>
+            </Link>
+          </div>
+          <div className="event-proof">
+            <p className="eyebrow">Work showcased at</p>
+            <div className="event-logos">
+              <Image
+                src="/brand/partners/cop30.webp"
+                width={160}
+                height={90}
+                alt="COP30"
+                unoptimized
+              />
+              <Image
+                src="/brand/partners/iucn.webp"
+                width={160}
+                height={90}
+                alt="IUCN World Congress"
+                unoptimized
+              />
+            </div>
+            <p>
+              For BCRN, we brought footage from multiple countries into one
+              story about human resilience and nature-led solutions, shown at
+              both COP30 and IUCN.
+            </p>
+            <span className="small-copy">
+              COP30 · UAE pavilion at IUCN World Congress 2025
+            </span>
+          </div>
+        </div>
+      </section>
+      <section className="studio-preview">
+        <div className="studio-preview-image">
+          <Image
+            src="/brand/hero/hero-7-1280.webp"
+            fill
+            sizes="(max-width: 760px) 100vw, 50vw"
+            alt="A gathering in the field, from Ayni Studios’ editorial photography"
+          />
+        </div>
+        <div className="studio-preview-copy">
+          <p className="eyebrow accent">The meaning behind the name</p>
+          <h2>
+            Give back
+            <br />
+            what you receive.
+          </h2>
+          <p className="body-copy">
+            Ayni is an Andean principle of reciprocity. It shapes how we see our
+            work: stories made in service of people, ecosystems, and a shared
+            future.
+          </p>
+          <Link href="/about" className="text-link mt-7">
+            Meet the studio <span aria-hidden="true">↗</span>
+          </Link>
+        </div>
+      </section>
+      <InquiryCTA />
     </div>
   );
 }

@@ -1,7 +1,5 @@
 import type { MetadataRoute } from "next";
-
-const BASE_URL =
-  process.env.NEXT_PUBLIC_BASE_URL || "https://ayni-studios.com";
+import { SITE_URL } from "./lib/publicContent";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -19,6 +17,6 @@ export default function robots(): MetadataRoute.Robots {
         ],
       },
     ],
-    sitemap: `${BASE_URL}/sitemap.xml`,
+    sitemap: `${SITE_URL}/sitemap.xml`,
   };
 }

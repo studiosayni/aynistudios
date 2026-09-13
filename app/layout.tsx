@@ -3,37 +3,34 @@ import type { Metadata } from "next";
 import { Barlow } from "next/font/google";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import ParticleField from "./components/ParticleField";
+import PublicEnhancements from "./components/PublicEnhancements";
 import { LightboxProvider } from "./components/VideoLightbox";
 import { Toaster } from "react-hot-toast";
+import { SITE_URL } from "./lib/publicContent";
 
-// Every declared weight gets its own preload, so unused ones are dead
-// requests. 800 has zero uses across app/ — 500 is kept for the ParticleField
-// canvas, which sets it as a raw font string rather than a Tailwind class.
+// Four weights cover the public editorial design; no animation-only weight.
 const barlow = Barlow({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "900"],
+  weight: ["400", "600", "700", "900"],
   variable: "--font-barlow",
 });
 
-const BASE_URL =
-  process.env.NEXT_PUBLIC_BASE_URL || "https://ayni-studios.com";
-
 export const metadata: Metadata = {
-  metadataBase: new URL(BASE_URL),
+  metadataBase: new URL(SITE_URL),
+  verification: { google: process.env.GOOGLE_SITE_VERIFICATION },
   title: {
-    default: "Ayni Studios — Media Forged For Our Future",
+    default: "Ayni Studios — Documentary & Impact Video Production",
     template: "%s — Ayni Studios",
   },
   description:
-    "Ayni Studios is a media studio producing documentary and impact content for the planet, humanity, and the future.",
+    "Documentary films, brand and impact content, and editing from Ayni Studios. Based in Los Angeles, working globally.",
   openGraph: {
     type: "website",
     siteName: "Ayni Studios",
     title: "Ayni Studios — Media Forged For Our Future",
     description:
       "Documentary and impact content for the planet, humanity, and the future.",
-    url: BASE_URL,
+    url: SITE_URL,
   },
   twitter: {
     card: "summary_large_image",
@@ -51,7 +48,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={barlow.variable}>
       <body className="bg-[#080F11] text-[#DCE4EB] antialiased min-h-screen flex flex-col">
-        <ParticleField />
+        <a href="#main-content" className="skip-link">
+          Skip to content
+        </a>
+        <PublicEnhancements />
         <Navbar />
 
         <Toaster
@@ -78,7 +78,13 @@ export default function RootLayout({
         {/* Client provider wrapping server children — the pages stay server
             components; only the player overlay ships as client JS. */}
         <LightboxProvider>
-          <main className="font-sans relative z-10 flex-grow">{children}</main>
+          <main
+            id="main-content"
+            tabIndex={-1}
+            className="font-sans relative z-10 flex-grow"
+          >
+            {children}
+          </main>
         </LightboxProvider>
 
         <Footer />
