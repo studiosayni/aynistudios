@@ -1,6 +1,6 @@
 // Editorial content for the public website. Keep claims tied to the sources
 // in _docs/relaunch-implementation.md; dates below are content revisions.
-export const CONTENT_UPDATED = "2026-09-13";
+export const CONTENT_UPDATED = "2026-09-15";
 export const NATURE_FOR_LIFE = {
   filmSlug: "orphaned-monkeys-of-the-amazon",
   sourceUrl: "https://www.learningfornature.org/en/nature-for-life-hub-2024/day3/",
@@ -43,7 +43,7 @@ export const services = [
       "Plan the access, interviews, locations, and production approach around the story.",
       "Shape the footage into a film, with agreed review stages and delivery formats.",
     ],
-    projectSlugs: ["conservation-diaries"],
+    projectSlugs: ["conservation-diaries", "seafood-souq-south-africa"],
     question: "Do we need a finished brief?",
     answer:
       "No. Tell us what you are working on, who the film should reach, and any important dates. We can help develop the story and define the production scope with you.",
@@ -70,7 +70,7 @@ export const services = [
       "Choose an editorial approach and formats that fit the campaign or channel.",
       "Create and review the content against the agreed brief and delivery plan.",
     ],
-    projectSlugs: ["panasonic-lumix", "nature-and-resilience"],
+    projectSlugs: ["panasonic-lumix", "seafood-souq-south-africa", "goumbook-sustainability-stories", "nature-and-resilience"],
     question: "Can we work together beyond a single film?",
     answer:
       "Yes. We can discuss a series, channel-focused collaboration, or ongoing content plan. We agree the scope and deliverables around your goals rather than assuming every organization needs the same package.",
@@ -125,7 +125,8 @@ export const services = [
     ],
     "projectSlugs": [
       "nature-and-resilience",
-      "conservation-diaries"
+      "conservation-diaries",
+      "goumbook-sustainability-stories"
     ],
     "question": "Have you worked on films involving international NGOs?",
     "answer": "Yes. Our BCRN programme film involved Emirates Nature–WWF, WWF International, and the International Federation of Red Cross and Red Crescent Societies (IFRC). We gathered and edited footage from multiple countries into one narrative. The film was showcased at COP30 and the IUCN World Conservation Congress 2025; the case study links to programme sources."
@@ -154,7 +155,9 @@ export const services = [
     "projectSlugs": [
       "conservation-diaries",
       "nature-and-resilience",
-      "panasonic-lumix"
+      "panasonic-lumix",
+      "seafood-souq-south-africa",
+      "goumbook-sustainability-stories"
     ],
     "question": "What makes an environmental film more than beautiful nature footage?",
     "answer": "A clear question and a human perspective give the imagery meaning. In The Conservation Diaries, mangrove restoration and citizen science offer specific ways into the wider conservation story. The aim is to connect what people see with what is happening, why it matters, and who is involved."
@@ -387,6 +390,107 @@ export const projects: Project[] = [
       },
     ],
   },
+{
+  "slug": "seafood-souq-south-africa",
+  "title": "Seafood traceability, from the water onwards",
+  "client": "Seafood Souq",
+  "category": "Brand documentary · Supply-chain transparency",
+  "summary": "An Ayni Studios film made in Cape Town, South Africa, connecting pole-and-line tuna fishing with Seafood Souq’s work on digital seafood traceability.",
+  "image": "https://i.ytimg.com/vi/Z1qjvzce4Cs/maxresdefault.jpg",
+  "imageAlt": "Seafood Souq x ICV: Digitising South Africa Tuna Pole & Line Fisheries",
+  "context": "Seafood supply chains span oceans, ports, and markets. Seafood Souq uses digital technology to support transparency and accountability across that journey. Its partnership with a pole-and-line tuna fishing company in Cape Town provides a specific setting for explaining that work.",
+  "role": "Ayni Studios made this film in South Africa to promote Seafood Souq and tell the story of its partnership with ICV in the pole-and-line tuna fishery.",
+  "details": [
+    {
+      "label": "Client",
+      "value": "Seafood Souq"
+    },
+    {
+      "label": "Location",
+      "value": "Cape Town, South Africa"
+    },
+    {
+      "label": "Featured partnership",
+      "value": "Seafood Souq × ICV"
+    },
+    {
+      "label": "Format",
+      "value": "Brand documentary"
+    },
+    {
+      "label": "Focus",
+      "value": "Digital traceability and seafood supply-chain transparency"
+    }
+  ],
+  "paragraphs": [
+    "The film connects a technology business with the fishing community and industry it serves. A concrete place and partnership give audiences a way into the wider question of where seafood comes from and how information follows it through the supply chain.",
+    "For businesses communicating environmental or social commitments, this is a useful storytelling approach: show the work in context, explain the intended benefit, and give the people and places behind the partnership a visible role.",
+    "Seafood Souq published the film on its own channel under the title “Seafood Souq x ICV – Digitising South Africa Tuna Pole & Line Fisheries.” It is an example of our brand and environmental storytelling work, with the finished film available below."
+  ],
+  "serviceSlugs": [
+    "brand-and-impact-content",
+    "documentary-production",
+    "environmental-conservation-filmmaking"
+  ],
+  "filmIds": [
+    "Z1qjvzce4Cs"
+  ],
+  "source": {
+    "label": "Watch Seafood Souq’s original upload",
+    "href": "https://www.youtube.com/watch?v=Z1qjvzce4Cs"
+  }
+},
+{
+  "slug": "goumbook-sustainability-stories",
+  "title": "Sustainability through people and action",
+  "client": "Goumbook",
+  "category": "Brand stories · Community impact films",
+  "summary": "Four Ayni Studios films for Goumbook: its founder story, Give a Ghaf, food-waste recovery, and coastal conservation in the UAE.",
+  "image": "https://i.ytimg.com/vi/F1bQIX2dM4s/maxresdefault.jpg",
+  "imageAlt": "Goumbook: Changing Mindsets in the UAE and beyond",
+  "context": "Goumbook’s work brings together sustainability education, businesses, and communities. These four films offer different ways into that mission: the organization’s story, its origins in tree planting, and two examples of community action.",
+  "role": "Ayni Studios created these video samples for Goumbook, which published the films on its own YouTube channel.",
+  "details": [
+    {
+      "label": "Client",
+      "value": "Goumbook"
+    },
+    {
+      "label": "Region",
+      "value": "United Arab Emirates"
+    },
+    {
+      "label": "Collection",
+      "value": "Four published films"
+    },
+    {
+      "label": "Formats",
+      "value": "Founder story, programme storytelling, and community impact films"
+    }
+  ],
+  "paragraphs": [
+    "Changing Mindsets in the UAE and Beyond introduces the organization through its founder, Tatiana, and the work connecting education, business engagement, and regional collaboration.",
+    "The Give a Ghaf origin story uses the tree-planting programme to explore Goumbook’s beginnings and its connection to desert biodiversity, water awareness, and the natural world.",
+    "Fighting Food Waste, Feeding Communities follows the Eat It or Save It initiative during Ramadan. The film connects food recovery with meals for communities in Dubai.",
+    "Community in Action documents a coastal clean-up and marine release at Jebel Ali Wildlife Sanctuary, with Goumbook’s Drop It initiative supporting the event.",
+    "Together, the collection shows how an organization can communicate at different levels: explain its purpose, preserve its origin story, and share specific examples of its work. Each film has a dedicated watch page below."
+  ],
+  "serviceSlugs": [
+    "brand-and-impact-content",
+    "environmental-conservation-filmmaking",
+    "ngo-video-production"
+  ],
+  "filmIds": [
+    "F1bQIX2dM4s",
+    "My_X9Av1Fmw",
+    "nOMAU0T7qaU",
+    "UBsFG4uQniA"
+  ],
+  "source": {
+    "label": "Explore Goumbook’s YouTube channel",
+    "href": "https://www.youtube.com/@Goumbook"
+  }
+},
 ];
 
 export type Film = {
@@ -410,6 +514,71 @@ export type Film = {
 // Published catalog snapshot: also provides a useful fallback if the catalog
 // cannot be fetched. New records remain available through the live catalog.
 export const films: Film[] = [
+{
+  "slug": "seafood-souq-south-africa-tuna",
+  "youtubeId": "Z1qjvzce4Cs",
+  "title": "Seafood Souq × ICV: South Africa’s Pole-and-Line Tuna Fishery",
+  "description": "An Ayni Studios film made in Cape Town for Seafood Souq, exploring its ICV partnership and digital transparency in the seafood supply chain.",
+  "client": "Seafood Souq",
+  "category": "Brand documentary",
+  "year": 2025,
+  "uploadDate": "2025-06-12T10:08:59-07:00",
+  "duration": "PT9M36S",
+  "projectSlug": "seafood-souq-south-africa",
+  "sourceUrl": "https://www.youtube.com/watch?v=Z1qjvzce4Cs"
+},
+{
+  "slug": "goumbook-changing-mindsets",
+  "youtubeId": "F1bQIX2dM4s",
+  "title": "Goumbook: Changing Mindsets in the UAE and Beyond",
+  "description": "An Ayni Studios film for Goumbook, with founder Tatiana introducing the organization’s story and its work in sustainability education, business engagement, and collaboration.",
+  "client": "Goumbook",
+  "category": "Founder & brand story",
+  "year": 2025,
+  "uploadDate": "2025-09-15T01:27:28-07:00",
+  "duration": "PT2M11S",
+  "projectSlug": "goumbook-sustainability-stories",
+  "sourceUrl": "https://www.youtube.com/watch?v=F1bQIX2dM4s"
+},
+{
+  "slug": "goumbook-give-a-ghaf-origin-story",
+  "youtubeId": "My_X9Av1Fmw",
+  "title": "Give a Ghaf: Goumbook’s Origin Story",
+  "description": "An Ayni Studios film for Goumbook exploring how the Give a Ghaf tree-planting programme connects its origin story with water awareness and biodiversity in the UAE.",
+  "client": "Goumbook",
+  "category": "Environmental storytelling",
+  "year": 2025,
+  "uploadDate": "2025-07-03T00:02:14-07:00",
+  "duration": "PT4M7S",
+  "projectSlug": "goumbook-sustainability-stories",
+  "sourceUrl": "https://www.youtube.com/watch?v=My_X9Av1Fmw"
+},
+{
+  "slug": "goumbook-food-waste-ramadan",
+  "youtubeId": "nOMAU0T7qaU",
+  "title": "Fighting Food Waste, Feeding Communities",
+  "description": "An Ayni Studios film for Goumbook about its Eat It or Save It initiative during Ramadan, connecting food-waste recovery with meals for communities in Dubai.",
+  "client": "Goumbook",
+  "category": "Community impact film",
+  "year": 2025,
+  "uploadDate": "2025-06-24T05:44:26-07:00",
+  "duration": "PT1M30S",
+  "projectSlug": "goumbook-sustainability-stories",
+  "sourceUrl": "https://www.youtube.com/watch?v=nOMAU0T7qaU"
+},
+{
+  "slug": "goumbook-jebel-ali-clean-up",
+  "youtubeId": "UBsFG4uQniA",
+  "title": "Community in Action at Jebel Ali Sanctuary",
+  "description": "An Ayni Studios film for Goumbook about a coastal clean-up and marine release at Jebel Ali Wildlife Sanctuary, supported by the Drop It initiative.",
+  "client": "Goumbook",
+  "category": "Conservation & community film",
+  "year": 2025,
+  "uploadDate": "2025-06-24T06:01:53-07:00",
+  "duration": "PT1M30S",
+  "projectSlug": "goumbook-sustainability-stories",
+  "sourceUrl": "https://www.youtube.com/watch?v=UBsFG4uQniA"
+},
 {
   "slug": "the-surgeon-who-crossed-the-sea",
   "youtubeId": "iZRQlh6dnS0",

@@ -10,7 +10,7 @@ import { pageMetadata } from "../lib/seo";
 export const revalidate = 300;
 export const metadata = pageMetadata(
   "Documentary Films & Selected Client Work",
-  "Explore Ayni Studios’ films, including They Live in Our World, selected for UNDP’s Nature for Life Hub, and work for Panasonic Global and Emirates Nature–WWF.",
+  "Explore Ayni Studios’ films for Seafood Souq, Goumbook, Panasonic Global, and Emirates Nature–WWF, plus our UNDP Nature for Life Hub selection.",
   "/library",
   "work",
 );

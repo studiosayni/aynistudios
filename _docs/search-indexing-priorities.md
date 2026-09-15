@@ -1,6 +1,6 @@
 # Search Console indexing priorities
 
-Submit [sitemap.xml](https://ayni-studios.com/sitemap.xml) in the verified property for https://ayni-studios.com/. The sitemap contains all 30 public pages, including ten film pages. Submitting it supports discovery; it is not a guarantee of indexing or rankings.
+Submit [sitemap.xml](https://ayni-studios.com/sitemap.xml) in the verified property for https://ayni-studios.com/. The sitemap contains all 37 public pages, including fifteen film pages. Submitting it supports discovery; it is not a guarantee of indexing or rankings.
 
 Use URL Inspection for these priority pages and request indexing when appropriate. Work through the list within the quota Search Console makes available; do not repeatedly resubmit unchanged URLs.
 
@@ -37,3 +37,16 @@ The service overview, guide index, contact/privacy pages, and individual films a
 Use Search Console's indexing reports and Web performance data to assess discovery, impressions, relevant queries, and clicks. Track actual booked conversations separately from booking-link clicks. Google says AI Overviews/AI Mode traffic is included within Web search reporting; visibility can vary by question and context.
 
 Source: [Google — AI features and your website](https://developers.google.com/search/docs/appearance/ai-features).
+
+
+## Added September 15: Seafood Souq and Goumbook
+
+Prioritize the two case studies, then the five new watch pages. The existing sitemap URL includes all seven automatically; there is no need to restart earlier indexing requests.
+
+- [Seafood Souq — South Africa case study](https://ayni-studios.com/work/seafood-souq-south-africa)
+- [Goumbook — sustainability stories case study](https://ayni-studios.com/work/goumbook-sustainability-stories)
+- [Seafood Souq × ICV — tuna fishery film](https://ayni-studios.com/films/seafood-souq-south-africa-tuna)
+- [Goumbook — Changing Mindsets](https://ayni-studios.com/films/goumbook-changing-mindsets)
+- [Give a Ghaf — Goumbook’s Origin Story](https://ayni-studios.com/films/goumbook-give-a-ghaf-origin-story)
+- [Fighting Food Waste, Feeding Communities](https://ayni-studios.com/films/goumbook-food-waste-ramadan)
+- [Community in Action at Jebel Ali Sanctuary](https://ayni-studios.com/films/goumbook-jebel-ali-clean-up)

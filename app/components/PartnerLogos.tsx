@@ -17,8 +17,8 @@ const partners = [
     file: "ifrc-wwf.webp",
     href: "/work/nature-and-resilience",
   },
-  { name: "Goumbook", file: "goumbook.webp" },
-  { name: "Seafood Souq", file: "sfs.webp" },
+  { name: "Goumbook", file: "goumbook.webp", href: "/work/goumbook-sustainability-stories" },
+  { name: "Seafood Souq", file: "sfs.webp", href: "/work/seafood-souq-south-africa" },
   { name: "teamLab", file: "teamlab.webp" },
 ];
 export default function PartnerLogos() {

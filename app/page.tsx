@@ -39,7 +39,7 @@ export default function HomePage() {
           </Link>
         </div>
         <div className="project-grid">
-          {projects.filter((project) => project.kind !== "sample").map((p) => (
+          {projects.filter((project) => project.kind !== "sample").slice(0, 3).map((p) => (
             <ProjectCard key={p.slug} project={p} />
           ))}
         </div>
