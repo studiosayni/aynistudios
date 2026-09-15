@@ -36,8 +36,8 @@ export default function HeroSection() {
               world.
             </p>
             <p className="hero-detail">
-              From field production to the final edit, we help conservation
-              organizations, institutions, and brands tell stories that move people.
+              From field production to the final edit, we help organizations,
+              institutions, and brands tell stories that move people.
             </p>
             <div className="button-row">
               <a href={BOOKING_URL} className="button" data-track="booking_click">

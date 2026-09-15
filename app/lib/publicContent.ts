@@ -43,7 +43,7 @@ export const services = [
       "Plan the access, interviews, locations, and production approach around the story.",
       "Shape the footage into a film, with agreed review stages and delivery formats.",
     ],
-    projectSlugs: ["conservation-diaries", "seafood-souq-south-africa"],
+    projectSlugs: ["conservation-diaries", "seafood-souq-south-africa", "amazonia-expeditions"],
     question: "Do we need a finished brief?",
     answer:
       "No. Tell us what you are working on, who the film should reach, and any important dates. We can help develop the story and define the production scope with you.",
@@ -70,7 +70,7 @@ export const services = [
       "Choose an editorial approach and formats that fit the campaign or channel.",
       "Create and review the content against the agreed brief and delivery plan.",
     ],
-    projectSlugs: ["panasonic-lumix", "seafood-souq-south-africa", "goumbook-sustainability-stories", "nature-and-resilience"],
+    projectSlugs: ["panasonic-lumix", "seafood-souq-south-africa", "goumbook-sustainability-stories", "amazonia-expeditions", "mahdi-laith-marine-conservation", "nature-and-resilience"],
     question: "Can we work together beyond a single film?",
     answer:
       "Yes. We can discuss a series, channel-focused collaboration, or ongoing content plan. We agree the scope and deliverables around your goals rather than assuming every organization needs the same package.",
@@ -157,7 +157,9 @@ export const services = [
       "nature-and-resilience",
       "panasonic-lumix",
       "seafood-souq-south-africa",
-      "goumbook-sustainability-stories"
+      "goumbook-sustainability-stories",
+      "amazonia-expeditions",
+      "mahdi-laith-marine-conservation"
     ],
     "question": "What makes an environmental film more than beautiful nature footage?",
     "answer": "A clear question and a human perspective give the imagery meaning. In The Conservation Diaries, mangrove restoration and citizen science offer specific ways into the wider conservation story. The aim is to connect what people see with what is happening, why it matters, and who is involved."
@@ -491,6 +493,105 @@ export const projects: Project[] = [
     "href": "https://www.youtube.com/@Goumbook"
   }
 },
+{
+  "slug": "amazonia-expeditions",
+  "title": "Life and adventure in the Peruvian Amazon",
+  "client": "Amazonia Expeditions",
+  "category": "Travel films · Wildlife storytelling",
+  "summary": "Four Ayni Studios films for Amazonia Expeditions, bringing rainforest wildlife, the journey to Tahuayo Lodge, and a canopy adventure to its audience.",
+  "image": "https://i.ytimg.com/vi/oa8rEH-oN40/maxresdefault.jpg",
+  "imageAlt": "Canopy Zipline Experience, a film for Amazonia Expeditions",
+  "context": "For a travel business, the destination is more than a location. These films introduce the experiences, wildlife, and journeys that shape a visit to the Peruvian Amazon with Amazonia Expeditions.",
+  "role": "Ayni Studios produced these four films for Amazonia Expeditions. The company published them on its own YouTube channel, with an Ayni Studios production credit in each description.",
+  "details": [
+    {
+      "label": "Client",
+      "value": "Amazonia Expeditions"
+    },
+    {
+      "label": "Location",
+      "value": "Peruvian Amazon"
+    },
+    {
+      "label": "Collection",
+      "value": "Four published films"
+    },
+    {
+      "label": "Focus",
+      "value": "Travel experiences, rainforest wildlife, and destination storytelling"
+    }
+  ],
+  "paragraphs": [
+    "Journey to the Lodge follows Amazonia Expeditions owner Dolly Beaver on the river journey from Iquitos towards Tahuayo Lodge. It introduces the route into the rainforest as part of the experience itself.",
+    "The Saki Monkey and Searching for the Red Uakari bring two primates into focus, giving the audience a closer look at the wildlife around the company’s rainforest lodges.",
+    "Canopy Zipline Experience shifts the perspective above the forest floor. Alongside the river journey and wildlife films, it shows a different part of the visitor experience.",
+    "The collection is an example of how short films can work together for a travel or hospitality brand: introduce a place, answer a visitor’s curiosity, and show distinct reasons to explore it. Each film can also stand on its own on the client’s channel."
+  ],
+  "serviceSlugs": [
+    "brand-and-impact-content",
+    "documentary-production",
+    "environmental-conservation-filmmaking"
+  ],
+  "filmIds": [
+    "QkDwrFqKS6w",
+    "0xWwD1A-65w",
+    "F5k8-wiNgnQ",
+    "oa8rEH-oN40"
+  ],
+  "source": {
+    "label": "Explore Amazonia Expeditions’ YouTube channel",
+    "href": "https://www.youtube.com/@amazoniaexpeditions"
+  }
+},
+{
+  "slug": "mahdi-laith-marine-conservation",
+  "title": "Marine conservation with Mahdi Laith",
+  "client": "Mahdi Laith",
+  "category": "Creator collaboration · Environmental storytelling",
+  "summary": "Ayni Studios’ collaboration with environmental creator Mahdi Laith on a film about releasing sharks and stingrays at Jebel Ali Reserve in Dubai.",
+  "image": "https://i.ytimg.com/vi/iQOZ8iwQA1Q/maxresdefault.jpg",
+  "imageAlt": "Releasing Sharks and Stingrays, published by Mahdi Laith",
+  "context": "A marine release at Jebel Ali Reserve in Dubai provides the setting for this collaboration with environmental creator Mahdi Laith. The film brings a specific conservation activity to the audience of his own channel.",
+  "role": "Ayni Studios collaborated with Mahdi Laith on this film, which he published on his YouTube channel in January 2024.",
+  "details": [
+    {
+      "label": "Collaborator",
+      "value": "Mahdi Laith"
+    },
+    {
+      "label": "Location",
+      "value": "Jebel Ali Reserve, Dubai, UAE"
+    },
+    {
+      "label": "Published",
+      "value": "January 2024"
+    },
+    {
+      "label": "Format",
+      "value": "Environmental creator collaboration"
+    },
+    {
+      "label": "Subject",
+      "value": "Release of sharks and stingrays"
+    }
+  ],
+  "paragraphs": [
+    "The published description explains that the marine animals were bred at Atlantis before their release. The film follows that return to the sea through the perspective of an environmental creator.",
+    "For organizations working with creators, a specific event offers a clear story to share: what is happening, where it takes place, and why the activity matters. This project is one example of Ayni’s work connecting environmental subjects with creator-led communication.",
+    "The original upload carries an Arabic and English title. The watch page below presents the film as published on Mahdi’s channel and links back to the original source."
+  ],
+  "serviceSlugs": [
+    "brand-and-impact-content",
+    "environmental-conservation-filmmaking"
+  ],
+  "filmIds": [
+    "iQOZ8iwQA1Q"
+  ],
+  "source": {
+    "label": "Watch Mahdi Laith’s original upload",
+    "href": "https://www.youtube.com/watch?v=iQOZ8iwQA1Q"
+  }
+},
 ];
 
 export type Film = {
@@ -514,6 +615,71 @@ export type Film = {
 // Published catalog snapshot: also provides a useful fallback if the catalog
 // cannot be fetched. New records remain available through the live catalog.
 export const films: Film[] = [
+{
+  "slug": "amazonia-the-saki-monkey",
+  "youtubeId": "0xWwD1A-65w",
+  "title": "The Saki Monkey",
+  "description": "Produced by Ayni Studios for Amazonia Expeditions, this short film introduces the saki monkey and the rainforest wildlife around its lodges in the Peruvian Amazon.",
+  "client": "Amazonia Expeditions",
+  "category": "Wildlife film",
+  "year": 2025,
+  "uploadDate": "2025-08-20T14:15:04-07:00",
+  "duration": "PT1M57S",
+  "projectSlug": "amazonia-expeditions",
+  "sourceUrl": "https://www.youtube.com/watch?v=0xWwD1A-65w"
+},
+{
+  "slug": "amazonia-canopy-zipline",
+  "youtubeId": "oa8rEH-oN40",
+  "title": "Soaring Through the Amazon Rainforest: Canopy Zipline Experience",
+  "description": "An Ayni Studios film for Amazonia Expeditions, showing a canopy zipline experience and a different perspective on the Peruvian Amazon rainforest.",
+  "client": "Amazonia Expeditions",
+  "category": "Travel & adventure film",
+  "year": 2026,
+  "uploadDate": "2026-01-09T10:04:59-08:00",
+  "duration": "PT1M22S",
+  "projectSlug": "amazonia-expeditions",
+  "sourceUrl": "https://www.youtube.com/watch?v=oa8rEH-oN40"
+},
+{
+  "slug": "amazonia-journey-to-the-lodge",
+  "youtubeId": "QkDwrFqKS6w",
+  "title": "Journey to the Lodge",
+  "description": "An Ayni Studios film for Amazonia Expeditions, following owner Dolly Beaver on a river journey towards Tahuayo Lodge in the Peruvian Amazon.",
+  "client": "Amazonia Expeditions",
+  "category": "Travel & destination film",
+  "year": 2025,
+  "uploadDate": "2025-07-18T10:42:18-07:00",
+  "duration": "PT1M58S",
+  "projectSlug": "amazonia-expeditions",
+  "sourceUrl": "https://www.youtube.com/watch?v=QkDwrFqKS6w"
+},
+{
+  "slug": "amazonia-red-uakari",
+  "youtubeId": "F5k8-wiNgnQ",
+  "title": "Searching for the Red Uakari",
+  "description": "Produced by Ayni Studios for Amazonia Expeditions, this short wildlife film follows the search for the bald red uakari monkey in the Peruvian Amazon.",
+  "client": "Amazonia Expeditions",
+  "category": "Wildlife film",
+  "year": 2025,
+  "uploadDate": "2025-08-12T15:36:15-07:00",
+  "duration": "PT1M12S",
+  "projectSlug": "amazonia-expeditions",
+  "sourceUrl": "https://www.youtube.com/watch?v=F5k8-wiNgnQ"
+},
+{
+  "slug": "mahdi-laith-sharks-and-stingrays",
+  "youtubeId": "iQOZ8iwQA1Q",
+  "title": "Releasing Sharks and Stingrays with Mahdi Laith",
+  "description": "A film made in collaboration with Ayni Studios and environmental creator Mahdi Laith, documenting a shark and stingray release at Jebel Ali Reserve in Dubai.",
+  "client": "Mahdi Laith",
+  "category": "Environmental creator collaboration",
+  "year": 2024,
+  "uploadDate": "2024-01-29T13:37:29-08:00",
+  "duration": "PT3M55S",
+  "projectSlug": "mahdi-laith-marine-conservation",
+  "sourceUrl": "https://www.youtube.com/watch?v=iQOZ8iwQA1Q"
+},
 {
   "slug": "seafood-souq-south-africa-tuna",
   "youtubeId": "Z1qjvzce4Cs",

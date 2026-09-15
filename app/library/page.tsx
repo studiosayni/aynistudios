@@ -28,7 +28,7 @@ export default async function LibraryPage() {
             something at stake.
           </h1>
           <p className="body-copy">
-            Documentary films, narrated animation, brand collaborations, and stories that connect
+            Documentary films, travel and wildlife stories, creator collaborations, and narrated animation that connect
             people with the world around them.
           </p>
           <div className="pill-list">

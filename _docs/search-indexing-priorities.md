@@ -1,6 +1,6 @@
 # Search Console indexing priorities
 
-Submit [sitemap.xml](https://ayni-studios.com/sitemap.xml) in the verified property for https://ayni-studios.com/. The sitemap contains all 37 public pages, including fifteen film pages. Submitting it supports discovery; it is not a guarantee of indexing or rankings.
+Submit [sitemap.xml](https://ayni-studios.com/sitemap.xml) in the verified property for https://ayni-studios.com/. The sitemap contains all 44 public pages, including twenty film pages. Submitting it supports discovery; it is not a guarantee of indexing or rankings.
 
 Use URL Inspection for these priority pages and request indexing when appropriate. Work through the list within the quota Search Console makes available; do not repeatedly resubmit unchanged URLs.
 
@@ -50,3 +50,16 @@ Prioritize the two case studies, then the five new watch pages. The existing sit
 - [Give a Ghaf — Goumbook’s Origin Story](https://ayni-studios.com/films/goumbook-give-a-ghaf-origin-story)
 - [Fighting Food Waste, Feeding Communities](https://ayni-studios.com/films/goumbook-food-waste-ramadan)
 - [Community in Action at Jebel Ali Sanctuary](https://ayni-studios.com/films/goumbook-jebel-ali-clean-up)
+
+
+## Added September 15: Amazonia Expeditions and Mahdi Laith
+
+- [Amazonia Expeditions — travel and wildlife case study](https://ayni-studios.com/work/amazonia-expeditions)
+- [Mahdi Laith — marine conservation collaboration](https://ayni-studios.com/work/mahdi-laith-marine-conservation)
+- [The Saki Monkey](https://ayni-studios.com/films/amazonia-the-saki-monkey)
+- [Canopy Zipline Experience](https://ayni-studios.com/films/amazonia-canopy-zipline)
+- [Journey to the Lodge](https://ayni-studios.com/films/amazonia-journey-to-the-lodge)
+- [Searching for the Red Uakari](https://ayni-studios.com/films/amazonia-red-uakari)
+- [Releasing Sharks and Stingrays with Mahdi Laith](https://ayni-studios.com/films/mahdi-laith-sharks-and-stingrays)
+
+These seven URLs are included in the existing sitemap. The broader homepage hero sentence does not require restarting earlier indexing requests.
