@@ -49,7 +49,22 @@ export default function Navbar() {
           className="button button-small"
           data-track="booking_click"
         >
-          Start a project <span aria-hidden="true">↗</span>
+          Start a project
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="shrink-0"
+          >
+            <path d="M5 19 19 5M5 5h14v14" />
+          </svg>
         </a>
       </nav>
     </header>
