@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import InquiryCTA from "../components/InquiryCTA";
 import PartnerLogos from "../components/PartnerLogos";
+import WhereWeWork from "../components/WhereWeWork";
 import BusinessAddress from "../components/BusinessAddress";
 import { LOCATION_PATH, LOCATION_STATEMENT, STUDIO_MAPS_URL } from "../lib/publicContent";
 import { founder, jsonLd, pageMetadata } from "../lib/seo";
@@ -124,6 +125,7 @@ export default function AboutPage() {
             </Link>
           </div>
         </section>
+        <WhereWeWork />
       </div>
       <div className="site-width"><NatureForLifeRecognition /></div>
       <PartnerLogos />

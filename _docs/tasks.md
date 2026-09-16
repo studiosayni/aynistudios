@@ -47,6 +47,14 @@ Items identified but not yet prioritized:
 
 ## Recently Completed
 
+000. **Homepage cinema cut (2026-09-16)** — Noah: the sections after the hero felt "bulky and not aesthetic". Diagnosis: ~30 boxes, one section template repeated five times, 18 equal-weight stills, two white tile rows straight after the hero. Proposal: https://claude.ai/artifact/2AMJCtfF1Crbnq7xYCFnEf
+   - Logo tiles → `CredibilityStrip` (monochrome via `filter: grayscale(1) invert(1)` + `mix-blend-mode: screen`; recolours partner marks — brand.md discourages this, Noah accepted it; fallback is one row of small tiles via `PartnerLogos`).
+   - Three project cards → `FeaturedWork` (BCRN reef, title over the frame, two rows).
+   - Six service cards → `ServiceReveal` (numbered list + one sticky still that follows the pointer; stills from `serviceArt`).
+   - Field frames + four cards + six-still grid + second logo row → `FieldFeature` (The Sacred Ascent full-bleed + recognition copy + borderless methods list).
+   - `FieldSection` and `RecognitionFeature` deleted; their frames and grid live on the about page as `WhereWeWork`.
+   - `.section-space` 104 → 84px; CTA padding 90 → 76. Desktop homepage ≈ 5,000px (was ≈ 7,400).
+
 00. **Homepage flourish pass (2026-09-15)** — colour spectrum, glow fix, motifs, field stills. Proposal: https://claude.ai/artifact/TjwAFiALxoevEzuC2rAxSi
 
    - **Glows** were drawn on the content column, 40px taller than the section, so their box edges showed and they spilled onto the row above. Now `.band::before` draws one radial glow on the full-bleed band, sized to fade before the edges, in the band's `--accent`.

@@ -62,14 +62,14 @@ Consequences, and what we do instead:
 ## ROUTES
 | Route | Source | Notes |
 |---|---|---|
-| `/` | Server component | Hero (still + word-cloud video), partner + recognition logo rows, three selected projects, six service cards with film stills (`ServiceShowcase`), cream studio panel with line motifs, "In the field" (`FieldSection`: three anamorphic editorial stills + the four methods in one row), one recognition section with a 2×3 grid of editorial stills (`RecognitionFeature`), amber closing CTA with motifs. Accents are amber everywhere; `.band::before` draws one amber glow per band at the position the band sets with `--glow-x/--glow-y`. Accent rules resolve `var(--accent, #feb040)`, so a section could be tinted later, but nothing sets `--accent` today (a per-section colour spectrum was tried on 2026-09-15 and dropped on 2026-09-16 at Noah's request). WebSite + Organization/LocalBusiness JSON-LD. |
+| `/` | Server component | "Cinema cut" (2026-09-16): hero, `CredibilityStrip` (monochrome partner marks + showcase line), `FeaturedWork` (BCRN reef as a 2.4:1 frame with the title over it, two project rows), `ServiceReveal` (client component: numbered list with one still that follows hover/focus), cream studio panel with motifs, `FieldFeature` (The Sacred Ascent full-bleed with recognition copy and monochrome event marks, then the four methods as a borderless list), amber CTA with motifs. One amber glow per band (`.band::before`). WebSite + Organization/LocalBusiness JSON-LD. |
 | `/library` | Server component; `_library` read server-side (`revalidate = 300`) | Selected collaborations grid, animation sample, UNDP recognition, film grid. Exports its own `metadata`. |
 | `/work/[slug]` | Static (`generateStaticParams`) | Case study per project from `app/lib/publicContent.ts`. BreadcrumbList JSON-LD. `/work` itself 301s to `/library`. |
 | `/services`, `/services/[slug]` | Static | Index is the same still-card grid as the homepage; detail pages carry a masthead still, Service JSON-LD (`areaServed` = `SERVICE_AREAS`), breadcrumbs, Q&A. |
 | `/video-production-los-angeles` | Static | Location page: `LOCATION_STATEMENT`, six service cards, address/service-area/contact facts, three projects, FAQ. WebPage + FAQPage + BreadcrumbList JSON-LD. Linked from the homepage services section, footer, services, about, and contact. |
 | `/films/[slug]` | ISR (`revalidate = 300`) | Watch page with an always-rendered YouTube embed and VideoObject JSON-LD. |
 | `/guides`, `/guides/[slug]` | Static | Article JSON-LD authored by the founder Person entity; `dateModified` from `PAGE_UPDATED`. |
-| `/about`, `/contact`, `/privacy` | Static | About carries the founder Person JSON-LD and a "Where we are" block; contact links the map and the LA page. |
+| `/about`, `/contact`, `/privacy` | Static | About carries the founder Person JSON-LD, a "Where we are" block, and `WhereWeWork` (the two film frames and six-still strip that left the homepage); contact links the map and the LA page. |
 | `/share/[slug]` | Route handler (`next/og`) | 1200×630 social image per page slug, including `los-angeles`. |
 | `/admin/library` | Client-rendered | CRUD for `_library` incl. featured toggle. Doc ID convention: the YouTube video ID. |
 | `/login`, `/signup` | Firebase Auth | Email/Pass + Google; gated by Firestore `_allowlist/{email}` |

@@ -1,14 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import HeroSection from "./components/HeroSection";
-import PartnerLogos from "./components/PartnerLogos";
-import ProjectCard from "./components/ProjectCard";
-import ServiceShowcase from "./components/ServiceShowcase";
-import FieldSection from "./components/FieldSection";
-import RecognitionFeature from "./components/RecognitionFeature";
+import CredibilityStrip from "./components/CredibilityStrip";
+import FeaturedWork from "./components/FeaturedWork";
+import ServiceReveal from "./components/ServiceReveal";
+import FieldFeature from "./components/FieldFeature";
 import InquiryCTA from "./components/InquiryCTA";
 import { MotifCluster } from "./components/Motifs";
-import { LOCATION_PATH, projects, services } from "./lib/publicContent";
+import { LOCATION_PATH } from "./lib/publicContent";
 import { jsonLd, organization, pageMetadata, website } from "./lib/seo";
 
 export const metadata = pageMetadata(
@@ -17,12 +16,9 @@ export const metadata = pageMetadata(
   "/",
 );
 
-// Each band draws one soft amber glow; only its position varies. Accents
-// are amber everywhere (a colour-per-section spectrum was tried on
-// 2026-09-15 and dropped the next day).
-const glow = (x = "12%", y = "34%") =>
-  ({ "--glow-x": x, "--glow-y": y }) as React.CSSProperties;
-
+// The "cinema cut" (2026-09-16): the hero's rules carried down the page.
+// One image per section, type set over it, lists instead of cards, amber
+// only. Each band draws one soft amber glow at the position it sets.
 export default function HomePage() {
   return (
     <div className="public-site">
@@ -35,48 +31,19 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: jsonLd(organization) }}
       />
       <HeroSection />
-      <PartnerLogos showRecognition />
-
-      <section className="band section-space" id="selected-work" style={glow()}>
-        <div className="site-width">
-          <div className="section-heading">
-            <div>
-              <p className="eyebrow accent">Selected work</p>
-              <h2>
-                Good stories.
-                <br />
-                Real-world purpose.
-              </h2>
-            </div>
-            <Link href="/library" className="text-link">
-              All work <span aria-hidden="true">↗</span>
-            </Link>
-          </div>
-          <div className="project-grid">
-            {projects
-              .filter((project) => project.kind !== "sample")
-              .slice(0, 3)
-              .map((p) => (
-                <ProjectCard key={p.slug} project={p} />
-              ))}
-          </div>
-        </div>
-      </section>
+      <CredibilityStrip />
+      <FeaturedWork />
 
       <section
         className="band band-two services-showcase section-space"
         aria-labelledby="services-title"
-        style={glow("8%", "28%")}
+        style={{ "--glow-x": "8%", "--glow-y": "28%" } as React.CSSProperties}
       >
         <div className="site-width">
           <div className="section-heading">
             <div>
               <p className="eyebrow accent">What we do</p>
-              <h2 id="services-title">
-                From first idea
-                <br />
-                to final frame.
-              </h2>
+              <h2 id="services-title">From first idea to final frame.</h2>
             </div>
             <p className="body-copy max-w-sm">
               A Valencia, California video production company serving Los
@@ -84,7 +51,7 @@ export default function HomePage() {
               organizations, brands, and people preserving a legacy.
             </p>
           </div>
-          <ServiceShowcase items={services.slice(0, 6)} />
+          <ServiceReveal />
           <div className="services-foot">
             <Link href="/services" className="text-link">
               All services <span aria-hidden="true">↗</span>
@@ -124,11 +91,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <FieldSection />
-
-      <div style={glow("10%", "78%")}>
-        <RecognitionFeature />
-      </div>
+      <FieldFeature />
       <InquiryCTA />
     </div>
   );
