@@ -15,7 +15,6 @@ const frames = [
     alt: "A child in a snowsuit at a sacred Andean gathering below snow-capped peaks, from The Sacred Ascent",
     title: "The Sacred Ascent",
     detail: "A sacred Andean event, UNESCO heritage",
-    tint: "#3d8f9c",
     position: "center 55%",
     wide: true,
   },
@@ -24,7 +23,6 @@ const frames = [
     alt: "Women listening to a political candidate speak at night, from The Bridge to Nowhere",
     title: "The Bridge to Nowhere",
     detail: "Women listen to a candidate promise a new future",
-    tint: "#d8497e",
     position: "center 45%",
     wide: false,
     href: "/films/the-bridge-to-nowhere",
@@ -34,7 +32,6 @@ const frames = [
     alt: "The family of an oyster diver seated together at a doorway, from Casting New Lines",
     title: "Casting New Lines",
     detail: "An oyster diver’s family in the Gulf",
-    tint: "#c9453b",
     position: "center 30%",
     wide: false,
   },
@@ -47,7 +44,7 @@ export default function FieldSection() {
   return (
     <section
       className="band field-section section-space"
-      style={{ "--accent": "#8fb6d6", "--glow-x": "88%", "--glow-y": "18%" } as React.CSSProperties}
+      style={{ "--glow-x": "88%", "--glow-y": "18%" } as React.CSSProperties}
       aria-labelledby="field-title"
     >
       <div className="site-width">
@@ -71,7 +68,6 @@ export default function FieldSection() {
             <figure
               key={frame.src}
               className={`field-frame${frame.wide ? " field-frame-wide" : ""}`}
-              style={{ "--tint": frame.tint } as React.CSSProperties}
             >
               <Image
                 src={frame.src}

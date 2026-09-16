@@ -17,12 +17,11 @@ export const metadata = pageMetadata(
   "/",
 );
 
-// Each band below carries one accent from the spectrum in globals.css
-// (--c-*): eyebrows, numbers, hovers and the band's glow take it. Buttons
-// stay amber everywhere. The order down the page is violet → magenta → teal
-// → green → ice → red → amber.
-const accent = (color: string, glowX = "12%", glowY = "34%") =>
-  ({ "--accent": color, "--glow-x": glowX, "--glow-y": glowY }) as React.CSSProperties;
+// Each band draws one soft amber glow; only its position varies. Accents
+// are amber everywhere (a colour-per-section spectrum was tried on
+// 2026-09-15 and dropped the next day).
+const glow = (x = "12%", y = "34%") =>
+  ({ "--glow-x": x, "--glow-y": y }) as React.CSSProperties;
 
 export default function HomePage() {
   return (
@@ -36,11 +35,9 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: jsonLd(organization) }}
       />
       <HeroSection />
-      <div style={accent("var(--c-violet)")}>
-        <PartnerLogos showRecognition />
-      </div>
+      <PartnerLogos showRecognition />
 
-      <section className="band section-space" id="selected-work" style={accent("var(--c-magenta)")}>
+      <section className="band section-space" id="selected-work" style={glow()}>
         <div className="site-width">
           <div className="section-heading">
             <div>
@@ -69,7 +66,7 @@ export default function HomePage() {
       <section
         className="band band-two services-showcase section-space"
         aria-labelledby="services-title"
-        style={accent("var(--c-teal)", "8%", "28%")}
+        style={glow("8%", "28%")}
       >
         <div className="site-width">
           <div className="section-heading">
@@ -99,7 +96,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="studio-preview" style={accent("var(--c-canopy)")}>
+      <section className="studio-preview">
         <div className="studio-preview-image">
           <Image
             src="/brand/hero/hero-7-1280.webp"
@@ -129,7 +126,7 @@ export default function HomePage() {
 
       <FieldSection />
 
-      <div style={accent("var(--c-red)", "10%", "78%")}>
+      <div style={glow("10%", "78%")}>
         <RecognitionFeature />
       </div>
       <InquiryCTA />
