@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import {
+  GOOGLE_PROFILE_URLS,
   LOCATION_PATH,
   NATURE_FOR_LIFE,
   SERVICE_AREAS,
@@ -131,6 +132,7 @@ export const organization = {
     areaServed: "Worldwide",
   },
   sameAs: [
+    ...GOOGLE_PROFILE_URLS,
     "https://www.youtube.com/@Ayni.Studios",
     "https://www.instagram.com/ayni_studios",
     "https://www.tiktok.com/@ayni_studios",

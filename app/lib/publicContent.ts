@@ -19,8 +19,13 @@ export const STUDIO_ADDRESS = {
 // local search entity Google and Gemini resolve the address to. Coordinates
 // are from OpenStreetMap for the street address above.
 export const STUDIO_GEO = { latitude: 34.435142, longitude: -118.585437 } as const;
-export const STUDIO_MAPS_URL =
-  "https://www.google.com/maps/search/?api=1&query=Ayni+Studios+28130+Avenue+Crocker+Unit+318+Valencia+CA+91355";
+// The Google Business Profile (created 2026-09-16). The cid link opens the
+// profile itself rather than a search for the address.
+export const STUDIO_MAPS_URL = "https://maps.google.com/maps?cid=4980682438578051182";
+export const GOOGLE_PROFILE_URLS = [
+  STUDIO_MAPS_URL,
+  "https://www.google.com/search?kgmid=/g/11zxngbfsl",
+] as const;
 export const LOCATION_PATH = "/video-production-los-angeles";
 // One sentence every location-bearing surface reuses, so search engines and
 // AI answers see the same facts everywhere: where the studio is, what it
