@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import RecognitionLogos from "./RecognitionLogos";
 
 const partners = [
   {
@@ -21,7 +22,7 @@ const partners = [
   { name: "Seafood Souq", file: "sfs.webp", href: "/work/seafood-souq-south-africa" },
   { name: "teamLab", file: "teamlab.webp" },
 ];
-export default function PartnerLogos() {
+export default function PartnerLogos({ showRecognition = false }: { showRecognition?: boolean }) {
   return (
     <section className="partner-section" aria-labelledby="partners-title">
       <div className="site-width">
@@ -61,6 +62,7 @@ export default function PartnerLogos() {
             );
           })}
         </div>
+        {showRecognition && <RecognitionLogos />}
       </div>
     </section>
   );

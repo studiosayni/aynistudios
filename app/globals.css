@@ -1328,3 +1328,32 @@ a.partner-tile:hover {
 .undp-recognition-logo { width: auto; height: 100px; }
 .nature-event-logo { display: block; background: #fff; border-radius: 3px; padding: 20px; width: min(270px, 100%); }
 .nature-event-logo img { width: 100%; height: auto; }
+
+.recognition-row {
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid #28363a;
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+.recognition-row > h2 { padding-top: 30px; }
+.recognition-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.recognition-link { display: flex; flex-direction: column; gap: 12px; font-size: 13px; line-height: 1.4; color: #b6c0c4; }
+.recognition-link:hover { color: #feb040; }
+.recognition-link:focus-visible { outline: 2px solid #feb040; outline-offset: 5px; }
+.recognition-art { display: flex; align-items: center; justify-content: center; height: 82px; padding: 10px 18px; background: #fff; border-radius: 3px; }
+.recognition-art > img { width: 100%; height: 60px; object-fit: contain; }
+.recognition-art-nature { gap: 12px; }
+.recognition-art-nature > img { min-width: 0; flex: 1; }
+.recognition-undp { display: flex; justify-content: center; background: #0c171a; padding: 5px; flex: 0 0 36px; }
+.recognition-undp img { height: 52px; width: auto; }
+@media (max-width: 760px) {
+  .recognition-row { grid-template-columns: 1fr; gap: 20px; }
+  .recognition-row > h2 { padding-top: 0; }
+  .recognition-grid { grid-template-columns: 1fr; gap: 14px; }
+  .recognition-link { flex-direction: row; align-items: center; gap: 16px; }
+  .recognition-art { flex: 0 0 160px; padding: 10px; }
+  .recognition-art-nature { gap: 8px; }
+}

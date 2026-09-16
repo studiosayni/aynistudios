@@ -23,7 +23,7 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: jsonLd(organization) }}
       />
       <HeroSection />
-      <PartnerLogos />
+      <PartnerLogos showRecognition />
       <section className="section-space site-width" id="selected-work">
         <div className="section-heading">
           <div>
@@ -114,23 +114,7 @@ export default function HomePage() {
             </Link>
           </div>
           <div className="event-proof">
-            <p className="eyebrow">Work showcased at</p>
-            <div className="event-logos">
-              <Image
-                src="/brand/partners/cop30.webp"
-                width={160}
-                height={90}
-                alt="COP30"
-                unoptimized
-              />
-              <Image
-                src="/brand/partners/iucn.webp"
-                width={160}
-                height={90}
-                alt="IUCN World Congress"
-                unoptimized
-              />
-            </div>
+            <p className="eyebrow mb-6">The BCRN programme film</p>
             <p>
               For BCRN, we brought footage from multiple countries into one
               story about human resilience and nature-led solutions, shown at
@@ -142,7 +126,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      <div className="site-width"><NatureForLifeRecognition /></div>
+      <div className="site-width"><NatureForLifeRecognition showLogos={false} /></div>
       <section className="studio-preview">
         <div className="studio-preview-image">
           <Image
