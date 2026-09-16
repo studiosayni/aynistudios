@@ -20,7 +20,7 @@ _No active app dev tasks currently tracked in master todo. Check `../../Noah95/t
 <!-- Run workspace-audit to review and promote items to A-### in the master todo. -->
 
 **Launch leftovers** (site went live 2026-07-10):
-- ~~No canonical URL, and no redirect between apex and `www`.~~ Closed 2026-09-15: every public page emits a canonical (relaunch, 2026-09-13) and `next.config.ts` now 301s `www` → apex by host match. Verify on the deployed host after the next deploy — App Hosting must pass the `Host` header through for the `has` rule to fire.
+- ~~No canonical URL, and no redirect between apex and `www`.~~ Closed 2026-09-15: every public page emits a canonical (relaunch, 2026-09-13) and `next.config.ts` 301s `www` → apex by host match. Verified live by Noah on 2026-09-16: `www.ayni-studios.com` lands on the bare domain.
 - Review pillar-word translations in `app/lib/pillarWords.ts` — flagged for native review, never done.
 - Stale April test doc `_allowlist/Q288za15…` with a misspelled `workspaceid`. Inert; delete at leisure.
 
@@ -68,7 +68,7 @@ Items identified but not yet prioritized:
    - **SEO.** Sitemap `lastmod` now comes from `PAGE_UPDATED` per path (was one constant for 24 URLs). Organization schema is `["Organization","LocalBusiness"]` with `geo`, `hasMap`, `areaServed` (Valencia / Santa Clarita / LA / LA County / CA / US / Worldwide), `knowsAbout`, and the founder inlined as a Person; a `WebSite` entity sits beside it on the homepage. New `/video-production-los-angeles` page (FAQPage + WebPage + breadcrumbs), linked from the homepage services section, footer, services, about, and contact. Contact is in the nav and footer (it was orphaned). `/work` → `/library` and `www` → apex redirects. Homepage title and description carry "Los Angeles". Guides are authored by the founder Person with real `dateModified`. Service pages: `areaServed` = `SERVICE_AREAS`, masthead still, location line.
    - **Homepage.** Six service cards with film stills replace the numbered list and the "What story brings you here?" cards; the cream studio panel moved up after them; the animation card in the production-methods grid is the one light card; "Work that travels" and "Selected for UNDP" merged into one `RecognitionFeature`; its art is a 2×3 grid of editorial stills (images 18, 5, 2, 9, 26, 6) — a single still (8, then a YouTube frame) read as one place, and the grid shows the range; the closing CTA band is amber on every public page; radial glows behind section headings; eyebrows 12px, small copy 14px.
    - **Other pages.** Services index uses the same still grid. About has a "Where we are" block. Contact has the map link and Santa Clarita context.
-   - **Not done, needs a decision or an asset:** Google Business Profile (cannot be created from the repo — needs the owner; the schema and NAP are ready to match it). A clean 16:9 still for the Panasonic card (still a logo panel). Real-device mobile pass.
+   - **Not done, needs a decision or an asset:** Google Business Profile (cannot be created from the repo — needs the owner; the schema and NAP are ready to match it). Noah is creating it on 2026-09-16; once live, confirm the name, address and phone match `STUDIO_ADDRESS` and the footer exactly. A clean 16:9 still for the Panasonic card (still a logo panel). Real-device mobile pass.
    - **Gotcha:** the `PAGE_UPDATED` map is only useful if it is maintained. Bump the date when a page's visible content changes; never bulk-update it on deploy.
 
 
