@@ -15,6 +15,58 @@ export const STUDIO_ADDRESS = {
   postalCode: "91355",
   addressCountry: "US",
 } as const;
+// Valencia sits inside the city of Santa Clarita, Los Angeles County — the
+// local search entity Google and Gemini resolve the address to. Coordinates
+// are from OpenStreetMap for the street address above.
+export const STUDIO_GEO = { latitude: 34.435142, longitude: -118.585437 } as const;
+export const STUDIO_MAPS_URL =
+  "https://www.google.com/maps/search/?api=1&query=Ayni+Studios+28130+Avenue+Crocker+Unit+318+Valencia+CA+91355";
+export const LOCATION_PATH = "/video-production-los-angeles";
+// One sentence every location-bearing surface reuses, so search engines and
+// AI answers see the same facts everywhere: where the studio is, what it
+// makes, and how far it works.
+export const LOCATION_STATEMENT =
+  "Ayni Studios is a documentary and impact video production company based in Valencia, California, in the Santa Clarita Valley of Los Angeles County. We film across Los Angeles and work with organizations worldwide.";
+export const SERVICE_AREAS = [
+  { "@type": "City", name: "Los Angeles", sameAs: "https://en.wikipedia.org/wiki/Los_Angeles" },
+  { "@type": "City", name: "Santa Clarita", sameAs: "https://en.wikipedia.org/wiki/Santa_Clarita,_California" },
+  { "@type": "Place", name: "Valencia, California", sameAs: "https://en.wikipedia.org/wiki/Valencia,_Santa_Clarita,_California" },
+  { "@type": "AdministrativeArea", name: "Los Angeles County", sameAs: "https://en.wikipedia.org/wiki/Los_Angeles_County,_California" },
+  { "@type": "State", name: "California", sameAs: "https://en.wikipedia.org/wiki/California" },
+  { "@type": "Country", name: "United States", sameAs: "https://en.wikipedia.org/wiki/United_States" },
+  { "@type": "Place", name: "Worldwide" },
+] as const;
+// Last material content change per public path. The sitemap reports these
+// as <lastmod>; a page not listed here falls back to CONTENT_UPDATED. Update
+// the date when the page's visible content changes, not on every deploy —
+// Google ignores lastmod once it stops matching reality.
+export const PAGE_UPDATED: Record<string, string> = {
+  "/": "2026-09-15",
+  "/library": "2026-09-15",
+  "/services": "2026-09-15",
+  "/guides": "2026-09-13",
+  "/about": "2026-09-15",
+  "/contact": "2026-09-15",
+  "/privacy": "2026-09-13",
+  [LOCATION_PATH]: "2026-09-15",
+  "/guides/affordable-video-production": "2026-09-13",
+  "/guides/choosing-a-storytelling-company": "2026-09-13",
+  "/work/audio-to-animated-legacy-film": "2026-09-13",
+  "/work/conservation-diaries": "2026-09-15",
+  "/work/panasonic-lumix": "2026-09-15",
+  "/work/nature-and-resilience": "2026-09-15",
+  "/work/seafood-souq-south-africa": "2026-09-15",
+  "/work/goumbook-sustainability-stories": "2026-09-15",
+  "/work/amazonia-expeditions": "2026-09-15",
+  "/work/mahdi-laith-marine-conservation": "2026-09-15",
+  "/services/documentary-production": "2026-09-15",
+  "/services/brand-and-impact-content": "2026-09-15",
+  "/services/editing-and-post-production": "2026-09-13",
+  "/services/ngo-video-production": "2026-09-15",
+  "/services/environmental-conservation-filmmaking": "2026-09-15",
+  "/services/legacy-films": "2026-09-13",
+  "/services/remote-video-production": "2026-09-13",
+};
 // Public canonical identity is separate from the app's local/auth base URL.
 export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL || "https://ayni-studios.com"
@@ -218,6 +270,40 @@ export const services = [
     "answer": "It can. Existing footage can remove the need for a new shoot; filming kits and local filmmakers can reduce crew travel; supplied audio can become the basis of an animated film. Shared planning and capture requirements can also improve consistency and make recurring content easier to produce. Savings and timing depend on the material, locations, animation complexity, logistics, and review process, so we scope each project individually."
   },
 ] as const;
+
+// A still per service for the homepage and services grid. YouTube's maxres
+// frame of a film we made for that kind of client, routed through
+// next/image like every other thumbnail.
+export const serviceArt: Record<string, { image: string; alt: string }> = {
+  "documentary-production": {
+    image: "https://i.ytimg.com/vi/71RKXOFeaco/maxresdefault.jpg",
+    alt: "Two volunteers planting mangroves for The Conservation Diaries",
+  },
+  "brand-and-impact-content": {
+    image: "https://i.ytimg.com/vi/Z1qjvzce4Cs/maxresdefault.jpg",
+    alt: "Seafood Souq interview in front of a world map",
+  },
+  "editing-and-post-production": {
+    image: "https://i.ytimg.com/vi/KA5wK3R5ClM/maxresdefault.jpg",
+    alt: "Aerial view of divers over a reef from the BCRN programme film",
+  },
+  "ngo-video-production": {
+    image: "https://i.ytimg.com/vi/UBsFG4uQniA/maxresdefault.jpg",
+    alt: "Volunteers lined up along the shoreline at a Jebel Ali clean-up",
+  },
+  "environmental-conservation-filmmaking": {
+    image: "https://i.ytimg.com/vi/F5k8-wiNgnQ/maxresdefault.jpg",
+    alt: "A guide searching the rainforest canopy in the Peruvian Amazon",
+  },
+  "legacy-films": {
+    image: "https://i.ytimg.com/vi/iZRQlh6dnS0/maxresdefault.jpg",
+    alt: "Painted portrait from The Surgeon Who Crossed the Sea",
+  },
+  "remote-video-production": {
+    image: "/brand/hero/hero-10-1280.webp",
+    alt: "A family listening together, from Ayni Studios’ editorial photography",
+  },
+};
 
 export type Project = {
   slug: string;
@@ -894,6 +980,7 @@ export function isPublicPath(path: string) {
       "/contact",
       "/privacy",
       "/guides",
+      LOCATION_PATH,
     ].some((prefix) => path === prefix || path.startsWith(`${prefix}/`))
   );
 }

@@ -1,9 +1,10 @@
+import Link from "next/link";
 import BusinessAddress from "../components/BusinessAddress";
-import { BOOKING_URL } from "../lib/publicContent";
+import { BOOKING_URL, LOCATION_PATH, STUDIO_MAPS_URL } from "../lib/publicContent";
 import { pageMetadata } from "../lib/seo";
 export const metadata = pageMetadata(
   "Start a Project",
-  "Tell Ayni Studios about your documentary, brand film, or editing project. Contact our Valencia, California studio for productions and collaborations worldwide.",
+  "Tell Ayni Studios about your documentary, brand film, or editing project. Contact our Valencia, California studio for productions in Los Angeles and worldwide.",
   "/contact",
   "contact",
 );
@@ -62,7 +63,23 @@ export default function ContactPage() {
           </a>
           <p className="eyebrow mt-8 mb-4">Business address</p>
           <BusinessAddress />
-          <p className="eyebrow mt-6">Valencia, CA · Working globally</p>
+          <a
+            href={STUDIO_MAPS_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="small-copy underline"
+          >
+            Open in Google Maps ↗
+          </a>
+          <p className="eyebrow mt-6">Valencia, CA · Los Angeles County · Working globally</p>
+          <p className="small-copy mt-3">
+            In the Santa Clarita Valley, north of the San Fernando Valley.
+            Meetings by appointment, in person or online.{" "}
+            <Link href={LOCATION_PATH} className="underline">
+              Video production in Los Angeles
+            </Link>
+            .
+          </p>
           <div className="question-block mt-10">
             <h2 style={{ fontSize: 25 }}>What happens next?</h2>
             <p className="body-copy mt-4">

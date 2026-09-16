@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import BrandLogo from "./BrandLogo";
 import BusinessAddress from "./BusinessAddress";
-import { isPublicPath, BOOKING_URL } from "../lib/publicContent";
+import { isPublicPath, BOOKING_URL, LOCATION_PATH, STUDIO_MAPS_URL } from "../lib/publicContent";
 
 const PrivateFooter = dynamic(() => import("./PrivateFooter"));
 export default function Footer() {
@@ -22,7 +22,10 @@ export default function Footer() {
             <p className="body-copy mt-5 max-w-xs">
               Stories for our planet, our humanity, and the future we share.
             </p>
-            <p className="eyebrow mt-6">Valencia, CA · Working globally</p>
+            <p className="eyebrow mt-6">Valencia, CA · Los Angeles County · Working globally</p>
+            <Link href={LOCATION_PATH} className="small-copy footer-location-link">
+              Video production in Los Angeles ↗
+            </Link>
           </div>
           <nav aria-label="Footer navigation">
             <p className="eyebrow">Explore</p>
@@ -30,6 +33,7 @@ export default function Footer() {
             <Link href="/services">Services</Link>
             <Link href="/guides">Production guides</Link>
             <Link href="/about">The studio</Link>
+            <Link href="/contact">Contact</Link>
             <a href={BOOKING_URL} data-track="booking_click">Start a project</a>
             <Link href="/login">Client login</Link>
           </nav>
@@ -50,6 +54,14 @@ export default function Footer() {
               WhatsApp ↗
             </a>
             <div className="small-copy mt-6"><BusinessAddress /></div>
+            <a
+              href={STUDIO_MAPS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="small-copy"
+            >
+              Open in Google Maps ↗
+            </a>
           </div>
           <nav aria-label="Social profiles">
             <p className="eyebrow">Elsewhere</p>

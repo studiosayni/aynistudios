@@ -1,16 +1,20 @@
 import NatureForLifeRecognition from "../../components/NatureForLifeRecognition";
 import ProductionMethods from "../../components/ProductionMethods";
 import { serviceQuestions } from "../../lib/storytellingContent";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
   services,
+  serviceArt,
   getService,
   getProject,
+  LOCATION_PATH,
+  SERVICE_AREAS,
   SITE_URL,
   BOOKING_URL,
 } from "../../lib/publicContent";
-import { breadcrumbs, jsonLd, pageMetadata } from "../../lib/seo";
+import { ORGANIZATION_ID, breadcrumbs, jsonLd, pageMetadata } from "../../lib/seo";
 import ProjectCard from "../../components/ProjectCard";
 import InquiryCTA from "../../components/InquiryCTA";
 export function generateStaticParams() {
@@ -37,18 +41,20 @@ export default async function ServicePage({
     "@context": "https://schema.org",
     "@type": "Service",
     "@id": `${SITE_URL}/services/${s.slug}#service`,
-    areaServed: "Worldwide",
+    areaServed: SERVICE_AREAS,
     serviceType: s.title,
     name: s.title,
     description: s.description,
     url: `${SITE_URL}/services/${s.slug}`,
+    ...(serviceArt[s.slug] ? { image: serviceArt[s.slug].image } : {}),
     provider: {
-      "@type": "Organization",
-      "@id": `${SITE_URL}/#organization`,
+      "@type": ["Organization", "LocalBusiness"],
+      "@id": ORGANIZATION_ID,
       name: "Ayni Studios",
       url: SITE_URL,
     },
   };
+  const art = serviceArt[s.slug];
   return (
     <article className="public-site">
       <script
@@ -70,7 +76,12 @@ export default async function ServicePage({
           <h1>{s.title}</h1>
           <p className="body-copy">{s.short}</p>
         </header>
-        <section className="editorial-grid pb-20">
+        {art && (
+          <div className="project-masthead">
+            <Image src={art.image} alt={art.alt} fill priority sizes="(max-width:760px) 100vw, 1200px" />
+          </div>
+        )}
+        <section className="editorial-grid section-space pb-20">
           <div className="editorial-copy">
             <p>{s.intro}</p>
             <p>{s.audience}</p>
@@ -89,6 +100,13 @@ export default async function ServicePage({
                 <li key={o}>{o}</li>
               ))}
             </ul>
+            <p className="small-copy mt-6">
+              Studio in Valencia, California.{" "}
+              <Link href={LOCATION_PATH} className="underline">
+                Filming across Los Angeles
+              </Link>{" "}
+              and working worldwide.
+            </p>
           </div>
         </section>
         <section className="editorial-grid section-space border-t border-[#28363a]">

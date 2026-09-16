@@ -3,16 +3,22 @@ import Link from "next/link";
 import Image from "next/image";
 import InquiryCTA from "../components/InquiryCTA";
 import PartnerLogos from "../components/PartnerLogos";
-import { pageMetadata } from "../lib/seo";
+import BusinessAddress from "../components/BusinessAddress";
+import { LOCATION_PATH, LOCATION_STATEMENT, STUDIO_MAPS_URL } from "../lib/publicContent";
+import { founder, jsonLd, pageMetadata } from "../lib/seo";
 export const metadata = pageMetadata(
   "About the Studio",
-  "Meet Ayni Studios, an independent documentary and storytelling company in Valencia, California. Our film They Live in Our World was selected for UNDP’s Nature for Life Hub.",
+  "Meet Ayni Studios, an independent documentary and storytelling company in Valencia, California, serving Los Angeles and working worldwide. Our film They Live in Our World was selected for UNDP’s Nature for Life Hub.",
   "/about",
   "studio",
 );
 export default function AboutPage() {
   return (
     <div className="public-site">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd({ "@context": "https://schema.org", ...founder }) }}
+      />
       <div className="site-width">
         <header className="page-heading">
           <p className="eyebrow accent">The studio</p>
@@ -88,6 +94,34 @@ export default function AboutPage() {
             >
               Meet Noah on LinkedIn ↗
             </a>
+          </div>
+        </section>
+        <section className="editorial-grid section-space border-t border-[#28363a]" aria-labelledby="where-title">
+          <div>
+            <p className="eyebrow accent mb-5">Where we are</p>
+            <h2 id="where-title">
+              Valencia, California.
+              <br />
+              Los Angeles and the world.
+            </h2>
+          </div>
+          <div className="editorial-copy">
+            <p>{LOCATION_STATEMENT}</p>
+            <p>
+              Our client work has taken us to the United Arab Emirates, the
+              Peruvian Amazon, and South Africa. When a story is far from a
+              crew, we work with existing footage, filming kits, audio-led
+              animation, and local filmmakers.
+            </p>
+            <div className="small-copy mb-6">
+              <BusinessAddress />
+              <a href={STUDIO_MAPS_URL} target="_blank" rel="noopener noreferrer" className="underline">
+                Open in Google Maps ↗
+              </a>
+            </div>
+            <Link href={LOCATION_PATH} className="text-link">
+              Video production in Los Angeles ↗
+            </Link>
           </div>
         </section>
       </div>

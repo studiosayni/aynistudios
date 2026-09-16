@@ -62,8 +62,15 @@ Consequences, and what we do instead:
 ## ROUTES
 | Route | Source | Notes |
 |---|---|---|
-| `/` | Server component; `_library` read server-side (`revalidate = 300`) | Full-viewport hero (rotating pillar word over the particle backdrop), library carousel (`LibraryCarousel` — receives items as a prop), inline portal sign-in card (`PortalSignInCard`) + contact card, partner logos, Malcolm X quote, Organization JSON-LD |
-| `/library` | Server component; `_library` read server-side (`revalidate = 300`) | Featured hero card (lite-YouTube facade — embed loads on click) + grid; grid cards link out to YouTube. Exports its own `metadata` (was a client component and could not, so it inherited the homepage title). |
+| `/` | Server component | Hero (still + word-cloud video), partner + recognition logo rows, three selected projects, six service cards with film stills (`ServiceShowcase`), cream studio panel, production methods (one featured light card), one recognition section with a still (`RecognitionFeature`), amber closing CTA. WebSite + Organization/LocalBusiness JSON-LD. |
+| `/library` | Server component; `_library` read server-side (`revalidate = 300`) | Selected collaborations grid, animation sample, UNDP recognition, film grid. Exports its own `metadata`. |
+| `/work/[slug]` | Static (`generateStaticParams`) | Case study per project from `app/lib/publicContent.ts`. BreadcrumbList JSON-LD. `/work` itself 301s to `/library`. |
+| `/services`, `/services/[slug]` | Static | Index is the same still-card grid as the homepage; detail pages carry a masthead still, Service JSON-LD (`areaServed` = `SERVICE_AREAS`), breadcrumbs, Q&A. |
+| `/video-production-los-angeles` | Static | Location page: `LOCATION_STATEMENT`, six service cards, address/service-area/contact facts, three projects, FAQ. WebPage + FAQPage + BreadcrumbList JSON-LD. Linked from the homepage services section, footer, services, about, and contact. |
+| `/films/[slug]` | ISR (`revalidate = 300`) | Watch page with an always-rendered YouTube embed and VideoObject JSON-LD. |
+| `/guides`, `/guides/[slug]` | Static | Article JSON-LD authored by the founder Person entity; `dateModified` from `PAGE_UPDATED`. |
+| `/about`, `/contact`, `/privacy` | Static | About carries the founder Person JSON-LD and a "Where we are" block; contact links the map and the LA page. |
+| `/share/[slug]` | Route handler (`next/og`) | 1200×630 social image per page slug, including `los-angeles`. |
 | `/admin/library` | Client-rendered | CRUD for `_library` incl. featured toggle. Doc ID convention: the YouTube video ID. |
 | `/login`, `/signup` | Firebase Auth | Email/Pass + Google; gated by Firestore `_allowlist/{email}` |
 | `/complete-profile` | Firebase Auth | First-time Google users set their full name and get workspace routed |
@@ -163,12 +170,14 @@ Firebase **client** config is hardcoded in `app/lib/firebase.ts` (keys are publi
 - Rules were deployed to production on 2026-07-10 (both Firestore and Storage).
 
 ## SEO PRIMITIVES
-- `app/layout.tsx` — site-level OpenGraph + Twitter + title template (`%s — Ayni Studios`), `metadataBase` from env.
-- `app/page.tsx` — Organization JSON-LD.
-- `app/library/page.tsx` — page-level `metadata` (title + description + OG). Only possible since it became a server component; as a client component it silently inherited the homepage title on every share, bookmark and search result.
-- ⚠️ Any route that needs its own `metadata` **cannot** be a client component. Fetch server-side and keep the interactive parts as child client components.
-- `app/sitemap.ts` — static routes (`/`, `/library`).
+- `app/lib/seo.ts` — `pageMetadata()` (absolute title, canonical, OG/Twitter with a `/share/<slug>` image), `organization` (typed `["Organization","LocalBusiness"]` with address, `geo`, `hasMap`, `areaServed`, `knowsAbout`, offer catalog, and the `founder` Person inlined), `founder`, `website`, `breadcrumbs()`, `faqPage()`.
+- `app/lib/publicContent.ts` — `LOCATION_STATEMENT` (the one sentence every location surface reuses), `STUDIO_GEO`, `STUDIO_MAPS_URL`, `SERVICE_AREAS`, `LOCATION_PATH`, `PAGE_UPDATED` (per-path lastmod for the sitemap — update when a page's content changes materially, never on deploy), `serviceArt` (a still per service).
+- `app/layout.tsx` — site-level OpenGraph + Twitter + title template (`%s — Ayni Studios`), `metadataBase` from env, Google site verification from env.
+- `next.config.ts` — 301 `www` → apex (host-matched redirect) and `/work` → `/library`.
+- `app/sitemap.ts` — every editorial route with `lastModified` from `PAGE_UPDATED`; film pages with the video extension, dated by upload.
 - `app/robots.ts` — disallows `/admin`, `/login`, `/signup`, `/complete-profile`, `/workspace`.
+- ⚠️ Any route that needs its own `metadata` **cannot** be a client component. Fetch server-side and keep the interactive parts as child client components.
+- Local intent: the homepage title, description and services paragraph, the about "Where we are" block, the contact page, the footer, and `/video-production-los-angeles` all state Valencia, CA / Santa Clarita / Los Angeles County the same way. Keep them consistent; that repetition is what search engines and AI assistants key on.
 
 ## BILLING FLOW
 1. Admin creates a **client** in `/admin/clients` (or re-uses existing).

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import InquiryCTA from "../components/InquiryCTA";
-import { services, BOOKING_URL } from "../lib/publicContent";
+import ServiceShowcase from "../components/ServiceShowcase";
+import { BOOKING_URL, LOCATION_PATH } from "../lib/publicContent";
 import { pageMetadata } from "../lib/seo";
 export const metadata = pageMetadata(
   "Video Production, NGO Films & Storytelling Services",
@@ -25,19 +26,15 @@ export default function ServicesPage() {
             kits, audio-led animation, or local filmmakers.
           </p>
         </header>
-        <div className="service-list mb-16">
-          {services.map((s) => (
-            <Link
-              key={s.slug}
-              href={`/services/${s.slug}`}
-              className="service-row"
-            >
-              <span className="service-number">{s.number}</span>
-              <h2 style={{ fontSize: "clamp(24px,3vw,36px)" }}>{s.title}</h2>
-              <p>{s.short}</p>
-              <span aria-hidden="true">↗</span>
-            </Link>
-          ))}
+        <div className="mb-16">
+          <ServiceShowcase />
+          <p className="small-copy mt-6">
+            Studio in Valencia, California.{" "}
+            <Link href={LOCATION_PATH} className="underline">
+              Video production across Los Angeles
+            </Link>{" "}
+            and worldwide.
+          </p>
         </div>
         <section className="editorial-grid section-space">
           <div>

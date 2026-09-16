@@ -169,7 +169,7 @@ body {
   font-size: 1.65rem;
 }
 .eyebrow {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   line-height: 1.5;
   letter-spacing: 0.16em;
@@ -184,7 +184,7 @@ body {
   color: #a7b2b8;
 }
 .small-copy {
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.65;
   color: #a7b2b8;
 }
@@ -520,7 +520,7 @@ a.partner-tile:hover {
   object-fit: contain;
 }
 .project-brand-panel span {
-  font-size: 11px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   text-align: center;
@@ -550,7 +550,7 @@ a.partner-tile:hover {
   font-size: 27px;
 }
 .project-client {
-  font-size: 13px;
+  font-size: 14px;
   margin-block: 14px;
   color: #c4cdd1;
 }
@@ -560,7 +560,7 @@ a.partner-tile:hover {
 }
 .status-tag {
   display: inline-block;
-  font-size: 11px;
+  font-size: 12px;
   color: #a7b2b8;
   border: 1px solid #334247;
   padding: 5px 8px;
@@ -583,7 +583,7 @@ a.partner-tile:hover {
   border-bottom: 1px solid #35454b;
 }
 .service-number {
-  font-size: 13px;
+  font-size: 14px;
   color: #feb040;
 }
 .service-row p {
@@ -664,7 +664,40 @@ a.partner-tile:hover {
 }
 .inquiry-cta {
   padding-block: 90px;
-  background: #101e22;
+  background: #feb040;
+  color: #1a1408;
+}
+.inquiry-cta .eyebrow {
+  color: #6b4a12;
+}
+.inquiry-cta h2 {
+  color: #14110a;
+}
+.inquiry-cta .body-copy {
+  color: #4a3a1c;
+  max-width: 560px;
+}
+.inquiry-cta .text-link {
+  color: #14110a;
+}
+.inquiry-cta .text-link:hover {
+  color: #5a3f0a;
+}
+.cta-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.button-dark {
+  background: #080f11;
+  color: #feb040;
+  border-color: #080f11;
+}
+.button-dark:hover {
+  background: #1b2a2f;
+  border-color: #1b2a2f;
 }
 .cta-inner {
   display: flex;
@@ -726,7 +759,7 @@ a.partner-tile:hover {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  font-size: 13px;
+  font-size: 14px;
   color: #a7b2b8;
   padding-top: 30px;
 }
@@ -756,7 +789,7 @@ a.partner-tile:hover {
   border-bottom: 1px solid #33464a;
 }
 .detail-list dt {
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #feb040;
@@ -1245,7 +1278,7 @@ a.partner-tile:hover {
   border-radius: 3px;
 }
 .public-site h2.eyebrow {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   line-height: 1.5;
   letter-spacing: 0.16em;
@@ -1340,7 +1373,7 @@ a.partner-tile:hover {
 }
 .recognition-row > h2 { padding-top: 30px; }
 .recognition-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
-.recognition-link { display: flex; flex-direction: column; gap: 12px; font-size: 13px; line-height: 1.4; color: #b6c0c4; }
+.recognition-link { display: flex; flex-direction: column; gap: 12px; font-size: 14px; line-height: 1.4; color: #b6c0c4; }
 .recognition-link:hover { color: #feb040; }
 .recognition-link:focus-visible { outline: 2px solid #feb040; outline-offset: 5px; }
 .recognition-art { display: flex; align-items: center; justify-content: center; height: 82px; padding: 10px 18px; background: #fff; border-radius: 3px; }
@@ -1356,4 +1389,305 @@ a.partner-tile:hover {
   .recognition-link { flex-direction: row; align-items: center; gap: 16px; }
   .recognition-art { flex: 0 0 160px; padding: 10px; }
   .recognition-art-nature { gap: 8px; }
+}
+
+
+/* ---------------------------------------------------------------------- */
+/* Homepage colour pass: stills behind the services, one light card in the
+   methods grid, a soft glow behind section headings, and one recognition
+   section with a photograph. */
+
+.section-glow {
+  position: relative;
+  isolation: isolate;
+}
+.section-glow::before {
+  content: "";
+  position: absolute;
+  /* Stays inside the section horizontally: a wider box here scrolls the
+     whole page sideways on phones. */
+  inset: -40px 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 45% 55% at 18% 8%,
+    rgba(254, 176, 64, 0.11),
+    transparent 70%
+  );
+}
+.section-glow-teal::before {
+  background: radial-gradient(
+    ellipse 50% 60% at 88% 92%,
+    rgba(52, 168, 146, 0.13),
+    transparent 70%
+  );
+}
+
+.services-showcase {
+  position: relative;
+  isolation: isolate;
+  background: linear-gradient(180deg, #0b1b1f 0%, #0a1519 100%);
+  border-block: 1px solid #28363a;
+}
+.services-showcase::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 40% 45% at 8% 0%, rgba(254, 176, 64, 0.12), transparent 70%),
+    radial-gradient(ellipse 45% 50% at 100% 100%, rgba(52, 168, 146, 0.12), transparent 70%);
+}
+.service-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+.service-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 430px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #132025;
+  isolation: isolate;
+  outline: 1px solid transparent;
+  transition: outline-color 0.2s;
+}
+.service-card:hover,
+.service-card:focus-visible {
+  outline-color: #feb040;
+}
+.service-card-art {
+  position: absolute;
+  /* YouTube frames of widescreen films carry letterbox bars top and
+     bottom; oversizing the art slot pushes them outside the card. */
+  inset: -14% 0;
+  z-index: -2;
+}
+.service-card-art img {
+  object-fit: cover;
+  filter: saturate(0.85) brightness(0.92);
+  transition:
+    transform 0.6s ease,
+    filter 0.6s ease;
+}
+.service-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    rgba(8, 15, 17, 0.08) 0%,
+    rgba(8, 15, 17, 0.5) 42%,
+    rgba(8, 15, 17, 0.95) 100%
+  );
+}
+.service-card:hover .service-card-art img {
+  transform: scale(1.04);
+  filter: saturate(1) brightness(1);
+}
+.service-card-body {
+  padding: 28px 28px 26px;
+}
+.service-card-number {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: #feb040;
+}
+.service-card h3 {
+  font-size: 27px;
+  margin: 12px 0 10px;
+  color: #f3f6f7;
+}
+.service-card p {
+  color: #c9d2d6;
+  font-size: 15.5px;
+  line-height: 1.6;
+  max-width: 34ch;
+}
+.service-card-cta {
+  display: inline-flex;
+  gap: 10px;
+  margin-top: 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #feb040;
+}
+.services-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 40px;
+  margin-top: 36px;
+}
+
+.method-card-featured {
+  background: #efe9dc;
+  border-color: #efe9dc;
+  color: #152529;
+}
+.method-card-featured .eyebrow.accent {
+  color: #8a6420;
+}
+.method-card-featured h3 {
+  color: #152529;
+}
+.method-card-featured .body-copy {
+  color: #45585d;
+}
+.method-card-featured .method-benefit {
+  color: #7a5a1a;
+}
+.method-card-featured .small-copy {
+  color: #5f6f74;
+}
+.method-card-featured .text-link {
+  color: #152529;
+}
+.method-card-featured .text-link:hover {
+  color: #8a6420;
+}
+
+.recognition-feature {
+  background: #0c171a;
+  border-top: 1px solid #28363a;
+}
+.recognition-feature-inner {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 70px;
+  align-items: center;
+}
+.recognition-feature-art {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #132025;
+  margin: 0;
+}
+.recognition-feature-art img {
+  object-fit: cover;
+  /* The YouTube frame carries a burned-in title top-left and a label
+     bottom-right. Zooming past both keeps the monkey and drops the type. */
+  object-position: 54% center;
+  transform: scale(1.35);
+}
+.recognition-feature-art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    200deg,
+    rgba(254, 176, 64, 0.16) 0%,
+    transparent 40%,
+    rgba(8, 15, 17, 0.6) 100%
+  );
+}
+.recognition-feature-caption {
+  position: absolute;
+  left: 20px;
+  bottom: 18px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #e7ecee;
+}
+.recognition-marks {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 34px;
+}
+.recognition-marks .recognition-art {
+  height: 72px;
+}
+
+.location-facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+.location-fact {
+  padding: 28px;
+  border: 1px solid #34464b;
+  background: #0c171a;
+}
+.location-fact .eyebrow {
+  margin-bottom: 14px;
+}
+.location-fact p,
+.location-fact address {
+  font-size: 17px;
+  line-height: 1.65;
+  color: #dce4eb;
+}
+.location-fact ul {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #c4cdd1;
+}
+.location-fact .text-link {
+  margin-top: 12px;
+}
+.faq-list .question-block + .question-block {
+  margin-top: 16px;
+}
+
+@media (max-width: 1000px) {
+  .service-card-grid,
+  .location-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .service-card {
+    min-height: 380px;
+  }
+  .recognition-feature-inner {
+    gap: 40px;
+  }
+}
+@media (max-width: 760px) {
+  .recognition-feature-inner {
+    grid-template-columns: 1fr;
+  }
+  .recognition-feature-art {
+    aspect-ratio: 1 / 1;
+  }
+  .recognition-feature-art img {
+    object-position: 57% center;
+  }
+  .recognition-marks {
+    grid-template-columns: 1fr;
+  }
+  .recognition-marks .recognition-link {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+  .recognition-marks .recognition-art {
+    flex: 0 0 150px;
+    height: 64px;
+    padding: 8px 12px;
+  }
+  .cta-actions {
+    width: 100%;
+  }
+}
+@media (max-width: 640px) {
+  .service-card-grid,
+  .location-facts {
+    grid-template-columns: 1fr;
+  }
+  .service-card {
+    min-height: 300px;
+  }
+  .service-card-body {
+    padding: 22px;
+  }
 }

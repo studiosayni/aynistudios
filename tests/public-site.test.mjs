@@ -115,6 +115,51 @@ test("all project/service/film references resolve and public slugs are unique", 
       assert.ok(content.projects.some((p) => p.slug === f.projectSlug));
   }
 });
+test("location, dates, and service artwork are consistent", () => {
+  assert.ok(content.isPublicPath(content.LOCATION_PATH));
+  assert.ok(content.isPublicPath(`${content.LOCATION_PATH}/`));
+  for (const [path, date] of Object.entries(content.PAGE_UPDATED)) {
+    assert.match(date, /^\d{4}-\d{2}-\d{2}$/, path);
+    assert.ok(Number.isFinite(Date.parse(date)), path);
+    assert.ok(content.isPublicPath(path), path);
+  }
+  for (const service of content.services)
+    assert.ok(content.PAGE_UPDATED[`/services/${service.slug}`], service.slug);
+  for (const project of content.projects)
+    assert.ok(content.PAGE_UPDATED[`/work/${project.slug}`], project.slug);
+  for (const guide of storytelling.guides)
+    assert.ok(content.PAGE_UPDATED[`/guides/${guide.slug}`], guide.slug);
+  for (const service of content.services) {
+    const art = content.serviceArt[service.slug];
+    assert.ok(art?.image && art?.alt, service.slug);
+  }
+  assert.ok(content.STUDIO_GEO.latitude > 34 && content.STUDIO_GEO.latitude < 35);
+  assert.ok(content.STUDIO_GEO.longitude < -118 && content.STUDIO_GEO.longitude > -119);
+  assert.match(content.LOCATION_STATEMENT, /Valencia, California/);
+  assert.match(content.LOCATION_STATEMENT, /Los Angeles/);
+});
+test("organization schema is a local business with a founder and a map", () => {
+  const seo = load("../app/lib/seo.ts", { "./publicContent": content });
+  // Cross-realm arrays are never reference-equal; compare the serialization.
+  assert.equal(JSON.stringify(seo.organization["@type"]), JSON.stringify(["Organization", "LocalBusiness"]));
+  assert.equal(seo.organization.geo["@type"], "GeoCoordinates");
+  assert.equal(seo.organization.founder["@type"], "Person");
+  assert.match(seo.organization.hasMap, /google\.com\/maps/);
+  assert.ok(seo.organization.areaServed.some((a) => a.name === "Los Angeles"));
+  assert.equal(seo.website["@type"], "WebSite");
+  const faq = seo.faqPage([{ question: "Q?", answer: "A." }]);
+  assert.equal(faq.mainEntity[0].acceptedAnswer.text, "A.");
+});
+test("www and /work redirect permanently", async () => {
+  const config = load("../next.config.ts");
+  const redirects = await (config.default ?? config).redirects();
+  const www = redirects.find((r) => r.has?.some((h) => h.value === "www.ayni-studios.com"));
+  assert.ok(www?.permanent);
+  assert.match(www.destination, /^https:\/\/ayni-studios\.com\//);
+  const work = redirects.find((r) => r.source === "/work");
+  assert.equal(work?.destination, "/library");
+  assert.ok(work?.permanent);
+});
 test("inquiry validation rejects malformed, oversized, and automated submissions", () => {
   for (const payload of [
     null,

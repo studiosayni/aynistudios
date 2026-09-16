@@ -24,6 +24,27 @@ const nextConfig: NextConfig = {
     ],
   },
 
+  async redirects() {
+    return [
+      {
+        // www serves an identical copy of the site. The canonical tag already
+        // points at the apex; this makes the answer unambiguous for crawlers
+        // and keeps link equity on one hostname.
+        source: "/:path*",
+        has: [{ type: "host", value: "www.ayni-studios.com" }],
+        destination: "https://ayni-studios.com/:path*",
+        permanent: true,
+      },
+      {
+        // Case studies live under /work/<slug> and the nav label is "Work",
+        // so people and crawlers try the parent URL. The index is /library.
+        source: "/work",
+        destination: "/library",
+        permanent: true,
+      },
+    ];
+  },
+
   async headers() {
     return [
       {

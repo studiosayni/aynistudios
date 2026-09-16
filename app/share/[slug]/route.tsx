@@ -25,6 +25,11 @@ const pages = [
     label: "Start a project",
   },
   { slug: "privacy", title: "Your privacy matters.", label: "Ayni Studios" },
+  {
+    slug: "los-angeles",
+    title: "Video production in Los Angeles.",
+    label: "Valencia, CA · Los Angeles County",
+  },
   { slug: "guides", title: "Good questions. A clearer brief.", label: "Video production planning" },
   ...guides.map((guide) => ({ slug: guide.slug, title: guide.title, label: "Ayni Studios guide" })),
   ...projects.map((p) => ({ slug: p.slug, title: p.title, label: p.client })),
