@@ -5,6 +5,39 @@ import { NATURE_FOR_LIFE } from "../lib/publicContent";
 // One recognition section for the homepage, replacing the separate
 // "Work that travels" and "Selected for UNDP" blocks: a still from They Live
 // in Our World, the three event marks, and a link into each story.
+const gridStills = [
+  {
+    src: "/brand/hero/hero-18-960.webp",
+    alt: "Masked dancers in woven ponchos at an Andean festival",
+    position: "center 40%",
+  },
+  {
+    src: "/brand/hero/hero-5-960.webp",
+    alt: "Aerial view of mangrove channels and turquoise water",
+    position: "center",
+  },
+  {
+    src: "/brand/hero/hero-2-960.webp",
+    alt: "A farmer holding papaya fruit beneath broad green leaves",
+    position: "center 40%",
+  },
+  {
+    src: "/brand/hero/hero-9-960.webp",
+    alt: "A woman resting beside bundles of woven cloth in the Andes",
+    position: "center 45%",
+  },
+  {
+    src: "/brand/hero/hero-26-960.webp",
+    alt: "A marine researcher in a sun hat looking out over the sea",
+    position: "center 30%",
+  },
+  {
+    src: "/brand/hero/hero-6-960.webp",
+    alt: "A man in a kandura standing in a young palm plantation",
+    position: "center 55%",
+  },
+];
+
 export default function RecognitionFeature() {
   return (
     <section
@@ -12,19 +45,22 @@ export default function RecognitionFeature() {
       aria-labelledby="recognition-feature-title"
     >
       <div className="site-width recognition-feature-inner">
-        <figure className="recognition-feature-art">
-          {/* Editorial still, not a YouTube frame: the 1280px thumbnails go
-              soft in a tall crop, and this one has no burned-in titles. */}
-          <Image
-            src="/brand/hero/hero-8-1920.webp"
-            alt="A guide on a boat on an Amazon river at dusk, from Ayni Studios’ editorial photography"
-            fill
-            sizes="(max-width: 760px) 100vw, 45vw"
-          />
-          <figcaption className="recognition-feature-caption">
-            On the river · Peruvian Amazon
-          </figcaption>
-        </figure>
+        {/* Six editorial stills as a 2×3 grid: the range of places the work
+            comes from, rather than one frame. Cells are ~300px wide, so the
+            640/960 variants do the work. */}
+        <div className="recognition-feature-art" role="group" aria-label="Stills from the field">
+          {gridStills.map((still) => (
+            <div className="recognition-cell" key={still.src}>
+              <Image
+                src={still.src}
+                alt={still.alt}
+                fill
+                sizes="(max-width: 760px) 50vw, 300px"
+                style={{ objectPosition: still.position }}
+              />
+            </div>
+          ))}
+        </div>
         <div className="recognition-feature-copy">
           <p className="eyebrow accent">Stories on a global stage</p>
           <h2 id="recognition-feature-title">

@@ -1619,38 +1619,25 @@ a.partner-tile:hover {
   align-items: center;
 }
 .recognition-feature-art {
-  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: 8px;
   aspect-ratio: 4 / 5;
-  border-radius: 4px;
-  overflow: hidden;
-  background: #132025;
   margin: 0;
 }
-.recognition-feature-art img {
+.recognition-cell {
+  position: relative;
+  overflow: hidden;
+  border-radius: 3px;
+  background: #132025;
+}
+.recognition-cell img {
   object-fit: cover;
-  /* Subject sits right of centre in the 16:9 source. */
-  object-position: 55% center;
+  transition: transform 0.6s ease;
 }
-.recognition-feature-art::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(
-    200deg,
-    rgba(254, 176, 64, 0.16) 0%,
-    transparent 40%,
-    rgba(8, 15, 17, 0.6) 100%
-  );
-}
-.recognition-feature-caption {
-  position: absolute;
-  left: 20px;
-  bottom: 18px;
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #e7ecee;
+.recognition-cell:hover img {
+  transform: scale(1.04);
 }
 .recognition-marks {
   display: grid;
@@ -1830,9 +1817,6 @@ a.partner-tile:hover {
 @media (max-width: 760px) {
   .recognition-feature-inner {
     grid-template-columns: 1fr;
-  }
-  .recognition-feature-art {
-    aspect-ratio: 4 / 3;
   }
   .recognition-marks {
     grid-template-columns: 1fr;
