@@ -104,7 +104,7 @@ export default function LosAngelesPage() {
         <div className="project-masthead">
           <Image
             src="/brand/hero/hero-1-1920.webp"
-            alt="Audience faces lit by a screen at an outdoor film gathering, from Ayni Studios’ editorial photography"
+            alt="Women listening to a political candidate speak at night, from Ayni Studios’ documentary The Bridge to Nowhere"
             fill
             priority
             sizes="100vw"

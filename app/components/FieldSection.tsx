@@ -7,32 +7,33 @@ import { productionMethods } from "../lib/storytellingContent";
 // working sit in one row beneath. ProductionMethods still renders the
 // detailed version on the remote-production service page.
 
-// Captions: place and occasion for each frame. Confirm with the studio
-// before changing; anything not certain is left out rather than guessed.
+// Captions: the film each frame comes from, confirmed by the studio.
+// A frame links to its watch page when the film is in the library.
 const frames = [
   {
     src: "/brand/hero/hero-3-1920.webp",
-    alt: "A child in a snowsuit at a high-altitude gathering below snow-capped Andean peaks",
-    place: "The high Andes",
-    detail: "A gathering below the snowline",
+    alt: "A child in a snowsuit at a sacred Andean gathering below snow-capped peaks, from The Sacred Ascent",
+    title: "The Sacred Ascent",
+    detail: "A sacred Andean event, UNESCO heritage",
     tint: "#3d8f9c",
     position: "center 55%",
     wide: true,
   },
   {
     src: "/brand/hero/hero-1-1920.webp",
-    alt: "Three women watching a screening at night, their faces lit by the screen",
-    place: "After dark",
-    detail: "A community screening",
+    alt: "Women listening to a political candidate speak at night, from The Bridge to Nowhere",
+    title: "The Bridge to Nowhere",
+    detail: "Women listen to a candidate promise a new future",
     tint: "#d8497e",
     position: "center 45%",
     wide: false,
+    href: "/films/the-bridge-to-nowhere",
   },
   {
     src: "/brand/hero/hero-10-1920.webp",
-    alt: "An Emirati family of four generations seated together at a doorway",
-    place: "United Arab Emirates",
-    detail: "A family portrait",
+    alt: "The family of an oyster diver seated together at a doorway, from Casting New Lines",
+    title: "Casting New Lines",
+    detail: "An oyster diver’s family in the Gulf",
     tint: "#c9453b",
     position: "center 30%",
     wide: false,
@@ -81,9 +82,19 @@ export default function FieldSection() {
                 style={{ objectPosition: frame.position }}
               />
               <figcaption>
-                <b>{frame.place}</b>
-                <span>{frame.detail}</span>
+                <span className="field-frame-text">
+                  <b>{frame.title}</b>
+                  <span>{frame.detail}</span>
+                </span>
+                {frame.href && <span className="field-frame-watch">Watch the film ↗</span>}
               </figcaption>
+              {frame.href && (
+                <Link
+                  href={frame.href}
+                  className="field-frame-link"
+                  aria-label={`Watch ${frame.title}`}
+                />
+              )}
             </figure>
           ))}
         </div>

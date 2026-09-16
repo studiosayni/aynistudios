@@ -1702,7 +1702,32 @@ a.partner-tile:hover {
   right: 22px;
   bottom: 18px;
   z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
   color: #f3f6f7;
+}
+.field-frame-watch {
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.field-frame-link {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+.field-frame-link:focus-visible {
+  outline: 2px solid var(--accent, #feb040);
+  outline-offset: -4px;
+}
+.field-frame img {
+  transition: transform 0.6s ease;
+}
+.field-frame:has(.field-frame-link:hover) img {
+  transform: scale(1.03);
 }
 .field-frame figcaption b {
   display: block;
