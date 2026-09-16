@@ -4,9 +4,10 @@ import HeroSection from "./components/HeroSection";
 import PartnerLogos from "./components/PartnerLogos";
 import ProjectCard from "./components/ProjectCard";
 import ServiceShowcase from "./components/ServiceShowcase";
-import ProductionMethods from "./components/ProductionMethods";
+import FieldSection from "./components/FieldSection";
 import RecognitionFeature from "./components/RecognitionFeature";
 import InquiryCTA from "./components/InquiryCTA";
+import { MotifCluster } from "./components/Motifs";
 import { LOCATION_PATH, projects, services } from "./lib/publicContent";
 import { jsonLd, organization, pageMetadata, website } from "./lib/seo";
 
@@ -15,6 +16,13 @@ export const metadata = pageMetadata(
   "Documentary, NGO, conservation, brand, and legacy films from Ayni Studios, a Valencia, California production company serving Los Angeles and working worldwide. Showcased at COP30 and IUCN; selected for UNDP’s Nature for Life Hub.",
   "/",
 );
+
+// Each band below carries one accent from the spectrum in globals.css
+// (--c-*): eyebrows, numbers, hovers and the band's glow take it. Buttons
+// stay amber everywhere. The order down the page is violet → magenta → teal
+// → green → ice → red → amber.
+const accent = (color: string, glowX = "12%", glowY = "34%") =>
+  ({ "--accent": color, "--glow-x": glowX, "--glow-y": glowY }) as React.CSSProperties;
 
 export default function HomePage() {
   return (
@@ -28,33 +36,41 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: jsonLd(organization) }}
       />
       <HeroSection />
-      <PartnerLogos showRecognition />
+      <div style={accent("var(--c-violet)")}>
+        <PartnerLogos showRecognition />
+      </div>
 
-      <section className="section-space site-width section-glow" id="selected-work">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow accent">Selected work</p>
-            <h2>
-              Good stories.
-              <br />
-              Real-world purpose.
-            </h2>
+      <section className="band section-space" id="selected-work" style={accent("var(--c-magenta)")}>
+        <div className="site-width">
+          <div className="section-heading">
+            <div>
+              <p className="eyebrow accent">Selected work</p>
+              <h2>
+                Good stories.
+                <br />
+                Real-world purpose.
+              </h2>
+            </div>
+            <Link href="/library" className="text-link">
+              All work <span aria-hidden="true">↗</span>
+            </Link>
           </div>
-          <Link href="/library" className="text-link">
-            All work <span aria-hidden="true">↗</span>
-          </Link>
-        </div>
-        <div className="project-grid">
-          {projects
-            .filter((project) => project.kind !== "sample")
-            .slice(0, 3)
-            .map((p) => (
-              <ProjectCard key={p.slug} project={p} />
-            ))}
+          <div className="project-grid">
+            {projects
+              .filter((project) => project.kind !== "sample")
+              .slice(0, 3)
+              .map((p) => (
+                <ProjectCard key={p.slug} project={p} />
+              ))}
+          </div>
         </div>
       </section>
 
-      <section className="services-showcase section-space" aria-labelledby="services-title">
+      <section
+        className="band band-two services-showcase section-space"
+        aria-labelledby="services-title"
+        style={accent("var(--c-teal)", "8%", "28%")}
+      >
         <div className="site-width">
           <div className="section-heading">
             <div>
@@ -83,7 +99,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="studio-preview">
+      <section className="studio-preview" style={accent("var(--c-canopy)")}>
         <div className="studio-preview-image">
           <Image
             src="/brand/hero/hero-7-1280.webp"
@@ -93,6 +109,7 @@ export default function HomePage() {
           />
         </div>
         <div className="studio-preview-copy">
+          <MotifCluster className="studio-motif" />
           <p className="eyebrow accent">The meaning behind the name</p>
           <h2>
             Give back
@@ -110,11 +127,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      <div className="site-width">
-        <ProductionMethods />
-      </div>
+      <FieldSection />
 
-      <RecognitionFeature />
+      <div style={accent("var(--c-red)", "10%", "78%")}>
+        <RecognitionFeature />
+      </div>
       <InquiryCTA />
     </div>
   );

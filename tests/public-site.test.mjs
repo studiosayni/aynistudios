@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import vm from "node:vm";
 import { createRequire } from "node:module";
 import ts from "typescript";
@@ -132,6 +132,8 @@ test("location, dates, and service artwork are consistent", () => {
   for (const service of content.services) {
     const art = content.serviceArt[service.slug];
     assert.ok(art?.image && art?.alt, service.slug);
+    if (art.image.startsWith("/"))
+      assert.ok(existsSync(new URL(`../public${art.image}`, import.meta.url)), art.image);
   }
   assert.ok(content.STUDIO_GEO.latitude > 34 && content.STUDIO_GEO.latitude < 35);
   assert.ok(content.STUDIO_GEO.longitude < -118 && content.STUDIO_GEO.longitude > -119);

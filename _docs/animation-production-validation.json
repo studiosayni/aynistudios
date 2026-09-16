@@ -1,0 +1,285 @@
+{
+  "origin": "https://ayni-studios.com",
+  "pages": [
+    {
+      "url": "https://ayni-studios.com",
+      "status": 200,
+      "h1": 1,
+      "schemaTypes": [
+        "Organization"
+      ],
+      "socialImage": "https://ayni-studios.com/share/home"
+    },
+    {
+      "url": "https://ayni-studios.com/library",
+      "status": 200,
+      "h1": 1,
+      "schemaTypes": [],
+      "socialImage": "https://ayni-studios.com/share/work"
+    },
+    {
+      "url": "https://ayni-studios.com/services",
+      "status": 200,
+      "h1": 1,
+      "schemaTypes": [],
+      "socialImage": "https://ayni-studios.com/share/services"
+    },
+    {
+      "url": "https://ayni-studios.com/guides",
+      "status": 200,
+      "h1": 1,
+      "schemaTypes": [],
+      "socialImage": "https://ayni-studios.com/share/guides"
+    },
+    {
+      "url": "https://ayni-studios.com/guides/affordable-video-production",
+      "status": 200,
+      "h1": 1,
+      "schemaTypes": [
+        "Article",
+        "BreadcrumbList"
+      ],
+      "socialImage": "https://ayni-studios.com/share/affordable-video-production"
+    },
+    {
+      "url": "https://ayni-studios.com/guides/choosing-a-storytelling-company",
+      "status": 200,
+      "h1": 1,
+      "schemaTypes": [
+        "Article",
+        "BreadcrumbList"
+      ],
+      "socialImage": "https://ayni-studios.com/share/choosing-a-storytelling-company"
+    },
+    {
+      "url": "https://ayni-studios.com/about",
+      "status": 200,
+      "h1": 1,
+      "schemaTypes": [],
+      "socialImage": "https://ayni-studios.com/share/studio"
+    },
+    {
+      "url": "https://ayni-studios.com/contact",
+      "status": 200,
+      "h1": 1,
+      "schemaTypes": [],
+      "socialImage": "https://ayni-studios.com/share/contact"
+    },
+    {
+      "url": "https://ayni-studios.com/privacy",
+      "status": 200,
+      "h1": 1,
+      "schemaTypes": [],
+      "socialImage": "https://ayni-studios.com/share/privacy"
+    },
+    {
+      "url": "https://ayni-studios.com/work/audio-to-animated-legacy-film",
+      "status": 200,
+      "h1": 1,
+      "schemaTypes": [
+        "BreadcrumbList"
+      ],
+      "socialImage": "https://ayni-studios.com/share/audio-to-animated-legacy-film"
+    },
+    {
+      "url": "https://ayni-studios.com/work/conservation-diaries",
+      "status": 200,
+      "h1": 1,
+      "schemaTypes": [
+        "BreadcrumbList"
+      ],
+      "socialImage": "https://ayni-studios.com/share/conservation-diaries"
+    },
+    {
+      "url": "https://ayni-studios.com/work/panasonic-lumix",
+      "status": 200,
+      "h1": 1,
+      "schemaTypes": [
+        "BreadcrumbList"
+      ],
+      "socialImage": "https://ayni-studios.com/share/panasonic-lumix"
+    },
+    {
+      "url": "https://ayni-studios.com/work/nature-and-resilience",
+      "status": 200,
+      "h1": 1,
+      "schemaTypes": [
+        "BreadcrumbList"
+      ],
+      "socialImage": "https://ayni-studios.com/share/nature-and-resilience"
+    },
+    {
+      "url": "https://ayni-studios.com/services/documentary-production",
+      "status": 200,
+      "h1": 1,
+      "schemaTypes": [
+        "Service",
+        "BreadcrumbList"
+      ],
+      "socialImage": "https://ayni-studios.com/share/documentary-production"
+    },
+    {
+      "url": "https://ayni-studios.com/services/brand-and-impact-content",
+      "status": 200,
+      "h1": 1,
+      "schemaTypes": [
+        "Service",
+        "BreadcrumbList"
+      ],
+      "socialImage": "https://ayni-studios.com/share/brand-and-impact-content"
+    },
+    {
+      "url": "https://ayni-studios.com/services/editing-and-post-production",
+      "status": 200,
+      "h1": 1,
+      "schemaTypes": [
+        "Service",
+        "BreadcrumbList"
+      ],
+      "socialImage": "https://ayni-studios.com/share/editing-and-post-production"
+    },
+    {
+      "url": "https://ayni-studios.com/services/ngo-video-production",
+      "status": 200,
+      "h1": 1,
+      "schemaTypes": [
+        "Service",
+        "BreadcrumbList"
+      ],
+      "socialImage": "https://ayni-studios.com/share/ngo-video-production"
+    },
+    {
+      "url": "https://ayni-studios.com/services/environmental-conservation-filmmaking",
+      "status": 200,
+      "h1": 1,
+      "schemaTypes": [
+        "Service",
+        "BreadcrumbList"
+      ],
+      "socialImage": "https://ayni-studios.com/share/environmental-conservation-filmmaking"
+    },
+    {
+      "url": "https://ayni-studios.com/services/legacy-films",
+      "status": 200,
+      "h1": 1,
+      "schemaTypes": [
+        "Service",
+        "BreadcrumbList"
+      ],
+      "socialImage": "https://ayni-studios.com/share/legacy-films"
+    },
+    {
+      "url": "https://ayni-studios.com/services/remote-video-production",
+      "status": 200,
+      "h1": 1,
+      "schemaTypes": [
+        "Service",
+        "BreadcrumbList"
+      ],
+      "socialImage": "https://ayni-studios.com/share/remote-video-production"
+    },
+    {
+      "url": "https://ayni-studios.com/films/the-surgeon-who-crossed-the-sea",
+      "status": 200,
+      "h1": 1,
+      "schemaTypes": [
+        "VideoObject"
+      ],
+      "socialImage": "https://ayni-studios.com/share/the-surgeon-who-crossed-the-sea"
+    },
+    {
+      "url": "https://ayni-studios.com/films/building-community-resilience",
+      "status": 200,
+      "h1": 1,
+      "schemaTypes": [
+        "VideoObject"
+      ],
+      "socialImage": "https://ayni-studios.com/share/building-community-resilience"
+    },
+    {
+      "url": "https://ayni-studios.com/films/the-floating-forest",
+      "status": 200,
+      "h1": 1,
+      "schemaTypes": [
+        "VideoObject"
+      ],
+      "socialImage": "https://ayni-studios.com/share/the-floating-forest"
+    },
+    {
+      "url": "https://ayni-studios.com/films/voices-of-change",
+      "status": 200,
+      "h1": 1,
+      "schemaTypes": [
+        "VideoObject"
+      ],
+      "socialImage": "https://ayni-studios.com/share/voices-of-change"
+    },
+    {
+      "url": "https://ayni-studios.com/films/commercial-fishing-in-the-amazon",
+      "status": 200,
+      "h1": 1,
+      "schemaTypes": [
+        "VideoObject"
+      ],
+      "socialImage": "https://ayni-studios.com/share/commercial-fishing-in-the-amazon"
+    },
+    {
+      "url": "https://ayni-studios.com/films/do-plants-have-spirits",
+      "status": 200,
+      "h1": 1,
+      "schemaTypes": [
+        "VideoObject"
+      ],
+      "socialImage": "https://ayni-studios.com/share/do-plants-have-spirits"
+    },
+    {
+      "url": "https://ayni-studios.com/films/oil-spill-threatens-the-galapagos",
+      "status": 200,
+      "h1": 1,
+      "schemaTypes": [
+        "VideoObject"
+      ],
+      "socialImage": "https://ayni-studios.com/share/oil-spill-threatens-the-galapagos"
+    },
+    {
+      "url": "https://ayni-studios.com/films/orphaned-monkeys-of-the-amazon",
+      "status": 200,
+      "h1": 1,
+      "schemaTypes": [
+        "VideoObject"
+      ],
+      "socialImage": "https://ayni-studios.com/share/orphaned-monkeys-of-the-amazon"
+    },
+    {
+      "url": "https://ayni-studios.com/films/the-bridge-to-nowhere",
+      "status": 200,
+      "h1": 1,
+      "schemaTypes": [
+        "VideoObject"
+      ],
+      "socialImage": "https://ayni-studios.com/share/the-bridge-to-nowhere"
+    },
+    {
+      "url": "https://ayni-studios.com/films/what-is-ayni",
+      "status": 200,
+      "h1": 1,
+      "schemaTypes": [
+        "VideoObject"
+      ],
+      "socialImage": "https://ayni-studios.com/share/what-is-ayni"
+    }
+  ],
+  "checks": [
+    "single H1",
+    "production canonical",
+    "social image loads",
+    "public internal links resolve",
+    "service/article JSON-LD parses",
+    "production methods in homepage HTML",
+    "Search Console verification retained"
+  ],
+  "commit": "63afa67",
+  "rollout": "rollout-2026-09-13-004",
+  "videoEntries": 10,
+  "animationCreditVerified": true
+}

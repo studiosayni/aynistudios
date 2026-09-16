@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { BOOKING_URL } from "../lib/publicContent";
+import { MotifBand, MotifCluster } from "./Motifs";
 
 // The closing band on every public page. Amber, used once per page at full
-// width, so the page has a definite ending and the brand accent reads as
-// deliberate rather than scattered.
+// width, with the motif set drawn in near-black at low opacity: a terrace
+// strip along the bottom edge and a cluster in the top-right corner, both
+// kept clear of the headline and the button.
 export default function InquiryCTA({
   title = "What story do you want to tell?",
 }: {
@@ -11,6 +13,8 @@ export default function InquiryCTA({
 }) {
   return (
     <section className="inquiry-cta">
+      <MotifCluster className="cta-motif-corner" />
+      <MotifBand className="cta-motif-band" />
       <div className="site-width cta-inner">
         <div>
           <p className="eyebrow">Make something meaningful</p>

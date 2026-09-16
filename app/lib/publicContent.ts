@@ -300,8 +300,8 @@ export const serviceArt: Record<string, { image: string; alt: string }> = {
     alt: "Painted portrait from The Surgeon Who Crossed the Sea",
   },
   "remote-video-production": {
-    image: "/brand/hero/hero-10-1280.webp",
-    alt: "A family listening together, from Ayni Studios’ editorial photography",
+    image: "/brand/hero/hero-24-1280.webp",
+    alt: "Volunteers wading through shallow mangrove water with sample trays, from Ayni Studios’ editorial photography",
   },
 };
 

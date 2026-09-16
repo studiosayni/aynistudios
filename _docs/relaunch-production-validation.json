@@ -1,0 +1,470 @@
+{
+  "domain": "https://ayni-studios.com",
+  "pages": [
+    {
+      "url": "https://ayni-studios.com",
+      "status": 200,
+      "h1": 1,
+      "canonical": [
+        "https://ayni-studios.com"
+      ],
+      "bookingLinks": 4,
+      "correctBookingLinks": true,
+      "oldInquiryLinks": 0,
+      "players": 0,
+      "forms": 0
+    },
+    {
+      "url": "https://ayni-studios.com/library",
+      "status": 200,
+      "h1": 1,
+      "canonical": [
+        "https://ayni-studios.com/library"
+      ],
+      "bookingLinks": 3,
+      "correctBookingLinks": true,
+      "oldInquiryLinks": 0,
+      "players": 0,
+      "forms": 0
+    },
+    {
+      "url": "https://ayni-studios.com/services",
+      "status": 200,
+      "h1": 1,
+      "canonical": [
+        "https://ayni-studios.com/services"
+      ],
+      "bookingLinks": 4,
+      "correctBookingLinks": true,
+      "oldInquiryLinks": 0,
+      "players": 0,
+      "forms": 0
+    },
+    {
+      "url": "https://ayni-studios.com/about",
+      "status": 200,
+      "h1": 1,
+      "canonical": [
+        "https://ayni-studios.com/about"
+      ],
+      "bookingLinks": 3,
+      "correctBookingLinks": true,
+      "oldInquiryLinks": 0,
+      "players": 0,
+      "forms": 0
+    },
+    {
+      "url": "https://ayni-studios.com/contact",
+      "status": 200,
+      "h1": 1,
+      "canonical": [
+        "https://ayni-studios.com/contact"
+      ],
+      "bookingLinks": 3,
+      "correctBookingLinks": true,
+      "oldInquiryLinks": 0,
+      "players": 0,
+      "forms": 0
+    },
+    {
+      "url": "https://ayni-studios.com/privacy",
+      "status": 200,
+      "h1": 1,
+      "canonical": [
+        "https://ayni-studios.com/privacy"
+      ],
+      "bookingLinks": 2,
+      "correctBookingLinks": true,
+      "oldInquiryLinks": 0,
+      "players": 0,
+      "forms": 0
+    },
+    {
+      "url": "https://ayni-studios.com/work/conservation-diaries",
+      "status": 200,
+      "h1": 1,
+      "canonical": [
+        "https://ayni-studios.com/work/conservation-diaries"
+      ],
+      "bookingLinks": 3,
+      "correctBookingLinks": true,
+      "oldInquiryLinks": 0,
+      "players": 0,
+      "forms": 0
+    },
+    {
+      "url": "https://ayni-studios.com/work/panasonic-lumix",
+      "status": 200,
+      "h1": 1,
+      "canonical": [
+        "https://ayni-studios.com/work/panasonic-lumix"
+      ],
+      "bookingLinks": 3,
+      "correctBookingLinks": true,
+      "oldInquiryLinks": 0,
+      "players": 0,
+      "forms": 0
+    },
+    {
+      "url": "https://ayni-studios.com/work/nature-and-resilience",
+      "status": 200,
+      "h1": 1,
+      "canonical": [
+        "https://ayni-studios.com/work/nature-and-resilience"
+      ],
+      "bookingLinks": 3,
+      "correctBookingLinks": true,
+      "oldInquiryLinks": 0,
+      "players": 0,
+      "forms": 0
+    },
+    {
+      "url": "https://ayni-studios.com/services/documentary-production",
+      "status": 200,
+      "h1": 1,
+      "canonical": [
+        "https://ayni-studios.com/services/documentary-production"
+      ],
+      "bookingLinks": 4,
+      "correctBookingLinks": true,
+      "oldInquiryLinks": 0,
+      "players": 0,
+      "forms": 0
+    },
+    {
+      "url": "https://ayni-studios.com/services/brand-and-impact-content",
+      "status": 200,
+      "h1": 1,
+      "canonical": [
+        "https://ayni-studios.com/services/brand-and-impact-content"
+      ],
+      "bookingLinks": 4,
+      "correctBookingLinks": true,
+      "oldInquiryLinks": 0,
+      "players": 0,
+      "forms": 0
+    },
+    {
+      "url": "https://ayni-studios.com/services/editing-and-post-production",
+      "status": 200,
+      "h1": 1,
+      "canonical": [
+        "https://ayni-studios.com/services/editing-and-post-production"
+      ],
+      "bookingLinks": 4,
+      "correctBookingLinks": true,
+      "oldInquiryLinks": 0,
+      "players": 0,
+      "forms": 0
+    },
+    {
+      "url": "https://ayni-studios.com/films/building-community-resilience",
+      "status": 200,
+      "h1": 1,
+      "canonical": [
+        "https://ayni-studios.com/films/building-community-resilience"
+      ],
+      "bookingLinks": 3,
+      "correctBookingLinks": true,
+      "oldInquiryLinks": 0,
+      "players": 1,
+      "forms": 0
+    },
+    {
+      "url": "https://ayni-studios.com/films/the-floating-forest",
+      "status": 200,
+      "h1": 1,
+      "canonical": [
+        "https://ayni-studios.com/films/the-floating-forest"
+      ],
+      "bookingLinks": 3,
+      "correctBookingLinks": true,
+      "oldInquiryLinks": 0,
+      "players": 1,
+      "forms": 0
+    },
+    {
+      "url": "https://ayni-studios.com/films/voices-of-change",
+      "status": 200,
+      "h1": 1,
+      "canonical": [
+        "https://ayni-studios.com/films/voices-of-change"
+      ],
+      "bookingLinks": 3,
+      "correctBookingLinks": true,
+      "oldInquiryLinks": 0,
+      "players": 1,
+      "forms": 0
+    },
+    {
+      "url": "https://ayni-studios.com/films/commercial-fishing-in-the-amazon",
+      "status": 200,
+      "h1": 1,
+      "canonical": [
+        "https://ayni-studios.com/films/commercial-fishing-in-the-amazon"
+      ],
+      "bookingLinks": 3,
+      "correctBookingLinks": true,
+      "oldInquiryLinks": 0,
+      "players": 1,
+      "forms": 0
+    },
+    {
+      "url": "https://ayni-studios.com/films/do-plants-have-spirits",
+      "status": 200,
+      "h1": 1,
+      "canonical": [
+        "https://ayni-studios.com/films/do-plants-have-spirits"
+      ],
+      "bookingLinks": 3,
+      "correctBookingLinks": true,
+      "oldInquiryLinks": 0,
+      "players": 1,
+      "forms": 0
+    },
+    {
+      "url": "https://ayni-studios.com/films/oil-spill-threatens-the-galapagos",
+      "status": 200,
+      "h1": 1,
+      "canonical": [
+        "https://ayni-studios.com/films/oil-spill-threatens-the-galapagos"
+      ],
+      "bookingLinks": 3,
+      "correctBookingLinks": true,
+      "oldInquiryLinks": 0,
+      "players": 1,
+      "forms": 0
+    },
+    {
+      "url": "https://ayni-studios.com/films/orphaned-monkeys-of-the-amazon",
+      "status": 200,
+      "h1": 1,
+      "canonical": [
+        "https://ayni-studios.com/films/orphaned-monkeys-of-the-amazon"
+      ],
+      "bookingLinks": 3,
+      "correctBookingLinks": true,
+      "oldInquiryLinks": 0,
+      "players": 1,
+      "forms": 0
+    },
+    {
+      "url": "https://ayni-studios.com/films/the-bridge-to-nowhere",
+      "status": 200,
+      "h1": 1,
+      "canonical": [
+        "https://ayni-studios.com/films/the-bridge-to-nowhere"
+      ],
+      "bookingLinks": 3,
+      "correctBookingLinks": true,
+      "oldInquiryLinks": 0,
+      "players": 1,
+      "forms": 0
+    },
+    {
+      "url": "https://ayni-studios.com/films/what-is-ayni",
+      "status": 200,
+      "h1": 1,
+      "canonical": [
+        "https://ayni-studios.com/films/what-is-ayni"
+      ],
+      "bookingLinks": 3,
+      "correctBookingLinks": true,
+      "oldInquiryLinks": 0,
+      "players": 1,
+      "forms": 0
+    }
+  ],
+  "assets": [
+    {
+      "url": "https://ayni-studios.com/_next/image?url=%2Fbrand%2Fhero%2Fhero-7-1280.webp&w=3840&q=75",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/_next/image?url=%2Fbrand%2Fhero%2Fhero-7-1920.webp&w=3840&q=75",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/_next/image?url=https%3A%2F%2Fi.ytimg.com%2Fvi%2F-LDcp9SWahw%2Fmaxresdefault.jpg&w=3840&q=75",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/_next/image?url=https%3A%2F%2Fi.ytimg.com%2Fvi%2F6vw_pS96Odg%2Fmaxresdefault.jpg&w=3840&q=75",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/_next/image?url=https%3A%2F%2Fi.ytimg.com%2Fvi%2F71RKXOFeaco%2Fmaxresdefault.jpg&w=3840&q=75",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/_next/image?url=https%3A%2F%2Fi.ytimg.com%2Fvi%2FArxMcIPRSdk%2Fmaxresdefault.jpg&w=3840&q=75",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/_next/image?url=https%3A%2F%2Fi.ytimg.com%2Fvi%2FKA5wK3R5ClM%2Fmaxresdefault.jpg&w=3840&q=75",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/_next/image?url=https%3A%2F%2Fi.ytimg.com%2Fvi%2FQELtdAIjjs0%2Fmaxresdefault.jpg&w=3840&q=75",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/_next/image?url=https%3A%2F%2Fi.ytimg.com%2Fvi%2FejvyfpOlyRA%2Fmaxresdefault.jpg&w=3840&q=75",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/_next/image?url=https%3A%2F%2Fi.ytimg.com%2Fvi%2FqNLdmBfmlxU%2Fmaxresdefault.jpg&w=3840&q=75",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/_next/image?url=https%3A%2F%2Fi.ytimg.com%2Fvi%2FqrDvFXIixPY%2Fmaxresdefault.jpg&w=3840&q=75",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/brand/hero/hero-34.jpg",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/brand/hero/words-poster.webp",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/brand/marks/ayni-mark.svg",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/brand/partners/cop30.webp",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/brand/partners/enwwf.webp",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/brand/partners/goumbook.webp",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/brand/partners/ifrc-wwf.webp",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/brand/partners/iucn.webp",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/brand/partners/panasonic.webp",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/brand/partners/sfs.webp",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/brand/partners/teamlab.webp",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/share/brand-and-impact-content",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/share/building-community-resilience",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/share/commercial-fishing-in-the-amazon",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/share/conservation-diaries",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/share/contact",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/share/do-plants-have-spirits",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/share/documentary-production",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/share/editing-and-post-production",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/share/home",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/share/nature-and-resilience",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/share/oil-spill-threatens-the-galapagos",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/share/orphaned-monkeys-of-the-amazon",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/share/panasonic-lumix",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/share/privacy",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/share/services",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/share/studio",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/share/the-bridge-to-nowhere",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/share/the-floating-forest",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/share/voices-of-change",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/share/what-is-ayni",
+      "status": 200
+    },
+    {
+      "url": "https://ayni-studios.com/share/work",
+      "status": 200
+    }
+  ],
+  "videoSitemapEntries": 9,
+  "validatedAt": "2026-09-13T20:55:28.446494+00:00",
+  "commit": "b676af8677adf71a05dd91018dfb28f2bcd38908",
+  "rollout": "rollout-2026-09-13-001",
+  "rolloutStatus": "SUCCEEDED",
+  "browserChecks": {
+    "desktop1280": {
+      "videoPlaying": true,
+      "brokenImages": 0,
+      "horizontalOverflow": false
+    },
+    "mobile390": {
+      "videoElements": 0,
+      "posterLoaded": true,
+      "horizontalOverflow": false
+    },
+    "bookingDestinationTitle": "15 minutes with Ayni Studios"
+  }
+}

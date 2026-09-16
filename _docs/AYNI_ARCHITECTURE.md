@@ -62,7 +62,7 @@ Consequences, and what we do instead:
 ## ROUTES
 | Route | Source | Notes |
 |---|---|---|
-| `/` | Server component | Hero (still + word-cloud video), partner + recognition logo rows, three selected projects, six service cards with film stills (`ServiceShowcase`), cream studio panel, production methods (one featured light card), one recognition section with an editorial still (`RecognitionFeature`), amber closing CTA. WebSite + Organization/LocalBusiness JSON-LD. |
+| `/` | Server component | Hero (still + word-cloud video), partner + recognition logo rows, three selected projects, six service cards with film stills (`ServiceShowcase`), cream studio panel with line motifs, "In the field" (`FieldSection`: three anamorphic editorial stills + the four methods in one row), one recognition section with an editorial still (`RecognitionFeature`), amber closing CTA with motifs. Each band sets `--accent` from the spectrum tokens in `globals.css` (`--c-teal`, `--c-canopy`, `--c-ice`, `--c-magenta`, `--c-red`, `--c-violet`); `.band::before` draws the glow in that colour. WebSite + Organization/LocalBusiness JSON-LD. |
 | `/library` | Server component; `_library` read server-side (`revalidate = 300`) | Selected collaborations grid, animation sample, UNDP recognition, film grid. Exports its own `metadata`. |
 | `/work/[slug]` | Static (`generateStaticParams`) | Case study per project from `app/lib/publicContent.ts`. BreadcrumbList JSON-LD. `/work` itself 301s to `/library`. |
 | `/services`, `/services/[slug]` | Static | Index is the same still-card grid as the homepage; detail pages carry a masthead still, Service JSON-LD (`areaServed` = `SERVICE_AREAS`), breadcrumbs, Q&A. |

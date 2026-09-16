@@ -8,7 +8,7 @@ const FEATURED_INDEX = 2;
 
 export default function ProductionMethods({ detailed = false }: { detailed?: boolean }) {
   return (
-    <section className="section-space production-methods section-glow section-glow-teal">
+    <section className="section-space production-methods">
       <div className="section-heading">
         <div>
           <p className="eyebrow accent">Flexible ways to work together</p>

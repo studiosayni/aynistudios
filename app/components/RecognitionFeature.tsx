@@ -8,7 +8,7 @@ import { NATURE_FOR_LIFE } from "../lib/publicContent";
 export default function RecognitionFeature() {
   return (
     <section
-      className="recognition-feature section-space"
+      className="band recognition-feature section-space"
       aria-labelledby="recognition-feature-title"
     >
       <div className="site-width recognition-feature-inner">

@@ -149,6 +149,15 @@ body {
 .public-site {
   --muted: #a7b2b8;
   --line: #28363a;
+  /* The spectrum: six colours lifted from the editorial stills. A band sets
+     --accent to one of them; labels, numbers, hovers and the glow follow.
+     Buttons stay amber. */
+  --c-teal: #3d8f9c;
+  --c-canopy: #6fae4a;
+  --c-ice: #8fb6d6;
+  --c-magenta: #d8497e;
+  --c-red: #c9453b;
+  --c-violet: #7a66b8;
   color: #e7ecee;
 }
 .public-site h1,
@@ -176,7 +185,7 @@ body {
   text-transform: uppercase;
 }
 .accent {
-  color: #feb040;
+  color: var(--accent, #feb040);
 }
 .body-copy {
   font-size: 17px;
@@ -261,7 +270,7 @@ body {
   color: #e7ecee;
 }
 .text-link:hover {
-  color: #feb040;
+  color: var(--accent, #feb040);
 }
 .button-row {
   display: flex;
@@ -474,8 +483,11 @@ body {
 }
 .partner-tile:has(a):hover,
 a.partner-tile:hover {
-  outline: 2px solid #feb040;
+  outline: 2px solid var(--accent, #feb040);
   outline-offset: 3px;
+}
+.partner-section .eyebrow {
+  color: var(--accent, #a7b2b8);
 }
 .project-grid {
   display: grid;
@@ -539,7 +551,7 @@ a.partner-tile:hover {
   font-size: 20px;
 }
 .project-card:hover .project-arrow {
-  background: #feb040;
+  background: var(--accent, #feb040);
   color: #080f11;
 }
 .project-caption {
@@ -653,8 +665,25 @@ a.partner-tile:hover {
 .studio-preview-copy h2 {
   margin-block: 20px;
 }
+.studio-preview-copy {
+  position: relative;
+  overflow: hidden;
+}
 .studio-preview-copy .accent {
-  color: #67532f;
+  color: #5e7a2f;
+}
+.studio-motif {
+  position: absolute;
+  right: -30px;
+  top: -20px;
+  width: min(62%, 420px);
+  height: auto;
+  color: #5e7a2f;
+  opacity: 0.28;
+  pointer-events: none;
+}
+.studio-preview-copy > :not(.studio-motif) {
+  position: relative;
 }
 .studio-preview-copy .body-copy {
   color: #45585d;
@@ -662,10 +691,40 @@ a.partner-tile:hover {
 .studio-preview-copy .text-link {
   color: #152529;
 }
+.studio-preview-copy .text-link:hover {
+  color: #5e7a2f;
+}
 .inquiry-cta {
+  position: relative;
+  overflow: hidden;
   padding-block: 90px;
   background: #feb040;
   color: #1a1408;
+}
+.inquiry-cta .cta-inner {
+  position: relative;
+  z-index: 1;
+}
+.cta-motif-corner {
+  position: absolute;
+  right: -40px;
+  top: -60px;
+  width: min(46%, 520px);
+  height: auto;
+  color: #1a1408;
+  opacity: 0.13;
+  pointer-events: none;
+}
+.cta-motif-band {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 70px;
+  color: #1a1408;
+  opacity: 0.14;
+  pointer-events: none;
 }
 .inquiry-cta .eyebrow {
   color: #6b4a12;
@@ -1374,7 +1433,7 @@ a.partner-tile:hover {
 .recognition-row > h2 { padding-top: 30px; }
 .recognition-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
 .recognition-link { display: flex; flex-direction: column; gap: 12px; font-size: 14px; line-height: 1.4; color: #b6c0c4; }
-.recognition-link:hover { color: #feb040; }
+.recognition-link:hover { color: var(--accent, #feb040); }
 .recognition-link:focus-visible { outline: 2px solid #feb040; outline-offset: 5px; }
 .recognition-art { display: flex; align-items: center; justify-content: center; height: 82px; padding: 10px 18px; background: #fff; border-radius: 3px; }
 .recognition-art > img { width: 100%; height: 60px; object-fit: contain; }
@@ -1394,50 +1453,46 @@ a.partner-tile:hover {
 
 /* ---------------------------------------------------------------------- */
 /* Homepage colour pass: stills behind the services, one light card in the
-   methods grid, a soft glow behind section headings, and one recognition
-   section with a photograph. */
+   methods grid, a glow behind each band, and one recognition section with a
+   photograph. */
 
-.section-glow {
+/* A full-bleed band with one soft glow in the band's own accent. The glow
+   is drawn on the band itself, never on the content column, and its ellipse
+   fades out before the band's edges, so no box ever shows. */
+.band {
   position: relative;
   isolation: isolate;
+  overflow: hidden;
 }
-.section-glow::before {
-  content: "";
-  position: absolute;
-  /* Stays inside the section horizontally: a wider box here scrolls the
-     whole page sideways on phones. */
-  inset: -40px 0;
-  z-index: -1;
-  pointer-events: none;
-  background: radial-gradient(
-    ellipse 45% 55% at 18% 8%,
-    rgba(254, 176, 64, 0.11),
-    transparent 70%
-  );
-}
-.section-glow-teal::before {
-  background: radial-gradient(
-    ellipse 50% 60% at 88% 92%,
-    rgba(52, 168, 146, 0.13),
-    transparent 70%
-  );
-}
-
-.services-showcase {
-  position: relative;
-  isolation: isolate;
-  background: linear-gradient(180deg, #0b1b1f 0%, #0a1519 100%);
-  border-block: 1px solid #28363a;
-}
-.services-showcase::before {
+.band::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
   pointer-events: none;
+  background: radial-gradient(
+    ellipse 30% 36% at var(--glow-x, 12%) var(--glow-y, 34%),
+    color-mix(in srgb, var(--accent, #feb040) 15%, transparent),
+    transparent 70%
+  );
+}
+.band-two::before {
   background:
-    radial-gradient(ellipse 40% 45% at 8% 0%, rgba(254, 176, 64, 0.12), transparent 70%),
-    radial-gradient(ellipse 45% 50% at 100% 100%, rgba(52, 168, 146, 0.12), transparent 70%);
+    radial-gradient(
+      ellipse 28% 34% at var(--glow-x, 8%) var(--glow-y, 28%),
+      color-mix(in srgb, var(--accent, #feb040) 15%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 26% 32% at 92% 74%,
+      color-mix(in srgb, var(--accent, #feb040) 12%, transparent),
+      transparent 70%
+    );
+}
+
+.services-showcase {
+  background: linear-gradient(180deg, #0b1b1f 0%, #0a1519 100%);
+  border-block: 1px solid #28363a;
 }
 .service-card-grid {
   display: grid;
@@ -1459,7 +1514,7 @@ a.partner-tile:hover {
 }
 .service-card:hover,
 .service-card:focus-visible {
-  outline-color: #feb040;
+  outline-color: var(--accent, #feb040);
 }
 .service-card-art {
   position: absolute;
@@ -1498,7 +1553,7 @@ a.partner-tile:hover {
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.14em;
-  color: #feb040;
+  color: var(--accent, #feb040);
 }
 .service-card h3 {
   font-size: 27px;
@@ -1517,7 +1572,7 @@ a.partner-tile:hover {
   margin-top: 18px;
   font-size: 14px;
   font-weight: 600;
-  color: #feb040;
+  color: var(--accent, #feb040);
 }
 .services-foot {
   display: flex;
@@ -1607,6 +1662,102 @@ a.partner-tile:hover {
   height: 72px;
 }
 
+/* In the field: anamorphic frames, then the four methods in one row. */
+.field-section {
+  background: #0a1417;
+  border-top: 1px solid #28363a;
+}
+.field-frames {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.field-frame {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 2.4 / 1;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #132025;
+}
+.field-frame-wide {
+  grid-column: 1 / -1;
+}
+.field-frame img {
+  object-fit: cover;
+}
+.field-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 50%, var(--tint, #080f11) 100%);
+  opacity: 0.8;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+.field-frame figcaption {
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  bottom: 18px;
+  z-index: 1;
+  color: #f3f6f7;
+}
+.field-frame figcaption b {
+  display: block;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+.field-frame figcaption span {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffffb3;
+}
+.field-frame-wide figcaption b {
+  font-size: 30px;
+}
+.method-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+.method-card-compact {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 24px 22px;
+}
+.method-card-compact .eyebrow {
+  margin: 0;
+}
+.public-site .method-card-compact h3 {
+  font-size: 21px;
+  line-height: 1.15;
+  margin: 2px 0 0;
+}
+.method-card-compact .body-copy {
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+.method-card-compact .method-benefit {
+  margin: auto 0 0;
+  padding-top: 12px;
+  font-size: 14.5px;
+  color: var(--accent, #e4b86f);
+}
+.method-card-compact.method-card-featured .method-benefit,
+.method-card-compact.method-card-featured .eyebrow {
+  color: #8a6420;
+}
+.method-link {
+  font-weight: 600;
+}
+
 .location-facts {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1640,7 +1791,8 @@ a.partner-tile:hover {
 
 @media (max-width: 1000px) {
   .service-card-grid,
-  .location-facts {
+  .location-facts,
+  .method-row {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .service-card {
@@ -1676,8 +1828,28 @@ a.partner-tile:hover {
 }
 @media (max-width: 640px) {
   .service-card-grid,
-  .location-facts {
+  .location-facts,
+  .method-row,
+  .field-frames {
     grid-template-columns: 1fr;
+  }
+  .field-frame {
+    aspect-ratio: 16 / 9;
+  }
+  .field-frame-wide figcaption b {
+    font-size: 24px;
+  }
+  .studio-motif {
+    width: 60%;
+    right: -40px;
+    top: auto;
+    bottom: -30px;
+    opacity: 0.2;
+  }
+  .cta-motif-corner {
+    width: 70%;
+    top: -80px;
+    opacity: 0.09;
   }
   .service-card {
     min-height: 300px;

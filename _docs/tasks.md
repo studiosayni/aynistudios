@@ -47,6 +47,14 @@ Items identified but not yet prioritized:
 
 ## Recently Completed
 
+00. **Homepage flourish pass (2026-09-15)** — colour spectrum, glow fix, motifs, field stills. Proposal: https://claude.ai/artifact/TjwAFiALxoevEzuC2rAxSi
+
+   - **Glows** were drawn on the content column, 40px taller than the section, so their box edges showed and they spilled onto the row above. Now `.band::before` draws one radial glow on the full-bleed band, sized to fade before the edges, in the band's `--accent`.
+   - **Spectrum.** Six tokens lifted from the stills (`--c-teal/canopy/ice/magenta/red/violet`). Each homepage band sets `--accent`; `.accent`, `.text-link:hover`, service-card numbers, partner-tile hover, project-arrow hover and recognition-link hover all resolve `var(--accent, #feb040)`, so other pages stay amber. Buttons are amber everywhere.
+   - **Motifs** (`app/components/Motifs.tsx`): terraces, stepped diamond, river, sun, fern, spiral, ridge as line art in `currentColor`. Green at 28% on the cream panel, near-black at 13–14% on the amber band. Abstract by design; do not add a specific community's pattern without permission.
+   - **In the field** (`FieldSection`) replaces the plain methods grid: images 3 (Andes, full-width 2.4:1), 1 and 10 (half-width 2.4:1, 16:9 on phones) with tinted captions, then the four methods in one row. **Captions are conservative and unconfirmed** — "The high Andes / A gathering below the snowline", "After dark / A community screening", "United Arab Emirates / A family portrait". Confirm place and occasion with Noah and update `frames` in the component.
+   - Image 10 was also the remote-production service card; that card now uses image 24 (mangrove volunteers).
+
 0. **SEO local-intent pass + homepage colour pass (2026-09-15)** — follow-up to the ChatGPT relaunch review.
 
    - **SEO.** Sitemap `lastmod` now comes from `PAGE_UPDATED` per path (was one constant for 24 URLs). Organization schema is `["Organization","LocalBusiness"]` with `geo`, `hasMap`, `areaServed` (Valencia / Santa Clarita / LA / LA County / CA / US / Worldwide), `knowsAbout`, and the founder inlined as a Person; a `WebSite` entity sits beside it on the homepage. New `/video-production-los-angeles` page (FAQPage + WebPage + breadcrumbs), linked from the homepage services section, footer, services, about, and contact. Contact is in the nav and footer (it was orphaned). `/work` → `/library` and `www` → apex redirects. Homepage title and description carry "Los Angeles". Guides are authored by the founder Person with real `dateModified`. Service pages: `areaServed` = `SERVICE_AREAS`, masthead still, location line.
