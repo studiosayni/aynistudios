@@ -1573,10 +1573,8 @@ a.partner-tile:hover {
 }
 .recognition-feature-art img {
   object-fit: cover;
-  /* The YouTube frame carries a burned-in title top-left and a label
-     bottom-right. Zooming past both keeps the monkey and drops the type. */
-  object-position: 54% center;
-  transform: scale(1.35);
+  /* Subject sits right of centre in the 16:9 source. */
+  object-position: 55% center;
 }
 .recognition-feature-art::after {
   content: "";
@@ -1657,10 +1655,7 @@ a.partner-tile:hover {
     grid-template-columns: 1fr;
   }
   .recognition-feature-art {
-    aspect-ratio: 1 / 1;
-  }
-  .recognition-feature-art img {
-    object-position: 57% center;
+    aspect-ratio: 4 / 3;
   }
   .recognition-marks {
     grid-template-columns: 1fr;

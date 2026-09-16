@@ -13,14 +13,16 @@ export default function RecognitionFeature() {
     >
       <div className="site-width recognition-feature-inner">
         <figure className="recognition-feature-art">
+          {/* Editorial still, not a YouTube frame: the 1280px thumbnails go
+              soft in a tall crop, and this one has no burned-in titles. */}
           <Image
-            src="https://i.ytimg.com/vi/QELtdAIjjs0/maxresdefault.jpg"
-            alt="A rescued capuchin monkey eating fruit, from They Live in Our World"
+            src="/brand/hero/hero-8-1920.webp"
+            alt="A guide on a boat on an Amazon river at dusk, from Ayni Studios’ editorial photography"
             fill
-            sizes="(max-width: 760px) 100vw, 50vw"
+            sizes="(max-width: 760px) 100vw, 45vw"
           />
           <figcaption className="recognition-feature-caption">
-            They Live in Our World · Peruvian Amazon
+            On the river · Peruvian Amazon
           </figcaption>
         </figure>
         <div className="recognition-feature-copy">
