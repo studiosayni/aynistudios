@@ -639,50 +639,71 @@ a.partner-tile:hover {
   margin-bottom: 22px;
 }
 .inquiry-cta {
+  position: relative;
+  overflow: hidden;
   background: #feb040;
   color: #1a1408;
 }
 .cta-panel {
   position: relative;
-  overflow: hidden;
+  z-index: 1;
   padding-block: 76px;
 }
-.inquiry-cta .cta-inner {
-  position: relative;
-  z-index: 1;
-}
-/* Split variant: amber copy panel left, a full-height still right. The copy
-   keeps the site container's left edge (the panel is half the section, so
-   100% * 2 is the full width) and stacks vertically to fit the half. */
+/* Full-bleed variant: the still runs edge to edge, the copy sits over a
+   scrim that darkens the left and the foot, and amber is kept for the
+   eyebrow and the button. Colours flip to the light-on-dark set. */
 .inquiry-cta.has-image {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  background: #080f11;
+  color: #e7ecee;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+}
+.inquiry-cta.has-image .cta-panel {
+  width: 100%;
+  padding-block: 96px;
+}
+.cta-bg {
+  object-fit: cover;
+  object-position: 50% 62%;
+}
+.cta-scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(8, 15, 17, 0.88) 0%, rgba(8, 15, 17, 0.7) 34%, rgba(8, 15, 17, 0.15) 62%, rgba(8, 15, 17, 0) 100%),
+    linear-gradient(0deg, rgba(8, 15, 17, 0.75) 0%, rgba(8, 15, 17, 0) 40%),
+    linear-gradient(180deg, rgba(8, 15, 17, 0.35) 0%, rgba(8, 15, 17, 0) 30%);
 }
 .inquiry-cta.has-image .cta-inner {
-  width: auto;
-  margin-left: max(48px, calc((100% * 2 - 1280px) / 2));
-  margin-right: 48px;
   flex-direction: column;
   align-items: flex-start;
   gap: 30px;
 }
 .inquiry-cta.has-image .cta-inner h2 {
+  max-width: 560px;
+}
+.inquiry-cta.has-image .eyebrow {
+  color: #feb040;
+}
+.inquiry-cta.has-image h2 {
+  color: #f3f6f7;
+}
+.inquiry-cta.has-image .body-copy {
+  color: #c5ced2;
   max-width: 520px;
 }
-.cta-image {
-  position: relative;
-  margin: 0;
-  min-height: 420px;
-  background: #132025;
+.inquiry-cta.has-image .text-link {
+  color: #e7ecee;
 }
-.cta-image img {
-  object-fit: cover;
-  object-position: 50% 55%;
+.inquiry-cta.has-image .text-link:hover {
+  color: #feb040;
 }
-.cta-image figcaption {
+.cta-cap {
   position: absolute;
-  left: 24px;
-  bottom: 18px;
+  right: 48px;
+  bottom: 22px;
+  z-index: 1;
   font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1201,16 +1222,24 @@ a.partner-tile:hover {
     padding-block: 60px;
   }
   .inquiry-cta.has-image {
-    grid-template-columns: 1fr;
-  }
-  .inquiry-cta.has-image .cta-image {
-    order: -1;
     min-height: 0;
-    aspect-ratio: 16 / 10;
   }
-  .inquiry-cta.has-image .cta-inner {
-    width: min(1280px, calc(100% - 96px));
-    margin-inline: auto;
+  /* Phones: the boat sits in the lower third of the frame, so the copy
+     takes the top and the scrim comes down from above. */
+  .inquiry-cta.has-image .cta-panel {
+    padding-block: 64px 300px;
+  }
+  .cta-bg {
+    object-position: 50% 100%;
+  }
+  .cta-scrim {
+    background:
+      linear-gradient(180deg, rgba(8, 15, 17, 0.96) 0%, rgba(8, 15, 17, 0.9) 48%, rgba(8, 15, 17, 0.25) 72%, rgba(8, 15, 17, 0) 100%);
+  }
+  .cta-cap {
+    right: auto;
+    left: 48px;
+    bottom: 18px;
   }
   .cta-inner {
     align-items: flex-start;
