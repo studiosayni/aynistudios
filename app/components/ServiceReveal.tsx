@@ -17,21 +17,31 @@ const captions: Record<string, string> = {
   "legacy-films": "The Surgeon Who Crossed the Sea · Legacy film",
 };
 
-export default function ServiceReveal({ count = 6 }: { count?: number }) {
+// `variant="wide"` flips the balance: the still becomes the wider column at
+// 3:2 (landscape footage crops natively) and the list tightens to match its
+// height, so nothing needs to be sticky.
+export default function ServiceReveal({
+  count = 6,
+  variant = "portrait",
+}: {
+  count?: number;
+  variant?: "portrait" | "wide";
+}) {
   const items = services.slice(0, count);
   const [active, setActive] = useState(0);
+  const wide = variant === "wide";
   return (
-    <div className="svc-grid">
+    <div className={`svc-grid${wide ? " svc-grid-wide" : ""}`}>
       <div className="svc-stage" aria-hidden="true">
         {items.map((s, i) => {
           const art = serviceArt[s.slug];
           return art ? (
             <Image
               key={s.slug}
-              src={art.image}
+              src={wide ? (art.wide ?? art.image) : art.image}
               alt=""
               fill
-              sizes="(max-width: 860px) 100vw, 560px"
+              sizes={wide ? "(max-width: 860px) 100vw, 700px" : "(max-width: 860px) 100vw, 560px"}
               className={i === active ? "on" : undefined}
               priority={i === 0}
             />

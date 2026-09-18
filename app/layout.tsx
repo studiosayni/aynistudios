@@ -4,6 +4,7 @@ import { Barlow } from "next/font/google";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import PublicEnhancements from "./components/PublicEnhancements";
+import FloatingBook from "./components/FloatingBook";
 import { LightboxProvider } from "./components/VideoLightbox";
 import { Toaster } from "react-hot-toast";
 import { SITE_URL } from "./lib/publicContent";
@@ -53,6 +54,7 @@ export default function RootLayout({
         </a>
         <PublicEnhancements />
         <Navbar />
+        <FloatingBook />
 
         <Toaster
           position="bottom-center"

@@ -638,56 +638,6 @@ a.partner-tile:hover {
   line-height: 1.65;
   margin-bottom: 22px;
 }
-.studio-preview {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  background: #e9e6dd;
-  color: #152529;
-}
-.studio-preview-image {
-  position: relative;
-  min-height: 480px;
-}
-.studio-preview-image img {
-  object-fit: cover;
-}
-.studio-preview-copy {
-  padding: 75px 70px;
-  max-width: 680px;
-  align-self: center;
-}
-.studio-preview-copy h2 {
-  margin-block: 20px;
-}
-.studio-preview-copy {
-  position: relative;
-  overflow: hidden;
-}
-.studio-preview-copy .accent {
-  color: #67532f;
-}
-.studio-motif {
-  position: absolute;
-  right: -30px;
-  top: -20px;
-  width: min(62%, 420px);
-  height: auto;
-  color: #8a6420;
-  opacity: 0.26;
-  pointer-events: none;
-}
-.studio-preview-copy > :not(.studio-motif) {
-  position: relative;
-}
-.studio-preview-copy .body-copy {
-  color: #45585d;
-}
-.studio-preview-copy .text-link {
-  color: #152529;
-}
-.studio-preview-copy .text-link:hover {
-  color: #8a6420;
-}
 .inquiry-cta {
   background: #feb040;
   color: #1a1408;
@@ -1102,9 +1052,6 @@ a.partner-tile:hover {
   .footer-grid {
     gap: 28px;
   }
-  .studio-preview-copy {
-    padding: 55px 40px;
-  }
   .project-grid {
     gap: 22px;
   }
@@ -1250,15 +1197,6 @@ a.partner-tile:hover {
   .event-proof {
     padding: 26px;
   }
-  .studio-preview {
-    grid-template-columns: 1fr;
-  }
-  .studio-preview-image {
-    min-height: 300px;
-  }
-  .studio-preview-copy {
-    padding: 42px 25px;
-  }
   .cta-panel {
     padding-block: 60px;
   }
@@ -1370,6 +1308,50 @@ a.partner-tile:hover {
   background: #feb040;
   color: #080f11;
   border-color: #feb040;
+}
+/* Floating booking pill: bottom-right, in after the first screen, out
+   while the closing CTA or the consent prompt is on screen. */
+.floating-book {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 60;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px;
+  border-radius: 999px;
+  background: #feb040;
+  color: #080f11;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+  box-shadow: 0 10px 30px rgba(8, 15, 17, 0.45);
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    background 0.2s;
+}
+.floating-book.on {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+.floating-book:hover {
+  background: #ffd18a;
+}
+.floating-book:focus-visible {
+  outline: 2px solid #e7ecee;
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .floating-book {
+    transition: none;
+  }
 }
 .analytics-settings {
   position: fixed;
@@ -1776,13 +1758,6 @@ a.partner-tile:hover {
   .field-frame-wide figcaption b {
     font-size: 24px;
   }
-  .studio-motif {
-    width: 60%;
-    right: -40px;
-    top: auto;
-    bottom: -30px;
-    opacity: 0.2;
-  }
   .cta-motif-corner {
     width: 70%;
     top: -80px;
@@ -2075,6 +2050,34 @@ a.partner-tile:hover {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #e7ecee;
+}
+
+/* Wide variant: image 55%, list 45%, 3:2 frame; six tighter rows land at
+   about the same height as the frame so the stage stays in normal flow. */
+.svc-grid-wide {
+  grid-template-columns: 0.47fr 0.53fr;
+  gap: 48px;
+  align-items: stretch;
+}
+.svc-grid-wide .svc-stage {
+  position: relative;
+  top: auto;
+  aspect-ratio: 3 / 2;
+  align-self: start;
+}
+.svc-grid-wide .svc-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.svc-grid-wide .svc-row {
+  padding: 17px 0;
+}
+.svc-grid-wide .svc-row b {
+  font-size: 22px;
+}
+.svc-grid-wide .svc-row.on .svc-desc {
+  max-height: 48px;
 }
 
 /* 4. From the field: one full-bleed frame, then a plain four-column list. */

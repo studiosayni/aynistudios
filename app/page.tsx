@@ -1,12 +1,10 @@
 import Link from "next/link";
-import Image from "next/image";
 import HeroSection from "./components/HeroSection";
 import CredibilityStrip from "./components/CredibilityStrip";
 import FeaturedWork from "./components/FeaturedWork";
 import ServiceReveal from "./components/ServiceReveal";
 import FieldFeature from "./components/FieldFeature";
 import InquiryCTA from "./components/InquiryCTA";
-import { MotifCluster } from "./components/Motifs";
 import { LOCATION_PATH } from "./lib/publicContent";
 import { jsonLd, organization, pageMetadata, website } from "./lib/seo";
 
@@ -19,6 +17,9 @@ export const metadata = pageMetadata(
 // The "cinema cut" (2026-09-16): the hero's rules carried down the page.
 // One image per section, type set over it, lists instead of cards, amber
 // only. Each band draws one soft amber glow at the position it sets.
+// Order (2026-09-18): proof first (selected work, recognition, remote
+// methods), then what we do, then the ask. The "meaning behind the name"
+// panel moved off the homepage; the about page carries it.
 export default function HomePage() {
   return (
     <div className="public-site">
@@ -33,6 +34,8 @@ export default function HomePage() {
       <HeroSection />
       <CredibilityStrip />
       <FeaturedWork />
+
+      <FieldFeature />
 
       <section
         className="band band-two services-showcase section-space"
@@ -51,7 +54,7 @@ export default function HomePage() {
               organizations, brands, and people preserving a legacy.
             </p>
           </div>
-          <ServiceReveal />
+          <ServiceReveal variant="wide" />
           <div className="services-foot">
             <Link href="/services" className="text-link">
               All services <span aria-hidden="true">↗</span>
@@ -63,35 +66,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="studio-preview">
-        <div className="studio-preview-image">
-          <Image
-            src="/brand/hero/hero-7-1280.webp"
-            fill
-            sizes="(max-width: 760px) 100vw, 50vw"
-            alt="A gathering in the field, from Ayni Studios’ editorial photography"
-          />
-        </div>
-        <div className="studio-preview-copy">
-          <MotifCluster className="studio-motif" />
-          <p className="eyebrow accent">The meaning behind the name</p>
-          <h2>
-            Give back
-            <br />
-            what you receive.
-          </h2>
-          <p className="body-copy">
-            Ayni is an Andean principle of reciprocity. It shapes how we see our
-            work: stories made in service of people, ecosystems, and a shared
-            future.
-          </p>
-          <Link href="/about" className="text-link mt-7">
-            Meet the studio <span aria-hidden="true">↗</span>
-          </Link>
-        </div>
-      </section>
-
-      <FieldFeature />
       <InquiryCTA
         image={{
           src: "/brand/services/seafood-souq-boat-1920.webp",
