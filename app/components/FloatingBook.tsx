@@ -53,7 +53,22 @@ export default function FloatingBook() {
       aria-hidden={!show}
       tabIndex={show ? 0 : -1}
     >
-      Book 15 minutes <span aria-hidden="true">↗</span>
+      Book 15 minutes
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="shrink-0"
+      >
+        <path d="M5 19 19 5M5 5h14v14" />
+      </svg>
     </a>
   );
 }
