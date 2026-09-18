@@ -9,11 +9,11 @@ import { services, serviceArt } from "../lib/publicContent";
 // pointer down the list. Hover, focus or tap a row to change the frame;
 // every row is still a plain link to its service page.
 const captions: Record<string, string> = {
-  "documentary-production": "The Conservation Diaries · Emirates Nature–WWF",
-  "brand-and-impact-content": "Seafood Souq · Cape Town",
-  "editing-and-post-production": "BCRN programme film · Emirates Nature–WWF, WWF, IFRC",
-  "ngo-video-production": "Goumbook · Jebel Ali clean-up",
-  "environmental-conservation-filmmaking": "Amazonia Expeditions · Peruvian Amazon",
+  "documentary-production": "Amazonia Expeditions · Peruvian Amazon",
+  "brand-and-impact-content": "Leaders of Change · Emirates Nature–WWF",
+  "editing-and-post-production": "teamLab · Tokyo",
+  "ngo-video-production": "La Isla de los Monos · Peruvian Amazon",
+  "environmental-conservation-filmmaking": "Logging on the riverbank · Peruvian Amazon",
   "legacy-films": "The Surgeon Who Crossed the Sea · Legacy film",
 };
 

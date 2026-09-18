@@ -276,33 +276,45 @@ export const services = [
   },
 ] as const;
 
-// A still per service for the homepage and services grid. YouTube's maxres
-// frame of a film we made for that kind of client, routed through
-// next/image like every other thumbnail.
-export const serviceArt: Record<string, { image: string; alt: string }> = {
+// A still per service for the homepage and services grid, from a film we made
+// for that kind of client, routed through next/image like every other
+// thumbnail. `image` is the 4:5 portrait the homepage reveal and the cards
+// use; `wide` is the full frame for the 16:7 masthead on the service page.
+// Prefer a frame graded from the 4K master (public/brand/services/) over
+// YouTube's maxres thumbnail, which is 720p with burned-in subtitles.
+export const serviceArt: Record<
+  string,
+  { image: string; alt: string; wide?: string }
+> = {
   "documentary-production": {
-    image: "https://i.ytimg.com/vi/71RKXOFeaco/maxresdefault.jpg",
-    alt: "Two volunteers planting mangroves for The Conservation Diaries",
+    image: "/brand/services/documentary-production-1280.webp",
+    wide: "/brand/services/documentary-production-wide-1920.webp",
+    alt: "A river guide looking back from a canoe in heavy rain on the Tahuayo, Peruvian Amazon",
   },
   "brand-and-impact-content": {
-    image: "https://i.ytimg.com/vi/Z1qjvzce4Cs/maxresdefault.jpg",
-    alt: "Seafood Souq interview in front of a world map",
+    image: "/brand/services/brand-and-impact-content-1280.webp",
+    wide: "/brand/services/brand-and-impact-content-wide-1920.webp",
+    alt: "Two Leaders of Change volunteers wading through a mangrove at sunset",
   },
   "editing-and-post-production": {
-    image: "https://i.ytimg.com/vi/KA5wK3R5ClM/maxresdefault.jpg",
-    alt: "Aerial view of divers over a reef from the BCRN programme film",
+    image: "/brand/services/editing-and-post-production-1280.webp",
+    wide: "/brand/services/editing-and-post-production-wide-1920.webp",
+    alt: "A spider specimen lit pink inside a glass cylinder, surrounded by coloured lights",
   },
   "ngo-video-production": {
-    image: "https://i.ytimg.com/vi/UBsFG4uQniA/maxresdefault.jpg",
-    alt: "Volunteers lined up along the shoreline at a Jebel Ali clean-up",
+    image: "/brand/services/ngo-video-production-1280.webp",
+    wide: "/brand/services/ngo-video-production-wide-1920.webp",
+    alt: "A capuchin monkey holding a piece of fruit and looking up through the canopy",
   },
   "environmental-conservation-filmmaking": {
-    image: "https://i.ytimg.com/vi/F5k8-wiNgnQ/maxresdefault.jpg",
-    alt: "A guide searching the rainforest canopy in the Peruvian Amazon",
+    image: "/brand/services/environmental-conservation-filmmaking-1280.webp",
+    wide: "/brand/services/environmental-conservation-filmmaking-wide-1920.webp",
+    alt: "Stacked hardwood logs on a riverbank at dusk, seen from the water",
   },
   "legacy-films": {
-    image: "https://i.ytimg.com/vi/iZRQlh6dnS0/maxresdefault.jpg",
-    alt: "Painted portrait from The Surgeon Who Crossed the Sea",
+    image: "/brand/services/legacy-films-1280.webp",
+    wide: "/brand/services/legacy-films-wide-1920.webp",
+    alt: "Painted animation of a small boat of people in a shaft of light on a stormy sea, from The Surgeon Who Crossed the Sea",
   },
   "remote-video-production": {
     image: "/brand/hero/hero-24-1280.webp",

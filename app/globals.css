@@ -689,15 +689,55 @@ a.partner-tile:hover {
   color: #8a6420;
 }
 .inquiry-cta {
+  background: #feb040;
+  color: #1a1408;
+}
+.cta-panel {
   position: relative;
   overflow: hidden;
   padding-block: 76px;
-  background: #feb040;
-  color: #1a1408;
 }
 .inquiry-cta .cta-inner {
   position: relative;
   z-index: 1;
+}
+/* Split variant: amber copy panel left, a full-height still right. The copy
+   keeps the site container's left edge (the panel is half the section, so
+   100% * 2 is the full width) and stacks vertically to fit the half. */
+.inquiry-cta.has-image {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.inquiry-cta.has-image .cta-inner {
+  width: auto;
+  margin-left: max(48px, calc((100% * 2 - 1280px) / 2));
+  margin-right: 48px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 30px;
+}
+.inquiry-cta.has-image .cta-inner h2 {
+  max-width: 520px;
+}
+.cta-image {
+  position: relative;
+  margin: 0;
+  min-height: 420px;
+  background: #132025;
+}
+.cta-image img {
+  object-fit: cover;
+  object-position: 50% 55%;
+}
+.cta-image figcaption {
+  position: absolute;
+  left: 24px;
+  bottom: 18px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #e7ecee;
+  text-shadow: 0 1px 8px rgba(8, 15, 17, 0.6);
 }
 .cta-motif-corner {
   position: absolute;
@@ -1219,8 +1259,20 @@ a.partner-tile:hover {
   .studio-preview-copy {
     padding: 42px 25px;
   }
-  .inquiry-cta {
+  .cta-panel {
     padding-block: 60px;
+  }
+  .inquiry-cta.has-image {
+    grid-template-columns: 1fr;
+  }
+  .inquiry-cta.has-image .cta-image {
+    order: -1;
+    min-height: 0;
+    aspect-ratio: 16 / 10;
+  }
+  .inquiry-cta.has-image .cta-inner {
+    width: min(1280px, calc(100% - 96px));
+    margin-inline: auto;
   }
   .cta-inner {
     align-items: flex-start;
@@ -1511,9 +1563,7 @@ a.partner-tile:hover {
 }
 .service-card-art {
   position: absolute;
-  /* YouTube frames of widescreen films carry letterbox bars top and
-     bottom; oversizing the art slot pushes them outside the card. */
-  inset: -14% 0;
+  inset: 0;
   z-index: -2;
 }
 .service-card-art img {
@@ -2169,9 +2219,17 @@ a.partner-tile:hover {
     grid-template-columns: 1fr;
   }
   .svc-stage {
-    position: static;
+    /* relative, not static: it drops the sticky but keeps the frame as the
+       containing block for the `fill` images inside it. */
+    position: relative;
+    top: auto;
     aspect-ratio: 16 / 10;
     order: 0;
+  }
+  /* Portrait stills land in a landscape slot here; keep the subject's
+     head in frame rather than the dead-centre band. */
+  .svc-stage img {
+    object-position: 50% 25%;
   }
   .svc-row b {
     font-size: 21px;

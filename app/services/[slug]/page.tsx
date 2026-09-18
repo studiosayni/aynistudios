@@ -46,7 +46,9 @@ export default async function ServicePage({
     name: s.title,
     description: s.description,
     url: `${SITE_URL}/services/${s.slug}`,
-    ...(serviceArt[s.slug] ? { image: serviceArt[s.slug].image } : {}),
+    ...(serviceArt[s.slug]
+      ? { image: serviceArt[s.slug].wide ?? serviceArt[s.slug].image }
+      : {}),
     provider: {
       "@type": ["Organization", "LocalBusiness"],
       "@id": ORGANIZATION_ID,
@@ -78,7 +80,7 @@ export default async function ServicePage({
         </header>
         {art && (
           <div className="project-masthead">
-            <Image src={art.image} alt={art.alt} fill priority sizes="(max-width:760px) 100vw, 1200px" />
+            <Image src={art.wide ?? art.image} alt={art.alt} fill priority sizes="(max-width:760px) 100vw, 1200px" />
           </div>
         )}
         <section className="editorial-grid section-space pb-20">

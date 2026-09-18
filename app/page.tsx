@@ -92,7 +92,13 @@ export default function HomePage() {
       </section>
 
       <FieldFeature />
-      <InquiryCTA />
+      <InquiryCTA
+        image={{
+          src: "/brand/services/seafood-souq-boat-1920.webp",
+          alt: "A fishing boat under the cliffs off Cape Town, filmed for Seafood Souq",
+          caption: "Seafood Souq · Cape Town",
+        }}
+      />
     </div>
   );
 }
