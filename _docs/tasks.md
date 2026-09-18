@@ -50,7 +50,7 @@ _No active app dev tasks currently tracked in master todo. Check `../../Noah95/t
 - `.field-feature` scrim heavier on phones (copy sat over the busiest part of the still).
 - `/library` was 14,750px tall (19 films, one full-width thumbnail each). Film cards are compact rows at 640 (132px thumbnail left, text right, all text pinned to column 2). Now ~10,250px.
 - `.methods-list` heading link was right-aligned under a left-aligned heading at ≤440.
-Still long on phones but left alone: case-study pages list all seven "More work" entries full size; the LA page runs 10,400px. Both could take the same compact-row treatment if Noah wants.
+- `.project-grid` cards (More work on case studies, Related work on service pages, Selected collaborations on the library, Films we have made on the LA page) are the same compact rows on phones, summary clamped to two lines, brand-logo panel shrunk. Case study pages went 8,027px → 5,642px; library 10,250px → 8,332px; LA page 10,446px → 9,653px.
 - CTA still: `CTA_STILL` is exported from `InquiryCTA.tsx` and passed on `/`, `/library`, `/services` and `/about`. Work, film, guide, service-detail and LA pages keep the amber band.
 
 **Performance, sized but not started:**

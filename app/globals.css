@@ -2391,6 +2391,57 @@ a.partner-tile:hover {
   .film-card .small-copy.mt-3 {
     margin-top: 4px;
   }
+  /* Case-study cards (More work, Related work, Selected collaborations,
+     the LA page's film list): same compact rows as the film library.
+     Summary clamps to two lines; the brand-logo panel shrinks to fit. */
+  .project-grid {
+    gap: 0;
+  }
+  .project-grid .project-card {
+    display: grid;
+    grid-template-columns: 132px minmax(0, 1fr);
+    column-gap: 16px;
+    padding: 18px 0;
+    border-bottom: 1px solid #2a3a40;
+  }
+  .project-grid .project-art {
+    align-self: start;
+  }
+  .project-grid .project-arrow {
+    display: none;
+  }
+  .project-grid .project-caption {
+    padding-top: 0;
+  }
+  .project-grid .project-caption h3 {
+    font-size: 18px;
+    margin-top: 6px;
+  }
+  .project-grid .project-client {
+    font-size: 13px;
+    margin-block: 4px 6px;
+  }
+  .project-grid .project-caption .body-copy {
+    font-size: 13px;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .project-grid .status-tag {
+    margin-top: 8px;
+  }
+  .project-grid .project-brand-panel {
+    padding: 10px 12px;
+    gap: 0;
+  }
+  .project-grid .project-brand-panel img {
+    height: 36px;
+  }
+  .project-grid .project-brand-panel span {
+    display: none;
+  }
   /* The methods heading link was pinned to the right under a left-aligned
      heading. */
   .methods-list .section-heading > .text-link {
