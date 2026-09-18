@@ -4,7 +4,7 @@ import CredibilityStrip from "./components/CredibilityStrip";
 import FeaturedWork from "./components/FeaturedWork";
 import ServiceReveal from "./components/ServiceReveal";
 import FieldFeature from "./components/FieldFeature";
-import InquiryCTA from "./components/InquiryCTA";
+import InquiryCTA, { CTA_STILL } from "./components/InquiryCTA";
 import { LOCATION_PATH } from "./lib/publicContent";
 import { jsonLd, organization, pageMetadata, website } from "./lib/seo";
 
@@ -66,13 +66,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <InquiryCTA
-        image={{
-          src: "/brand/services/seafood-souq-boat-1920.webp",
-          alt: "A fishing boat under the cliffs off Cape Town, filmed for Seafood Souq",
-          caption: "Seafood Souq · Cape Town",
-        }}
-      />
+      <InquiryCTA image={CTA_STILL} />
     </div>
   );
 }

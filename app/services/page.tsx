@@ -1,5 +1,5 @@
 import Link from "next/link";
-import InquiryCTA from "../components/InquiryCTA";
+import InquiryCTA, { CTA_STILL } from "../components/InquiryCTA";
 import ServiceShowcase from "../components/ServiceShowcase";
 import { BOOKING_URL, LOCATION_PATH } from "../lib/publicContent";
 import { pageMetadata } from "../lib/seo";
@@ -73,7 +73,7 @@ export default function ServicesPage() {
           </div>
         </section>
       </div>
-      <InquiryCTA />
+      <InquiryCTA image={CTA_STILL} />
     </div>
   );
 }

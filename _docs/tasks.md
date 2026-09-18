@@ -42,6 +42,17 @@ _No active app dev tasks currently tracked in master todo. Check `../../Noah95/t
 - `ServiceReveal` gained `variant="wide"` (47/53 columns, 3:2 frame using the `wide` exports, tighter rows so the list and frame sit level, no sticky). Chosen over the 4:5 portrait after a side-by-side at `/preview/services` (route deleted after the decision). Noah had floated a 2x3 card grid; rejected because it reintroduces the box grid the cinema cut removed and two columns crush the long titles.
 - `FloatingBook` (mounted in `app/layout.tsx`): "Book 15 minutes" pill bottom-right on public paths, shown after 0.8 viewport of scroll, hidden while the closing CTA is ≥15% in view or the analytics consent prompt is open (same corner on phones). Tracks as `booking_click` like the other booking links.
 
+**Phone pass (2026-09-18):** every public page captured full-length at 390px with Playwright (`playwright-core` against the cached `chromium_headless_shell`; plain headless Chrome is useless here, it enforces a ~500px minimum window and crops). Fixed, all in the "Phone pass" block at the foot of `globals.css`:
+- `.service-card-grid` stayed three across on phones (100px cards, titles chopped) on `/services` and the Los Angeles page. Now 2 / 1 columns at 860 / 640.
+- `.location-facts` (LA page) stayed three across; the email link forced a 417px sideways scroll. Stacks at 860.
+- `.field-frames` on the about page sat two frames side by side at ~170px with colliding captions. Stacks at 640.
+- Selected-work `.feature-frame`: 16:10 is ~240px tall on a phone and the copy stack is taller, so the title ran off the top. `aspect-ratio: auto; min-height: 460px` plus a deeper foot scrim.
+- `.field-feature` scrim heavier on phones (copy sat over the busiest part of the still).
+- `/library` was 14,750px tall (19 films, one full-width thumbnail each). Film cards are compact rows at 640 (132px thumbnail left, text right, all text pinned to column 2). Now ~10,250px.
+- `.methods-list` heading link was right-aligned under a left-aligned heading at ≤440.
+Still long on phones but left alone: case-study pages list all seven "More work" entries full size; the LA page runs 10,400px. Both could take the same compact-row treatment if Noah wants.
+- CTA still: `CTA_STILL` is exported from `InquiryCTA.tsx` and passed on `/`, `/library`, `/services` and `/about`. Work, film, guide, service-detail and LA pages keep the amber band.
+
 **Performance, sized but not started:**
 - **The hero word-cloud video is 1358KB — 55% of a cold homepage visit** (measured: 2.46MB total, 27 requests). Re-encoding the WebM at CRF 38 gives 1034KB, a 324KB saving; the current encode sits around CRF 34, and CRF 33 came out *larger*. The re-encode was rendered against a coloured background in a browser and is genuinely transparent and visually equivalent — do not trust `ffprobe` or `alphaextract` here, both report nothing useful (see the alpha gotcha below). **The WebM is safe to swap on its own** since WebKit never selects it. The HEVC-alpha MP4 is the other 1310KB and the risky half: it is the file that caused the opaque-hero bug, and it can only be verified in real Safari. Do that half only with a device to hand.
 - Everything else on the homepage was checked and ruled out: all six Barlow weights are genuinely used (91KB), JS is framework baseline (307KB), and 1920px is the *correct* video resolution — the 896px CSS cap is 1792 device px at DPR 2. Repeat visits are already near-free (24 of 26 responses cached).

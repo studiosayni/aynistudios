@@ -1,7 +1,7 @@
 import NatureForLifeRecognition from "../components/NatureForLifeRecognition";
 import Link from "next/link";
 import Image from "next/image";
-import InquiryCTA from "../components/InquiryCTA";
+import InquiryCTA, { CTA_STILL } from "../components/InquiryCTA";
 import PartnerLogos from "../components/PartnerLogos";
 import WhereWeWork from "../components/WhereWeWork";
 import BusinessAddress from "../components/BusinessAddress";
@@ -165,7 +165,7 @@ export default function AboutPage() {
           </div>
         </div>
       </div>
-      <InquiryCTA />
+      <InquiryCTA image={CTA_STILL} />
     </div>
   );
 }

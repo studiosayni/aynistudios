@@ -2303,3 +2303,97 @@ a.partner-tile:hover {
     max-width: 100px;
   }
 }
+
+/* ---------------------------------------------------------------------- */
+/* Phone pass (2026-09-18). Fixes from a 390px sweep of every public page. */
+
+@media (max-width: 860px) {
+  /* Six service cards were still three across on phones: 100px cards with
+     the titles chopped. Two across on tablets, one on phones. */
+  .service-card-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  /* The three location-fact columns on the Los Angeles page squeezed to
+     ~100px each and the email address forced a sideways scroll. */
+  .location-facts {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .service-card-grid {
+    grid-template-columns: 1fr;
+  }
+  .service-card {
+    min-height: 340px;
+  }
+  /* The two field frames on the about page sat side by side at ~170px
+     each with their captions colliding. */
+  .field-frames {
+    grid-template-columns: 1fr;
+  }
+  .field-frame-wide {
+    grid-column: auto;
+  }
+  /* The selected-work feature: a 16:10 frame is ~240px tall on a phone
+     and the copy stack is taller, so the title ran off the top. Let the
+     frame grow to the copy and deepen the foot of the scrim. */
+  .feature-frame {
+    aspect-ratio: auto;
+    min-height: 460px;
+  }
+  .feature-frame::after {
+    background:
+      linear-gradient(0deg, rgba(8, 15, 17, 0.9) 0%, rgba(8, 15, 17, 0.6) 45%, rgba(8, 15, 17, 0.1) 80%);
+  }
+  .feature-copy {
+    right: 22px;
+    max-width: none;
+  }
+  /* The recognition frame: copy sits over the busiest part of the still
+     on a narrow screen, so the scrim is heavier top to bottom. */
+  .field-feature::after {
+    background:
+      linear-gradient(0deg, rgba(8, 15, 17, 0.9) 0%, rgba(8, 15, 17, 0.72) 55%, rgba(8, 15, 17, 0.35) 100%);
+  }
+  /* Library film cards: one full-width thumbnail per film made the page
+     ~14,700px tall. Compact rows: thumbnail left, text right. */
+  .film-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .film-card {
+    display: grid;
+    grid-template-columns: 132px minmax(0, 1fr);
+    column-gap: 16px;
+    padding: 18px 0;
+    border-bottom: 1px solid #2a3a40;
+  }
+  .film-card > :not(.film-card-art) {
+    grid-column: 2;
+  }
+  .film-card-art {
+    grid-column: 1;
+    grid-row: 1 / span 6;
+    align-self: start;
+  }
+  .film-card .eyebrow {
+    margin-top: 0;
+  }
+  .film-card h3 {
+    font-size: 18px;
+    margin-block: 6px 4px;
+  }
+  .film-card .small-copy {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .film-card .small-copy.mt-3 {
+    margin-top: 4px;
+  }
+  /* The methods heading link was pinned to the right under a left-aligned
+     heading. */
+  .methods-list .section-heading > .text-link {
+    align-self: flex-start;
+  }
+}

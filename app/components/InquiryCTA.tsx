@@ -3,6 +3,13 @@ import Link from "next/link";
 import { BOOKING_URL } from "../lib/publicContent";
 import { MotifBand, MotifCluster } from "./Motifs";
 
+// The still the top-level pages share for the closing band.
+export const CTA_STILL = {
+  src: "/brand/services/seafood-souq-boat-1920.webp",
+  alt: "A fishing boat under the cliffs off Cape Town, filmed for Seafood Souq",
+  caption: "Seafood Souq · Cape Town",
+};
+
 // The closing band on every public page. Amber, used once per page at full
 // width, with the motif set drawn in near-black at low opacity: a terrace
 // strip along the bottom edge and a cluster in the top-right corner, both

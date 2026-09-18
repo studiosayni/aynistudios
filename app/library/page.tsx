@@ -2,7 +2,7 @@ import NatureForLifeRecognition from "../components/NatureForLifeRecognition";
 import Link from "next/link";
 import ProjectCard from "../components/ProjectCard";
 import FilmCard from "../components/FilmCard";
-import InquiryCTA from "../components/InquiryCTA";
+import InquiryCTA, { CTA_STILL } from "../components/InquiryCTA";
 import { projects, films as editorialFilms } from "../lib/publicContent";
 import { getPublicFilms } from "../lib/publicFilms";
 import { pageMetadata } from "../lib/seo";
@@ -86,7 +86,7 @@ export default async function LibraryPage() {
           </div>
         </section>
       </div>
-      <InquiryCTA />
+      <InquiryCTA image={CTA_STILL} />
     </div>
   );
 }
