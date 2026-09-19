@@ -18,7 +18,9 @@ export function pageMetadata(
   imageSlug = "home",
 ): Metadata {
   const image = {
-    url: `${SITE_URL}/share/${imageSlug}`,
+    // ?v= busts the caches at LinkedIn, WhatsApp, Slack and iMessage, which
+    // key on the image URL. Bump it whenever the card design changes.
+    url: `${SITE_URL}/share/${imageSlug}?v=2`,
     width: 1200,
     height: 630,
     alt: `${title} — Ayni Studios`,
