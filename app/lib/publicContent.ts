@@ -50,7 +50,7 @@ export const PAGE_UPDATED: Record<string, string> = {
   "/library": "2026-09-15",
   "/services": "2026-09-15",
   "/guides": "2026-09-13",
-  "/about": "2026-09-15",
+  "/about": "2026-09-18",
   "/contact": "2026-09-15",
   "/privacy": "2026-09-13",
   [LOCATION_PATH]: "2026-09-15",

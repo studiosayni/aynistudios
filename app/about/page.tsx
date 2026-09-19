@@ -145,13 +145,6 @@ export default function AboutPage() {
               responsibility of the people making it.
             </p>
             <p>
-              We are developing ways to use AI-assisted tools for the
-              time-consuming parts of post-production, with human review of the
-              story and the result. As that work develops, our focus is
-              practical: more time for the craft, and better value for our
-              clients.
-            </p>
-            <p>
               Flexible production is already part of how we work. Clients can send
               existing footage, receive filming kits, supply audio for animated
               narratives, or work with filmmakers in local communities around the
