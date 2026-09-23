@@ -4,9 +4,14 @@ import { guides } from "../../lib/storytellingContent";
 import { ImageResponse } from "next/og";
 import { films, projects, services } from "../../lib/publicContent";
 
-// Share cards carry a still behind the title. public/brand/og/<slug>.jpg is
-// a 1200x630 crop made for the card; a page without one uses the home still.
-const OG_DIR = path.join(process.cwd(), "public", "brand", "og");
+// Share cards carry a still behind the title. stills/<slug>.jpg is a
+// 1200x630 crop made for the card; a page without one uses the home still.
+// Keep build-time reads out of public/: file tracing copies whatever this
+// route reads into .next/standalone, and App Hosting's adapter then skips
+// copying any top-level folder that already exists there. Reading
+// public/brand/og once left production with only those files and 404s for
+// every other image under /brand (2026-09-22).
+const OG_DIR = path.join(process.cwd(), "app", "share", "stills");
 // Satori ships no font; Barlow (OFL) sits beside the route so the card
 // matches the site.
 const FONT_DIR = path.join(process.cwd(), "app", "share", "fonts");
