@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { guides } from "../lib/storytellingContent";
 import { collectionPage, jsonLd, pageMetadata } from "../lib/seo";
-import InquiryCTA from "../components/InquiryCTA";
+import InquiryCTA, { CTA_STILL } from "../components/InquiryCTA";
 
 const TITLE = "Video Production Planning Guides";
 const DESCRIPTION =
@@ -39,7 +39,7 @@ export default function GuidesPage() {
           ))}
         </div>
       </div>
-      <InquiryCTA />
+      <InquiryCTA image={CTA_STILL} />
     </div>
   );
 }

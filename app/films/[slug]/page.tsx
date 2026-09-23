@@ -6,7 +6,7 @@ import { SITE_URL, films, getService, NATURE_FOR_LIFE } from "../../lib/publicCo
 import { jsonLd, pageMetadata } from "../../lib/seo";
 import FilmCard from "../../components/FilmCard";
 import FilmPlayer from "../../components/FilmPlayer";
-import InquiryCTA from "../../components/InquiryCTA";
+import InquiryCTA, { CTA_STILL } from "../../components/InquiryCTA";
 
 export const revalidate = 300;
 export async function generateStaticParams() {
@@ -132,7 +132,7 @@ export default async function FilmPage({
           </div>
         </section>
       </div>
-      <InquiryCTA />
+      <InquiryCTA image={CTA_STILL} />
     </article>
   );
 }

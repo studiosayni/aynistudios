@@ -4,7 +4,7 @@ import { guides } from "../../lib/storytellingContent";
 import { CONTENT_UPDATED, PAGE_UPDATED, SITE_URL, getProject, getService } from "../../lib/publicContent";
 import { breadcrumbs, founder, jsonLd, pageMetadata } from "../../lib/seo";
 import ProjectCard from "../../components/ProjectCard";
-import InquiryCTA from "../../components/InquiryCTA";
+import InquiryCTA, { CTA_STILL } from "../../components/InquiryCTA";
 
 export function generateStaticParams() {
   return guides.map(({ slug }) => ({ slug }));
@@ -78,7 +78,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
           {guides.filter((item) => item.slug !== guide.slug).map((item) => <Link className="text-link" key={item.slug} href={`/guides/${item.slug}`}>{item.title} ↗</Link>)}
         </nav>
       </div>
-      <InquiryCTA />
+      <InquiryCTA image={CTA_STILL} />
     </article>
   );
 }

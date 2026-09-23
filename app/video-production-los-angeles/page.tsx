@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import BusinessAddress from "../components/BusinessAddress";
-import InquiryCTA from "../components/InquiryCTA";
+import InquiryCTA, { CTA_STILL } from "../components/InquiryCTA";
 import ProjectCard from "../components/ProjectCard";
 import ServiceShowcase from "../components/ServiceShowcase";
 import {
@@ -241,7 +241,7 @@ export default function LosAngelesPage() {
           ))}
         </section>
       </div>
-      <InquiryCTA title="Making something in Los Angeles?" />
+      <InquiryCTA title="Making something in Los Angeles?" image={CTA_STILL} />
     </article>
   );
 }

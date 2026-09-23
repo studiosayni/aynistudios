@@ -16,7 +16,7 @@ import {
 } from "../../lib/publicContent";
 import { ORGANIZATION_ID, breadcrumbs, jsonLd, pageMetadata } from "../../lib/seo";
 import ProjectCard from "../../components/ProjectCard";
-import InquiryCTA from "../../components/InquiryCTA";
+import InquiryCTA, { CTA_STILL } from "../../components/InquiryCTA";
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
 }
@@ -166,7 +166,7 @@ export default async function ServicePage({
           </div>
         </section>
       </div>
-      <InquiryCTA />
+      <InquiryCTA image={CTA_STILL} />
     </article>
   );
 }

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { BOOKING_URL } from "../lib/publicContent";
 import { MotifBand, MotifCluster } from "./Motifs";
 
-// The still the top-level pages share for the closing band.
+// The still every public page shares for the closing band.
 export const CTA_STILL = {
   src: "/brand/services/seafood-souq-boat-1920.webp",
   alt: "A fishing boat under the cliffs off Cape Town, filmed for Seafood Souq",
@@ -17,7 +17,8 @@ export const CTA_STILL = {
 //
 // With `image`, the band becomes a full-bleed still with the copy set over
 // a dark scrim on the left and amber kept for the accents only, the same
-// rule as the rest of the homepage. Every other page keeps the amber band.
+// rule as the rest of the homepage. Since 2026-09-22 every public page
+// passes CTA_STILL; the amber band is the fallback when no still is given.
 export default function InquiryCTA({
   title = "What story do you want to tell?",
   image,
@@ -33,7 +34,10 @@ export default function InquiryCTA({
             src={image.src}
             alt={image.alt}
             fill
-            sizes="100vw"
+            // On phones the band is ~750px tall, so a 3:2 still set to cover
+            // it draws ~1,110 CSS px wide whatever the screen width; "100vw"
+            // fetched a 1,200px file for a 3x screen and the boat went soft.
+            sizes="(max-width: 640px) 1160px, (max-width: 860px) 1020px, 100vw"
             className="cta-bg"
           />
           <div className="cta-scrim" aria-hidden="true" />

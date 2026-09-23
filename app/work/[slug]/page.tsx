@@ -11,7 +11,7 @@ import {
 import { ORGANIZATION_ID, jsonLd, pageMetadata } from "../../lib/seo";
 import FilmCard from "../../components/FilmCard";
 import ProjectCard from "../../components/ProjectCard";
-import InquiryCTA from "../../components/InquiryCTA";
+import InquiryCTA, { CTA_STILL } from "../../components/InquiryCTA";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -204,7 +204,7 @@ export default async function ProjectPage({
           </div>
         </section>
       </div>
-      <InquiryCTA title="Have a story with a similar ambition?" />
+      <InquiryCTA title="Have a story with a similar ambition?" image={CTA_STILL} />
     </article>
   );
 }
