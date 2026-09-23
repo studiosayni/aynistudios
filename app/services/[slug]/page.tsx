@@ -14,7 +14,7 @@ import {
   SITE_URL,
   BOOKING_URL,
 } from "../../lib/publicContent";
-import { ORGANIZATION_ID, breadcrumbs, jsonLd, pageMetadata } from "../../lib/seo";
+import { ORGANIZATION_ID, breadcrumbs, faqPage, jsonLd, pageMetadata } from "../../lib/seo";
 import ProjectCard from "../../components/ProjectCard";
 import InquiryCTA, { CTA_STILL } from "../../components/InquiryCTA";
 export function generateStaticParams() {
@@ -57,8 +57,17 @@ export default async function ServicePage({
     },
   };
   const art = serviceArt[s.slug];
+  // The same pairs the "Planning your project" section shows, in order.
+  const questions = [
+    { question: s.question, answer: s.answer },
+    ...(serviceQuestions[s.slug] || []),
+  ];
   return (
     <article className="public-site">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(faqPage(questions)) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLd(schema) }}
@@ -144,11 +153,7 @@ export default async function ServicePage({
         {["environmental-conservation-filmmaking", "documentary-production", "ngo-video-production"].includes(s.slug) && <NatureForLifeRecognition />}
         <section className="pb-20 service-questions">
           <h2 className="mb-8">Planning your project</h2>
-          <div className="question-block">
-          <h3>{s.question}</h3>
-          <p className="body-copy">{s.answer}</p>
-          </div>
-          {(serviceQuestions[s.slug] || []).map((item) => (
+          {questions.map((item) => (
             <div className="question-block" key={item.question}>
               <h3>{item.question}</h3><p className="body-copy">{item.answer}</p>
             </div>

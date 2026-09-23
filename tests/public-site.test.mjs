@@ -162,6 +162,64 @@ test("www and /work redirect permanently", async () => {
   assert.equal(work?.destination, "/library");
   assert.ok(work?.permanent);
 });
+test("titles and descriptions fit the search result budget", () => {
+  const seo = load("../app/lib/seo.ts", { "./publicContent": content });
+  // Brand kept when it fits, dropped (never cut) when it does not.
+  assert.equal(seo.fitTitle("Documentary production"), "Documentary production | Ayni Studios");
+  const long = "Soaring Through the Amazon Rainforest: Canopy Zipline Experience";
+  assert.equal(seo.fitTitle(long), long);
+  assert.ok(seo.titleWidth("Documentary & Impact Video Production, LA | Ayni Studios") <= seo.TITLE_BUDGET_PX);
+  // Short copy passes through untouched, never padded.
+  assert.equal(seo.clampDescription("Ships flat."), "Ships flat.");
+  // A sentence end at or past 60% of the budget wins.
+  const twoSentences = `${"a".repeat(100)}. ${"b".repeat(80)}.`;
+  assert.equal(seo.clampDescription(twoSentences), `${"a".repeat(100)}.`);
+  // An early sentence end does not; cut at a word with an ellipsis instead.
+  const early = `Short one. ${"word ".repeat(40)}`;
+  const cut = seo.clampDescription(early);
+  assert.ok(cut.length <= seo.DESCRIPTION_BUDGET && cut.endsWith("…") && !cut.endsWith(" …"));
+  // A period the budget only appears to end on is not a sentence end.
+  const dotted = `${"x".repeat(150)} U.S.A. ${"y ".repeat(20)}`;
+  assert.ok(!seo.clampDescription(dotted).endsWith("U."));
+  // The metadata carries the clamped values; social cards get the looser budget.
+  const meta = seo.pageMetadata("Test", `${"word ".repeat(50)}`, "/test");
+  assert.ok(meta.description.length <= seo.DESCRIPTION_BUDGET);
+  assert.ok(meta.openGraph.description.length > meta.description.length);
+  assert.ok(meta.openGraph.description.length <= seo.SOCIAL_DESCRIPTION_BUDGET);
+});
+
+test("AI agents get their own robots group with the full disallow list", () => {
+  const robots = load("../app/robots.ts", { "./lib/publicContent": content });
+  const rules = (robots.default ?? robots)().rules;
+  const all = rules.find((r) => r.userAgent === "*");
+  const ai = rules.find((r) => Array.isArray(r.userAgent));
+  for (const agent of ["GPTBot", "OAI-SearchBot", "ClaudeBot", "Claude-SearchBot", "Google-Extended", "PerplexityBot"]) {
+    assert.ok(ai.userAgent.includes(agent), agent);
+  }
+  assert.ok(!ai.userAgent.includes("Googlebot"));
+  // A crawler obeys only its most specific group, so the lists must match.
+  assert.deepEqual([...ai.disallow], [...all.disallow]);
+  // Portal pages rely on a noindex header, which a Disallow would hide.
+  assert.ok(!all.disallow.some((p) => /login|admin|workspace/.test(p)));
+});
+
+test("exactly one IndexNow key file, containing its own name", async () => {
+  const { readdirSync } = await import("node:fs");
+  const dir = new URL("../public/", import.meta.url);
+  const keys = readdirSync(dir).filter((f) => /^[a-f0-9]{32}\.txt$/.test(f));
+  assert.equal(keys.length, 1);
+  assert.equal(readFileSync(new URL(keys[0], dir), "utf8").trim(), keys[0].replace(".txt", ""));
+});
+
+test("portal and sign-in pages send a noindex header", async () => {
+  const config = load("../next.config.ts");
+  const headers = await (config.default ?? config).headers();
+  for (const prefix of ["/admin", "/workspace", "/login", "/signup", "/complete-profile"]) {
+    const rule = headers.find((h) => h.source === `${prefix}/:path*`);
+    assert.ok(rule?.headers.some((h) => h.key === "X-Robots-Tag" && /noindex/.test(h.value)), prefix);
+  }
+});
+
 test("inquiry validation rejects malformed, oversized, and automated submissions", () => {
   for (const payload of [
     null,

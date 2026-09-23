@@ -11,6 +11,65 @@ import {
   services,
 } from "./publicContent";
 
+// ── Title and description budget ──────────────────────────────────────
+// Google cuts a result title at roughly 600px and a snippet at roughly 155
+// characters. What gets cut is always the end, so the rules below decide
+// what the end is, instead of leaving it to a mid-word "…".
+// See Noah95/rink-products/ai-seo-playbook-2026-09.md section 4.4.
+
+// Advance widths of printable ASCII (32 to 126) in Arial at 20px, the face
+// and size of a desktop result title, measured once with PIL. Characters
+// outside the table count as 11px, about a lowercase letter.
+const ARIAL_20 = [
+  6, 6, 7, 11, 11, 18, 13, 4, 7, 7, 8, 12, 6, 7, 6, 6, 11, 11, 11, 11, 11, 11,
+  11, 11, 11, 11, 6, 6, 12, 12, 12, 11, 20, 13, 13, 14, 14, 13, 12, 16, 14, 6,
+  10, 13, 11, 17, 14, 16, 13, 16, 14, 13, 12, 14, 13, 19, 13, 13, 12, 6, 6, 6,
+  9, 11, 7, 11, 11, 10, 11, 11, 6, 11, 11, 4, 4, 10, 4, 17, 11, 11, 11, 11, 7,
+  10, 6, 11, 10, 14, 10, 10, 10, 7, 5, 7, 12,
+];
+const WIDE: Record<string, number> = { "’": 4, "‘": 4, "“": 7, "”": 7, "–": 11, "—": 20, "·": 7, "×": 12, "…": 20 };
+export function titleWidth(text: string): number {
+  let px = 0;
+  for (const ch of text) {
+    const code = ch.codePointAt(0)!;
+    px += code >= 32 && code <= 126 ? ARIAL_20[code - 32] : (WIDE[ch] ?? 11);
+  }
+  return px;
+}
+
+export const TITLE_BUDGET_PX = 600;
+const BRAND_SUFFIX = " | Ayni Studios";
+// Name plus brand when both fit; otherwise the name alone. Better to drop
+// the brand than have Google cut the title mid-word: the site name already
+// shows above every result (the WebSite schema) and in the URL.
+export function fitTitle(title: string): string {
+  const full = `${title}${BRAND_SUFFIX}`;
+  return titleWidth(full) <= TITLE_BUDGET_PX ? full : title;
+}
+
+export const DESCRIPTION_BUDGET = 155;
+export const SOCIAL_DESCRIPTION_BUDGET = 200;
+// Cut at the last sentence end inside the budget when one falls at or past
+// 60% of it (so "Ships flat." never becomes the whole description),
+// otherwise at a word boundary with an ellipsis. Short copy is never padded:
+// the fix for a thin description is better copy, not appended boilerplate.
+export function clampDescription(text: string, budget = DESCRIPTION_BUDGET): string {
+  const t = text.replace(/\s+/g, " ").trim();
+  if (t.length <= budget) return t;
+  const floor = Math.ceil(budget * 0.6);
+  let sentenceEnd = -1;
+  // Matched on the whole text: a period that only looks final because the
+  // budget cut the word after it must not count.
+  for (const m of t.matchAll(/[.!?](?=\s|$)/g)) {
+    const end = m.index! + 1;
+    if (end > budget) break;
+    if (end >= floor) sentenceEnd = end;
+  }
+  if (sentenceEnd > 0) return t.slice(0, sentenceEnd);
+  const cut = t.lastIndexOf(" ", budget - 1);
+  return `${t.slice(0, cut > 0 ? cut : budget - 1).replace(/[\s,;:–—-]+$/, "")}…`;
+}
+
 export function pageMetadata(
   title: string,
   description: string,
@@ -25,22 +84,25 @@ export function pageMetadata(
     height: 630,
     alt: `${title} — Ayni Studios`,
   };
+  // Social cards show more text than a result snippet, so they get their
+  // own, looser budget rather than the search one.
+  const social = clampDescription(description, SOCIAL_DESCRIPTION_BUDGET);
   return {
-    title: { absolute: `${title} | Ayni Studios` },
-    description,
+    title: { absolute: fitTitle(title) },
+    description: clampDescription(description),
     alternates: { canonical: path },
     openGraph: {
       type: "website",
       siteName: "Ayni Studios",
       title: `${title} — Ayni Studios`,
-      description,
+      description: social,
       url: path,
       images: [image],
     },
     twitter: {
       card: "summary_large_image",
       title: `${title} — Ayni Studios`,
-      description,
+      description: social,
       images: [image.url],
     },
   };

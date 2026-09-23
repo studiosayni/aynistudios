@@ -106,7 +106,7 @@ export const guides = [
   {
     "slug": "affordable-video-production",
     "title": "How to plan an affordable video production",
-    "description": "Compare existing footage, filming kits, audio-led animation, and local filmmakers. Ayni Studios explains the choices that shape video budgets and turnaround.",
+    "description": "Compare existing footage, filming kits, audio-led animation, and local filmmakers. Ayni Studios explains what shapes video budgets and turnaround.",
     "summary": "An affordable film starts with the right production method for the story. Ayni Studios offers editing from existing footage, filming kits, audio-led animation, and local filmmaker collaborations so you can discuss alternatives to a full travelling crew.",
     "sections": [
       {
@@ -164,7 +164,7 @@ export const guides = [
   {
     "slug": "choosing-a-storytelling-company",
     "title": "How to choose a media company for storytelling",
-    "description": "What to look for in a documentary, NGO, impact, or legacy video partner: complete films, a clear role, an appropriate production method, and a realistic scope.",
+    "description": "What to look for in a documentary, NGO, impact, or legacy video partner: complete films, a clear role, the right production method, and a realistic scope.",
     "summary": "Choose a storytelling company by looking at complete films, relevant experience, the proposed production approach, and how it will work with the people in your story. Ayni Studios offers documentary, brand, impact, conservation, and legacy filmmaking from Valencia, California, serving Los Angeles and working globally.",
     "sections": [
       {

@@ -46,17 +46,17 @@ export const SERVICE_AREAS = [
 // the date when the page's visible content changes, not on every deploy —
 // Google ignores lastmod once it stops matching reality.
 export const PAGE_UPDATED: Record<string, string> = {
-  "/": "2026-09-15",
+  "/": "2026-09-18",
   "/library": "2026-09-15",
   "/services": "2026-09-15",
-  "/guides": "2026-09-13",
+  "/guides": "2026-09-22",
   "/about": "2026-09-18",
   "/contact": "2026-09-15",
   "/privacy": "2026-09-13",
   [LOCATION_PATH]: "2026-09-15",
   "/guides/affordable-video-production": "2026-09-13",
   "/guides/choosing-a-storytelling-company": "2026-09-13",
-  "/work/audio-to-animated-legacy-film": "2026-09-13",
+  "/work/audio-to-animated-legacy-film": "2026-09-22",
   "/work/conservation-diaries": "2026-09-15",
   "/work/panasonic-lumix": "2026-09-15",
   "/work/nature-and-resilience": "2026-09-15",
@@ -84,7 +84,7 @@ export const services = [
     title: "Documentary production",
     short: "Real people. Real places. Stories worth staying with.",
     description:
-      "Documentary production for conservation organizations, institutions, and brands. Field storytelling, interviews, and episodic films with a human perspective.",
+      "Documentary production for conservation groups, institutions, and brands. Field storytelling, interviews, and episodic films with a human perspective.",
     intro:
       "Some stories need time on the ground. We bring a documentary approach to people, places, and the questions that connect them—whether the result is a standalone film or an ongoing series.",
     audience:
@@ -111,7 +111,7 @@ export const services = [
     title: "Brand & impact content",
     short: "Make the work you do mean something to the people watching.",
     description:
-      "Brand storytelling, impact films, and channel promotion for organizations with something meaningful to share. Explore Ayni Studios’ Panasonic Global and institutional work.",
+      "Brand storytelling, impact films, and channel promotion for organizations with something to share. See our Panasonic Global and institutional work.",
     intro:
       "A strong brand story starts with something real. We help organizations find that story and connect it with an audience through films, editorial planning, and content partnerships.",
     audience:
@@ -138,7 +138,7 @@ export const services = [
     title: "Editing & post-production",
     short: "Bring scattered footage into one clear, compelling story.",
     description:
-      "Documentary and brand video editing from Ayni Studios. Turn interviews, field footage, and material from multiple contributors into a coherent finished story.",
+      "Documentary and brand video editing from Ayni Studios. We turn interviews, field footage, and multi-contributor material into a coherent finished story.",
     intro:
       "The story does not end when filming stops. We work with footage from your team, partners, or multiple locations to find the thread that brings it together.",
     audience:
@@ -164,7 +164,7 @@ export const services = [
     "number": "04",
     "title": "NGO & nonprofit video production",
     "short": "Make your mission understandable. Keep people at the centre.",
-    "description": "NGO and nonprofit storytelling, programme films, and donor communications. Ayni Studios brings WWF and IFRC programme experience to documentary-led video production.",
+    "description": "NGO and nonprofit storytelling, programme films, and donor communications, with WWF and IFRC programme experience behind our documentary-led production.",
     "intro": "Ayni Studios creates films for NGOs, nonprofits, and organizations working on social and environmental impact. We help turn programme information, field interviews, and partner footage into a story that audiences can understand and connect with.",
     "audience": "For communications teams explaining a programme, engaging supporters, reporting on work, or preparing a film for a launch, conference, or campaign.",
     "offerings": [
@@ -193,7 +193,7 @@ export const services = [
     "number": "05",
     "title": "Environmental & conservation storytelling",
     "short": "Connect ecosystems, evidence, and the people doing the work.",
-    "description": "Conservation documentaries by Ayni Studios, including They Live in Our World, selected for UNDP’s Nature for Life Hub 2024. Explore our environmental storytelling.",
+    "description": "Conservation documentaries by Ayni Studios, including They Live in Our World, selected for UNDP’s Nature for Life Hub 2024. See our environmental films.",
     "intro": "Ayni Studios makes environmental and conservation films that connect the natural world with human experience. Our work includes mangrove restoration and citizen science in the UAE, documentary stories in the Amazon, and a programme film about nature-based solutions and community resilience.",
     "audience": "For conservation organizations, environmental NGOs, researchers, foundations, and brands with a specific, substantiated environmental story to share.",
     "offerings": [
@@ -226,7 +226,7 @@ export const services = [
     "number": "06",
     "title": "Legacy films & life stories",
     "short": "Preserve the voices, memories, and decisions that shaped a life.",
-    "description": "Personal, family, founder, and organizational legacy films. Ayni Studios combines interviews, archive material, existing recordings, and audio-led animation.",
+    "description": "Personal, family, founder, and organizational legacy films that combine interviews, archive material, existing recordings, and audio-led animation.",
     "intro": "Ayni Studios offers legacy videos for individuals, families, founders, organizations, and institutions. A legacy film can preserve a person’s life story, the memories of a family, or the people and decisions behind an organization’s history.",
     "audience": "For families preserving memories, founders reflecting on their journey, and organizations marking a milestone or passing knowledge to the next generation.",
     "offerings": [
@@ -251,7 +251,7 @@ export const services = [
     "number": "07",
     "title": "Remote & flexible video production",
     "short": "Your footage. Our kits. Local filmmakers. One considered story.",
-    "description": "Send existing footage, use a filming kit, turn audio into an animated story, or work with local filmmakers. Flexible Ayni Studios production options for budgets and deadlines.",
+    "description": "Send existing footage, use a filming kit, turn audio into an animated story, or work with local filmmakers, to suit your budget and deadline.",
     "intro": "Ayni Studios offers several ways to make a film without sending a full production crew to every location. You can send us footage you already have, receive a filming kit, supply audio for an animated narrative, or work with filmmakers in local communities around the world.",
     "audience": "For NGOs, brands, institutions, and families that need a production approach suited to a limited budget, dispersed contributors, recurring content, or a time-sensitive story.",
     "offerings": [
@@ -353,7 +353,7 @@ export const projects: Project[] = [
   "title": "From narration to an animated life story",
   "client": "Ayni Studios",
   "category": "Audio-led animation · Legacy film",
-  "summary": "Produced by Ayni Studios, The Surgeon Who Crossed the Sea turns the surgeon’s voice narration into an animated life story, combining painted imagery and photographs.",
+  "summary": "Produced by Ayni Studios, The Surgeon Who Crossed the Sea turns a surgeon’s voice narration into an animated life story of painted imagery and photographs.",
   "image": "https://i.ytimg.com/vi/iZRQlh6dnS0/maxresdefault.jpg",
   "imageAlt": "Painted portrait of a surgeon from The Surgeon Who Crossed the Sea",
   "context": "The Surgeon Who Crossed the Sea tells a personal story through narration, painted imagery, and photographs. It follows Dr. Tuan T. Lam’s journey from leaving Vietnam as a child to his later life as a surgeon. The film’s published description identifies his own writing as the source of the story.",
@@ -731,7 +731,7 @@ export const films: Film[] = [
   "slug": "amazonia-the-saki-monkey",
   "youtubeId": "0xWwD1A-65w",
   "title": "The Saki Monkey",
-  "description": "Produced by Ayni Studios for Amazonia Expeditions, this short film introduces the saki monkey and the rainforest wildlife around its lodges in the Peruvian Amazon.",
+  "description": "Produced by Ayni Studios for Amazonia Expeditions, this short film introduces the saki monkey and rainforest wildlife around its Peruvian Amazon lodges.",
   "client": "Amazonia Expeditions",
   "category": "Wildlife film",
   "year": 2025,
@@ -783,7 +783,7 @@ export const films: Film[] = [
   "slug": "mahdi-laith-sharks-and-stingrays",
   "youtubeId": "iQOZ8iwQA1Q",
   "title": "Releasing Sharks and Stingrays with Mahdi Laith",
-  "description": "A film made in collaboration with Ayni Studios and environmental creator Mahdi Laith, documenting a shark and stingray release at Jebel Ali Reserve in Dubai.",
+  "description": "A collaboration between Ayni Studios and environmental creator Mahdi Laith, documenting a shark and stingray release at Jebel Ali Reserve in Dubai.",
   "client": "Mahdi Laith",
   "category": "Environmental creator collaboration",
   "year": 2024,
@@ -809,7 +809,7 @@ export const films: Film[] = [
   "slug": "goumbook-changing-mindsets",
   "youtubeId": "F1bQIX2dM4s",
   "title": "Goumbook: Changing Mindsets in the UAE and Beyond",
-  "description": "An Ayni Studios film for Goumbook, with founder Tatiana introducing the organization’s story and its work in sustainability education, business engagement, and collaboration.",
+  "description": "An Ayni Studios film for Goumbook: founder Tatiana introduces its story and its work in sustainability education, business engagement, and collaboration.",
   "client": "Goumbook",
   "category": "Founder & brand story",
   "year": 2025,
@@ -822,7 +822,7 @@ export const films: Film[] = [
   "slug": "goumbook-give-a-ghaf-origin-story",
   "youtubeId": "My_X9Av1Fmw",
   "title": "Give a Ghaf: Goumbook’s Origin Story",
-  "description": "An Ayni Studios film for Goumbook exploring how the Give a Ghaf tree-planting programme connects its origin story with water awareness and biodiversity in the UAE.",
+  "description": "An Ayni Studios film for Goumbook on how the Give a Ghaf tree-planting programme links its origin story with water awareness and biodiversity in the UAE.",
   "client": "Goumbook",
   "category": "Environmental storytelling",
   "year": 2025,
@@ -835,7 +835,7 @@ export const films: Film[] = [
   "slug": "goumbook-food-waste-ramadan",
   "youtubeId": "nOMAU0T7qaU",
   "title": "Fighting Food Waste, Feeding Communities",
-  "description": "An Ayni Studios film for Goumbook about its Eat It or Save It initiative during Ramadan, connecting food-waste recovery with meals for communities in Dubai.",
+  "description": "An Ayni Studios film for Goumbook on its Eat It or Save It initiative during Ramadan, connecting food-waste recovery with meals for communities in Dubai.",
   "client": "Goumbook",
   "category": "Community impact film",
   "year": 2025,

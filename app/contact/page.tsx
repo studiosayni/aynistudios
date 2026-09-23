@@ -4,7 +4,7 @@ import { BOOKING_URL, LOCATION_PATH, STUDIO_MAPS_URL } from "../lib/publicConten
 import { pageMetadata } from "../lib/seo";
 export const metadata = pageMetadata(
   "Start a Project",
-  "Tell Ayni Studios about your documentary, brand film, or editing project. Contact our Valencia, California studio for productions in Los Angeles and worldwide.",
+  "Tell Ayni Studios about your documentary, brand film, or editing project. Our Valencia, California studio works in Los Angeles and worldwide.",
   "/contact",
   "contact",
 );

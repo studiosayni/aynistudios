@@ -5,7 +5,7 @@ import InquiryCTA, { CTA_STILL } from "../components/InquiryCTA";
 
 const TITLE = "Video Production Planning Guides";
 const DESCRIPTION =
-  "Plan an affordable video production and choose a storytelling partner. Practical advice from Ayni Studios on footage, filming kits, animation, and local filmmakers.";
+  "Plan an affordable video production and choose a storytelling partner. Ayni Studios’ advice on footage, filming kits, animation, and local filmmakers.";
 export const metadata = pageMetadata(TITLE, DESCRIPTION, "/guides", "guides");
 const schema = collectionPage({
   path: "/guides",

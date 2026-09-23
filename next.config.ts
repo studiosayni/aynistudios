@@ -47,6 +47,17 @@ const nextConfig: NextConfig = {
 
   async headers() {
     return [
+      // Portal and sign-in pages: crawlable, never indexed. robots.ts leaves
+      // them fetchable on purpose, since a crawler only reads this header on
+      // a path it may fetch; a Disallow would hide it and leave /login (linked
+      // from every page) in the index as a bare URL. `:path*` also matches the
+      // bare prefix, so /login itself is covered.
+      ...["/admin", "/workspace", "/login", "/signup", "/complete-profile"].map(
+        (prefix) => ({
+          source: `${prefix}/:path*`,
+          headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+        }),
+      ),
       {
         // Everything under public/ ships with `Cache-Control: public,
         // max-age=0` by default, because Next cannot fingerprint filenames it

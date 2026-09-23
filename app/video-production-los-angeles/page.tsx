@@ -23,7 +23,7 @@ import {
 } from "../lib/seo";
 
 export const metadata = pageMetadata(
-  "Los Angeles Video Production Company, Valencia CA",
+  "Los Angeles Video Production, Valencia CA",
   "Documentary and impact video production in Valencia, California, serving Los Angeles County and worldwide: documentaries, NGO and brand films, and editing.",
   LOCATION_PATH,
   "los-angeles",
