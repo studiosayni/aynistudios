@@ -154,6 +154,36 @@ export const website = {
   publisher: { "@id": ORGANIZATION_ID },
 };
 
+// Index pages (/library, /services, /guides): what the page is, who
+// publishes it, and the pages it lists in the order they appear on screen.
+// List only what is visible on the page.
+export function collectionPage(opts: {
+  path: string;
+  name: string;
+  description: string;
+  items: { name: string; path: string }[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${SITE_URL}${opts.path}#page`,
+    url: `${SITE_URL}${opts.path}`,
+    name: opts.name,
+    description: opts.description,
+    isPartOf: { "@id": `${SITE_URL}/#website` },
+    publisher: { "@id": ORGANIZATION_ID },
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: opts.items.map((item, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: item.name,
+        url: `${SITE_URL}${item.path}`,
+      })),
+    },
+  };
+}
+
 export function breadcrumbs(items: { name: string; path: string }[]) {
   return {
     "@context": "https://schema.org",

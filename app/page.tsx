@@ -10,7 +10,7 @@ import { jsonLd, organization, pageMetadata, website } from "./lib/seo";
 
 export const metadata = pageMetadata(
   "Documentary & Impact Video Production, Los Angeles",
-  "Documentary, NGO, conservation, brand, and legacy films from Ayni Studios, a Valencia, California production company serving Los Angeles and working worldwide. Showcased at COP30 and IUCN; selected for UNDP’s Nature for Life Hub.",
+  "Documentary, NGO, conservation and brand films from Ayni Studios in Valencia, California, serving Los Angeles and worldwide. Showcased at COP30 and IUCN.",
   "/",
 );
 

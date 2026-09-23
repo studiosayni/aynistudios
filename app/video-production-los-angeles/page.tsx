@@ -24,7 +24,7 @@ import {
 
 export const metadata = pageMetadata(
   "Los Angeles Video Production Company, Valencia CA",
-  "Ayni Studios is a documentary and impact video production company in Valencia, California, serving Los Angeles County and clients worldwide. Documentaries, NGO and brand films, editing, and legacy videos.",
+  "Documentary and impact video production in Valencia, California, serving Los Angeles County and worldwide: documentaries, NGO and brand films, and editing.",
   LOCATION_PATH,
   "los-angeles",
 );

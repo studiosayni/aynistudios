@@ -1,17 +1,25 @@
 import Link from "next/link";
 import InquiryCTA, { CTA_STILL } from "../components/InquiryCTA";
 import ServiceShowcase from "../components/ServiceShowcase";
-import { BOOKING_URL, LOCATION_PATH } from "../lib/publicContent";
-import { pageMetadata } from "../lib/seo";
-export const metadata = pageMetadata(
-  "Video Production, NGO Films & Storytelling Services",
-  "Documentary production, brand and impact content, and editing. Explore how Ayni Studios can help develop your story, produce a film, or work with existing footage.",
-  "/services",
-  "services",
-);
+import { BOOKING_URL, LOCATION_PATH, services } from "../lib/publicContent";
+import { collectionPage, jsonLd, pageMetadata } from "../lib/seo";
+const TITLE = "Video Production, NGO Films & Storytelling Services";
+const DESCRIPTION =
+  "Documentary production, brand and impact content, and editing. Explore how Ayni Studios can help develop your story, produce a film, or work with existing footage.";
+export const metadata = pageMetadata(TITLE, DESCRIPTION, "/services", "services");
+const schema = collectionPage({
+  path: "/services",
+  name: TITLE,
+  description: DESCRIPTION,
+  items: services.map((s) => ({ name: s.title, path: `/services/${s.slug}` })),
+});
 export default function ServicesPage() {
   return (
     <div className="public-site">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(schema) }}
+      />
       <div className="site-width">
         <header className="page-heading">
           <p className="eyebrow accent">Our services</p>

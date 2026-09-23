@@ -35,7 +35,7 @@ export default function Footer() {
             <Link href="/about">The studio</Link>
             <Link href="/contact">Contact</Link>
             <a href={BOOKING_URL} data-track="booking_click">Start a project</a>
-            <Link href="/login">Client login</Link>
+            <Link href="/login" prefetch={false}>Client login</Link>
           </nav>
           <div>
             <p className="eyebrow">Let’s talk</p>

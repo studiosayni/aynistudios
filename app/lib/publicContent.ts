@@ -328,6 +328,9 @@ export type Project = {
   client: string;
   category: string;
   summary: string;
+  // Search/tab title when "client: title" runs past ~60 characters, where
+  // Google cuts it off. The page heading keeps `title`.
+  seoTitle?: string;
   status?: string;
   kind?: "sample";
   image?: string;
@@ -423,6 +426,7 @@ export const projects: Project[] = [
   },
   {
     slug: "panasonic-lumix",
+    seoTitle: "Panasonic LUMIX: Women artisans of the Amazon",
     title: "Women artisans of the Amazon",
     client: "Panasonic Global · LUMIX",
     category: "Brand & documentary collaboration",
@@ -447,6 +451,7 @@ export const projects: Project[] = [
   },
   {
     slug: "nature-and-resilience",
+    seoTitle: "BCRN film for Emirates Nature–WWF and IFRC",
     title: "Nature as our first line of defence",
     client: "Emirates Nature–WWF · WWF · IFRC",
     category: "BCRN programme film",
@@ -497,6 +502,7 @@ export const projects: Project[] = [
   },
 {
   "slug": "seafood-souq-south-africa",
+  "seoTitle": "Seafood Souq: Tuna traceability in Cape Town",
   "title": "Seafood traceability, from the water onwards",
   "client": "Seafood Souq",
   "category": "Brand documentary · Supply-chain transparency",
@@ -547,6 +553,7 @@ export const projects: Project[] = [
 },
 {
   "slug": "goumbook-sustainability-stories",
+  "seoTitle": "Goumbook: Sustainability films in the UAE",
   "title": "Sustainability through people and action",
   "client": "Goumbook",
   "category": "Brand stories · Community impact films",
@@ -598,6 +605,7 @@ export const projects: Project[] = [
 },
 {
   "slug": "amazonia-expeditions",
+  "seoTitle": "Amazonia Expeditions: Peruvian Amazon films",
   "title": "Life and adventure in the Peruvian Amazon",
   "client": "Amazonia Expeditions",
   "category": "Travel films · Wildlife storytelling",
@@ -648,6 +656,7 @@ export const projects: Project[] = [
 },
 {
   "slug": "mahdi-laith-marine-conservation",
+  "seoTitle": "Mahdi Laith: Marine conservation film",
   "title": "Marine conservation with Mahdi Laith",
   "client": "Mahdi Laith",
   "category": "Creator collaboration · Environmental storytelling",

@@ -5,20 +5,31 @@ import FilmCard from "../components/FilmCard";
 import InquiryCTA, { CTA_STILL } from "../components/InquiryCTA";
 import { projects, films as editorialFilms } from "../lib/publicContent";
 import { getPublicFilms } from "../lib/publicFilms";
-import { pageMetadata } from "../lib/seo";
+import { collectionPage, jsonLd, pageMetadata } from "../lib/seo";
 
 export const revalidate = 300;
-export const metadata = pageMetadata(
-  "Documentary Films & Selected Client Work",
-  "Explore Ayni Studios’ films for Seafood Souq, Goumbook, Panasonic Global, and Emirates Nature–WWF, plus our UNDP Nature for Life Hub selection.",
-  "/library",
-  "work",
-);
+const TITLE = "Documentary Films & Selected Client Work";
+const DESCRIPTION =
+  "Explore Ayni Studios’ films for Seafood Souq, Goumbook, Panasonic Global, and Emirates Nature–WWF, plus our UNDP Nature for Life Hub selection.";
+export const metadata = pageMetadata(TITLE, DESCRIPTION, "/library", "work");
 export default async function LibraryPage() {
   const films = await getPublicFilms();
   const animationSample = editorialFilms.find((film) => film.youtubeId === "iZRQlh6dnS0");
+  const schema = collectionPage({
+    path: "/library",
+    name: TITLE,
+    description: DESCRIPTION,
+    items: [
+      ...projects.map((p) => ({ name: p.title, path: `/work/${p.slug}` })),
+      ...films.map((f) => ({ name: f.title, path: `/films/${f.slug}` })),
+    ],
+  });
   return (
     <div className="public-site">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(schema) }}
+      />
       <div className="site-width">
         <header className="page-heading">
           <p className="eyebrow accent">The work</p>

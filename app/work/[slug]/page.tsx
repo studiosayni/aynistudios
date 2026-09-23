@@ -8,7 +8,7 @@ import {
   getService,
   SITE_URL,
 } from "../../lib/publicContent";
-import { jsonLd, pageMetadata } from "../../lib/seo";
+import { ORGANIZATION_ID, jsonLd, pageMetadata } from "../../lib/seo";
 import FilmCard from "../../components/FilmCard";
 import ProjectCard from "../../components/ProjectCard";
 import InquiryCTA from "../../components/InquiryCTA";
@@ -24,7 +24,7 @@ export async function generateMetadata({
   const p = getProject((await params).slug);
   if (!p) return {};
   return pageMetadata(
-    p.kind === "sample" ? p.title : `${p.client}: ${p.title}`,
+    p.seoTitle ?? (p.kind === "sample" ? p.title : `${p.client}: ${p.title}`),
     p.summary,
     `/work/${p.slug}`,
     p.slug,
@@ -56,11 +56,48 @@ export default async function ProjectPage({
       },
     ],
   };
+  // The project as a work Ayni made, for whom, and the films that belong to
+  // it. The client is the first name in `client` ("Emirates Nature–WWF ·
+  // WWF · IFRC"); a creator collaboration names a person, not an
+  // organization. The films are plain CreativeWork links: full VideoObject
+  // markup belongs on the watch pages, where the video plays.
+  const clientName = p.client.split(" · ")[0];
+  const work = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": `${SITE_URL}/work/${p.slug}#work`,
+    name: p.title,
+    description: p.summary,
+    url: `${SITE_URL}/work/${p.slug}`,
+    genre: p.category,
+    creator: { "@id": ORGANIZATION_ID },
+    ...(p.image
+      ? { image: p.image.startsWith("/") ? `${SITE_URL}${p.image}` : p.image }
+      : {}),
+    ...(p.kind === "sample"
+      ? {}
+      : p.category.startsWith("Creator collaboration")
+        ? { contributor: { "@type": "Person", name: clientName } }
+        : { sourceOrganization: { "@type": "Organization", name: clientName } }),
+    ...(relatedFilms.length
+      ? {
+          hasPart: relatedFilms.map((f) => ({
+            "@type": "CreativeWork",
+            name: f.title,
+            url: `${SITE_URL}/films/${f.slug}`,
+          })),
+        }
+      : {}),
+  };
   return (
     <article className="public-site">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLd(breadcrumbs) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(work) }}
       />
       <div className="site-width">
         <nav className="breadcrumb" aria-label="Breadcrumb">
@@ -82,6 +119,7 @@ export default async function ProjectPage({
               src={p.image}
               alt={p.imageAlt || ""}
               fill
+              preload
               sizes="(max-width:760px) 100vw, 1200px"
             />
           ) : (
@@ -105,19 +143,21 @@ export default async function ProjectPage({
             {p.paragraphs.map((text) => (
               <p key={text}>{text}</p>
             ))}
-            {[...(p.source ? [p.source] : []), ...(p.moreSources || [])].map(
-              (source) => (
-                <a
-                  key={source.href}
-                  href={source.href}
-                  className="text-link block mb-3"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {source.label} ↗
-                </a>
-              ),
-            )}
+            <div className="source-links">
+              {[...(p.source ? [p.source] : []), ...(p.moreSources || [])].map(
+                (source) => (
+                  <a
+                    key={source.href}
+                    href={source.href}
+                    className="text-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {source.label} ↗
+                  </a>
+                ),
+              )}
+            </div>
           </div>
           <aside>
             <dl className="detail-list">

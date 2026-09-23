@@ -41,7 +41,10 @@ export default function Navbar() {
               {label}
             </Link>
           ))}
-          <Link href="/login" className="nav-portal">
+          {/* No prefetch: the login route's bundle runs Firebase Auth, which
+              loads ~270 KB of Google sign-in iframes into every public page
+              that merely shows this link. */}
+          <Link href="/login" className="nav-portal" prefetch={false}>
             Client login
           </Link>
         </div>

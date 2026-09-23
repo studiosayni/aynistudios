@@ -1,16 +1,25 @@
 import Link from "next/link";
 import { guides } from "../lib/storytellingContent";
-import { pageMetadata } from "../lib/seo";
+import { collectionPage, jsonLd, pageMetadata } from "../lib/seo";
 import InquiryCTA from "../components/InquiryCTA";
 
-export const metadata = pageMetadata(
-  "Video Production Planning Guides",
-  "Plan an affordable video production and choose a storytelling partner. Practical advice from Ayni Studios on footage, filming kits, animation, and local filmmakers.",
-  "/guides", "guides",
-);
+const TITLE = "Video Production Planning Guides";
+const DESCRIPTION =
+  "Plan an affordable video production and choose a storytelling partner. Practical advice from Ayni Studios on footage, filming kits, animation, and local filmmakers.";
+export const metadata = pageMetadata(TITLE, DESCRIPTION, "/guides", "guides");
+const schema = collectionPage({
+  path: "/guides",
+  name: TITLE,
+  description: DESCRIPTION,
+  items: guides.map((g) => ({ name: g.title, path: `/guides/${g.slug}` })),
+});
 export default function GuidesPage() {
   return (
     <div className="public-site">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(schema) }}
+      />
       <div className="site-width">
         <header className="page-heading">
           <p className="eyebrow accent">Planning your film</p>

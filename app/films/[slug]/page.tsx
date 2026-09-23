@@ -5,6 +5,7 @@ import { getPublicFilms } from "../../lib/publicFilms";
 import { SITE_URL, films, getService, NATURE_FOR_LIFE } from "../../lib/publicContent";
 import { jsonLd, pageMetadata } from "../../lib/seo";
 import FilmCard from "../../components/FilmCard";
+import FilmPlayer from "../../components/FilmPlayer";
 import InquiryCTA from "../../components/InquiryCTA";
 
 export const revalidate = 300;
@@ -72,11 +73,10 @@ export default async function FilmPage({
           />
         )}
         <div className="film-player">
-          <iframe
-            src={`https://www.youtube-nocookie.com/embed/${film.youtubeId}?rel=0`}
+          <FilmPlayer
+            youtubeId={film.youtubeId}
             title={film.title}
-            allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
+            thumbnailUrl={film.thumbnailUrl}
           />
         </div>
         <section className="editorial-grid py-12">

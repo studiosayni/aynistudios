@@ -5,11 +5,11 @@ import InquiryCTA, { CTA_STILL } from "../components/InquiryCTA";
 import PartnerLogos from "../components/PartnerLogos";
 import WhereWeWork from "../components/WhereWeWork";
 import BusinessAddress from "../components/BusinessAddress";
-import { LOCATION_PATH, LOCATION_STATEMENT, STUDIO_MAPS_URL } from "../lib/publicContent";
-import { founder, jsonLd, pageMetadata } from "../lib/seo";
+import { LOCATION_PATH, LOCATION_STATEMENT, SITE_URL, STUDIO_MAPS_URL } from "../lib/publicContent";
+import { ORGANIZATION_ID, founder, jsonLd, pageMetadata } from "../lib/seo";
 export const metadata = pageMetadata(
   "About the Studio",
-  "Meet Ayni Studios, an independent documentary and storytelling company in Valencia, California, serving Los Angeles and working worldwide. Our film They Live in Our World was selected for UNDP’s Nature for Life Hub.",
+  "Meet Ayni Studios, an independent documentary studio in Valencia, California. Our film They Live in Our World was selected for UNDP’s Nature for Life Hub.",
   "/about",
   "studio",
 );
@@ -19,6 +19,20 @@ export default function AboutPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLd({ "@context": "https://schema.org", ...founder }) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLd({
+            "@context": "https://schema.org",
+            "@type": "AboutPage",
+            "@id": `${SITE_URL}/about#page`,
+            url: `${SITE_URL}/about`,
+            name: "About the Studio",
+            isPartOf: { "@id": `${SITE_URL}/#website` },
+            mainEntity: { "@id": ORGANIZATION_ID },
+          }),
+        }}
       />
       <div className="site-width">
         <header className="page-heading">
