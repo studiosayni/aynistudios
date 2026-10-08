@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { guides } from "../../lib/storytellingContent";
 import { CONTENT_UPDATED, PAGE_UPDATED, SITE_URL, getProject, getService } from "../../lib/publicContent";
-import { breadcrumbs, founder, jsonLd, pageMetadata } from "../../lib/seo";
+import { ORGANIZATION_ID, breadcrumbs, jsonLd, pageMetadata } from "../../lib/seo";
 import ProjectCard from "../../components/ProjectCard";
 import InquiryCTA, { CTA_STILL } from "../../components/InquiryCTA";
 
@@ -28,8 +28,8 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
     headline: guide.title, description: guide.description, mainEntityOfPage: url,
     image: `${SITE_URL}/share/${guide.slug}`, datePublished: "2026-09-13",
     dateModified: updated, inLanguage: "en",
-    author: founder,
-    publisher: { "@type": "Organization", "@id": `${SITE_URL}/#organization`, name: "Ayni Studios" },
+    author: { "@type": "Organization", "@id": ORGANIZATION_ID, name: "Ayni Studios", url: `${SITE_URL}/about` },
+    publisher: { "@type": "Organization", "@id": ORGANIZATION_ID, name: "Ayni Studios" },
   };
   return (
     <article className="public-site">
@@ -46,7 +46,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
           <p className="eyebrow accent">Planning your film</p>
           <h1>{guide.title}</h1>
           <p className="body-copy">{guide.summary}</p>
-          <p className="small-copy mt-6">By <Link className="underline" href="/about">Noah Beilin, Ayni Studios</Link> · Updated {updatedLabel}</p>
+          <p className="small-copy mt-6">By <Link className="underline" href="/about">Ayni Studios</Link> · Updated {updatedLabel}</p>
         </header>
         <div className="guide-layout pb-20">
           <div className="editorial-copy">

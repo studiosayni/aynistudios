@@ -26,7 +26,7 @@ const DISALLOW = ["/api/", "/pay/"];
 // tokens for using already-crawled pages in Gemini and Apple Intelligence.
 // Googlebot stays under `*` for normal search. Grouped by operator, so
 // pulling one vendor is one edit. (Same list as rinkproducts.com; see
-// Noah95/rink-products/ai-seo-playbook-2026-09.md section 4.1.)
+// the Rink AI SEO playbook (2026-09), section 4.1.)
 const AI_AGENTS = [
   // OpenAI: training crawler, ChatGPT search index, live user-initiated fetch.
   "GPTBot",

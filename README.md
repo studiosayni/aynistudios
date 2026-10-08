@@ -88,7 +88,7 @@ Drop a file in `content/stories/my-slug.mdx`:
 title: My Story
 excerpt: One-line hook.
 date: 2026-04-20
-author: Noah G Beilin
+author: Ayni Studios
 categories: [Amazon, Conservation]
 cover: /brand/stories/my-cover.jpg
 ---

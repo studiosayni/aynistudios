@@ -6,7 +6,7 @@ import PartnerLogos from "../components/PartnerLogos";
 import WhereWeWork from "../components/WhereWeWork";
 import BusinessAddress from "../components/BusinessAddress";
 import { LOCATION_PATH, LOCATION_STATEMENT, SITE_URL, STUDIO_MAPS_URL } from "../lib/publicContent";
-import { ORGANIZATION_ID, founder, jsonLd, pageMetadata } from "../lib/seo";
+import { ORGANIZATION_ID, jsonLd, pageMetadata } from "../lib/seo";
 export const metadata = pageMetadata(
   "About the Studio",
   "Meet Ayni Studios, an independent documentary studio in Valencia, California. Our film They Live in Our World was selected for UNDP’s Nature for Life Hub.",
@@ -16,10 +16,6 @@ export const metadata = pageMetadata(
 export default function AboutPage() {
   return (
     <div className="public-site">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: jsonLd({ "@context": "https://schema.org", ...founder }) }}
-      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -93,7 +89,7 @@ export default function AboutPage() {
           </div>
           <div className="editorial-copy">
             <p>
-              Founded by Noah Beilin, Ayni brings together filmmaking and a
+              Ayni Studios brings together filmmaking and a
               commitment to stories about people and the natural world.
             </p>
             <p>
@@ -101,14 +97,6 @@ export default function AboutPage() {
               conservation practitioners, and partner organizations. From the
               Amazon rainforest to the UAE, the work starts with listening.
             </p>
-            <a
-              href="https://www.linkedin.com/in/noahbeilin"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-link"
-            >
-              Meet Noah on LinkedIn ↗
-            </a>
           </div>
         </section>
         <section className="editorial-grid section-space border-t border-[#28363a]" aria-labelledby="where-title">

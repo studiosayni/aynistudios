@@ -10,7 +10,7 @@ import {
 import type { Client, Invoice, Project } from "../lib/types";
 import { formatCurrency } from "../lib/currency";
 
-// Internal alert for Noah — lands in humanity@ayni-studios.com when a
+// Internal alert for the studio — lands in humanity@ayni-studios.com when a
 // payment clears. Keeps admin in the loop for Zelle/Stripe conf.
 
 export default function AdminPaymentAlertEmail({

@@ -15,7 +15,7 @@ import {
 // Google cuts a result title at roughly 600px and a snippet at roughly 155
 // characters. What gets cut is always the end, so the rules below decide
 // what the end is, instead of leaving it to a mid-word "…".
-// See Noah95/rink-products/ai-seo-playbook-2026-09.md section 4.4.
+// See the Rink AI SEO playbook (2026-09), section 4.4.
 
 // Advance widths of printable ASCII (32 to 126) in Arial at 20px, the face
 // and size of a desktop result title, measured once with PIL. Characters
@@ -113,26 +113,6 @@ export function jsonLd(data: unknown) {
 }
 
 export const ORGANIZATION_ID = `${SITE_URL}/#organization`;
-export const FOUNDER_ID = `${SITE_URL}/about#noah-beilin`;
-
-// The founder as a first-class entity. Referenced from the organization,
-// the about page, and every guide byline so search engines and AI answers
-// can connect the studio to a named, verifiable person.
-export const founder = {
-  "@type": "Person",
-  "@id": FOUNDER_ID,
-  name: "Noah Beilin",
-  jobTitle: "Founder and filmmaker",
-  worksFor: { "@id": ORGANIZATION_ID },
-  url: `${SITE_URL}/about`,
-  sameAs: ["https://www.linkedin.com/in/noahbeilin"],
-  knowsAbout: [
-    "Documentary filmmaking",
-    "Conservation storytelling",
-    "NGO video production",
-    "Video editing and post-production",
-  ],
-};
 
 // Organization AND LocalBusiness: the first keeps every existing @id
 // reference valid, the second is what Google's local results and Gemini's
@@ -154,7 +134,6 @@ export const organization = {
     name: "Nature for Life Hub 2024 — Day 3: They Live in Our World by Ayni Studios",
     url: NATURE_FOR_LIFE.sourceUrl,
   },
-  founder,
   address: {
     "@type": "PostalAddress",
     ...STUDIO_ADDRESS,

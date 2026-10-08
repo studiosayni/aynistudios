@@ -17,8 +17,7 @@ import { organization } from "../lib/seo";
 // what the studio does, which facts carry weight, and which page answers
 // which question, in the order we choose, instead of leaving an assistant to
 // infer it from the navigation. Not a ranking signal and not universally
-// read; it costs one route. See Noah95/rink-products/ai-seo-playbook-2026-09.md
-// section 4.2.
+// read; it costs one route. See the Rink AI SEO playbook (2026-09), section 4.2.
 //
 // Generated from the same modules the pages render, so it cannot drift from
 // the site. Every fact below is one the site already states on a page;
@@ -45,7 +44,7 @@ export async function GET() {
 
 > Documentary and impact video production company based in Valencia, California, in the Santa Clarita Valley of Los Angeles County, working with organizations worldwide. It makes documentaries, NGO and conservation films, brand and impact content, legacy films, and edits from existing footage.
 
-${LOCATION_STATEMENT} Founded by filmmaker Noah Beilin. The name comes from ayni, the Andean principle of sacred reciprocity.
+${LOCATION_STATEMENT} Our name comes from ayni, the Andean principle of sacred reciprocity.
 
 ## Facts worth quoting
 
@@ -82,7 +81,7 @@ ${films.map((f) => line(f.title, `/films/${f.slug}`, `${[f.client, f.year].filte
 ${line("Home", "/", "What the studio makes, selected work, and how to start a project.")}
 ${line("Work", "/library", "Every case study and film.")}
 ${line("Services", "/services", "All services and production options.")}
-${line("About", "/about", "Who runs the studio, where it works, and the meaning of its name.")}
+${line("About", "/about", "The studio’s approach, where it works, and the meaning of its name.")}
 ${line("Contact", "/contact", "Email, phone, WhatsApp, and the studio address.")}
 
 ## Contact

@@ -140,12 +140,12 @@ test("location, dates, and service artwork are consistent", () => {
   assert.match(content.LOCATION_STATEMENT, /Valencia, California/);
   assert.match(content.LOCATION_STATEMENT, /Los Angeles/);
 });
-test("organization schema is a local business with a founder and a map", () => {
+test("organization schema is a local business with a map and no personal founder record", () => {
   const seo = load("../app/lib/seo.ts", { "./publicContent": content });
   // Cross-realm arrays are never reference-equal; compare the serialization.
   assert.equal(JSON.stringify(seo.organization["@type"]), JSON.stringify(["Organization", "LocalBusiness"]));
   assert.equal(seo.organization.geo["@type"], "GeoCoordinates");
-  assert.equal(seo.organization.founder["@type"], "Person");
+  assert.equal("founder" in seo.organization, false);
   assert.match(seo.organization.hasMap, /google\.com\/maps/);
   assert.ok(seo.organization.areaServed.some((a) => a.name === "Los Angeles"));
   assert.equal(seo.website["@type"], "WebSite");
